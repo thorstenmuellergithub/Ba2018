@@ -1,0 +1,119 @@
+% Die Arbeit besteht aus Kapiteln (chapter)
+\chapter{Done Stuff}
+
+% Jedes Kapitel besteht aus Unterkapiteln (section)
+\section{Week one 28.11-05.12}
+\begin{itemize}
+\item Einlesen
+\item 3D Simulation auf eigenem laptop ausprobieren
+\item probieren die Doku zu CC3D zu verstehen
+\end{itemize}
+
+\section{Week two 05.12-12.12}
+\begin{itemize}
+\item Coding Kommentieren
+\item Code structurieren
+\item Doku erstellen
+\end{itemize}
+
+\section{Week three 12.12-19.12}
+\begin{itemize}
+\item Grundlagen verstehen
+\item Methoden mit angelo besprechen
+\item Aufgabe (3D Simulation) überprüfen
+\item Energiefunktionen verstehen
+\item Literatur recherche 
+\end{itemize}
+
+\section{Week four 19.12-26.12}
+\begin{itemize}
+\item Literatur recherche
+\item Python scripts auf ein lambda wert begrenzen
+\item Changed the cell drawing (reduced parameters as they were redundant)
+\item reduce approximation error  still a problem by 0.5 (at ExecConfig.calcPixelFromMuMeter and GrowthSteppable.moduroStep)
+\item Checked GrowthSteppable
+\item Tryied different cell drawing methods
+\end{itemize}
+
+\section{Week five 26.12-02.01}
+\begin{itemize}
+\item Structure the task - create goals for the BA
+\item Created a table of contents
+\item Studied GrowthSteppable (should be alright -> without changes to do for the 3D Simulation)
+\item figured out: adhesion energy has some magic numbers -> by setting it to 0 cells stay in their more or less cubic form even when they touch
+\item figured out: Volume-TargetVolume is wrong in one of the two cells after mitosis
+\item figured out: Surface-TargetSurface is wrong in every cell after mitosis
+\end{itemize}
+
+\section{Week six 02.01-09.01}
+\begin{itemize}
+\item Added a while loop to the ModelConfig.setCellAttributes() in a way that the targetVolume and targetSurface is always at least 1 larger than the current Volume / Surface - during Mitosis there were wrong values between volume /surface and targetVolume / targetSurface
+\item Changed the ExecConfig.calcVoxelVolumeFromVolume() method -> now we do not have rounding errors and calculate further with them - now we calculate the amount of voxels and then round up or down
+\item Corrected the calculation of the amount of stem cell at the basal membrane
+\end{itemize}
+
+\section{Week seven 09.01-16.01}
+\begin{itemize}
+\item Thesis besprochen
+\item An thesis geschrieben
+\item 
+\end{itemize}
+
+\section{Week eight 16.01-23.01}
+\begin{itemize}
+\item ersten teil der thesis besprochen
+\item an thesis geschrieben
+\item 
+\end{itemize}
+
+\section{Week nine 23.01-30.01}
+\begin{itemize}
+\item 
+\item 
+\item 
+\end{itemize}
+
+\section{Week ten 30.01-06.02}
+\begin{itemize}
+\item 
+\item 
+\item 
+\end{itemize}
+
+\section{Week eleven 06.02-13.02}
+\begin{itemize}
+\item 
+\item 
+\item 
+\end{itemize}
+
+\section{Week twelf 13.02-20.02}
+\begin{itemize}
+\item 
+\item 
+\item 
+\end{itemize}
+
+\section{Week thirteen 20.02-27.02}
+\begin{itemize}
+\item 
+\item 
+\item 
+\end{itemize}
+% Unterkapitel können noch einmal durch subsections untergliedert 
+% werden (jetzt auf der 3. Ebene)
+\subsection{Dritte Ebene}
+
+% Mit Labels können Sie sich später im Text wieder auf diese Stelle beziehen
+\label{Gliederung:EbeneDrei}
+
+% Einträge für den Index anlegen. Ein Index wird normalerweise in einer Abschluss
+% Arbeit nicht benötigt.
+\index{Gliederung!Ebenen}
+
+% Auf der 4. Ebene liegen die subsubsections. In diesem Template bekommt die
+% 4. Ebene keinen Nummern mehr und erscheint auch nicht im Inhaltsverzeichnis
+\subsubsection{Vierte Ebene}
+
+% Auf der 5. Ebene werden einzelne Absätze mit Überschriften versehen.
+\paragraph{Fünfte Ebene} Anders als in diesem Beispiel, darf in Ihrer Arbeit kein Gliederungspunkt auf seiner Ebene alleine stehen. D.\,h. wenn es ein 1.1 gibt, muss es auch ein 1.2 geben.
