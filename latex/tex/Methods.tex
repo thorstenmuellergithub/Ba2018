@@ -280,51 +280,51 @@ In the project the calculation of the amount of stem cells for two dimensions we
                               (stemCellFactor * stemCellFactor))
 ...
 \end{lstlisting}
-Since the y-axis is negligible in the calculation of an area, the calculation for two dimensions considers the x-axis and the calculation for three dimensions considers the x- and z-axis. Therfore, in two dimensions, only considering the x-axis, the area of the stem cells should be calculated by using the cell diameter, as it is the case. For three dimensions it is possible to calculate the area of a circle $\pi * radius^{2}$, which is in two dimensions, and use this calculation to further determine the amount of stem cells on the basal membrane. The following formulas calculate the amount of stem cells in two dimensions:
+Since the y-axis is negligible in the calculation of an area, the calculation for two dimensions considers the x-axis and the calculation for three dimensions considers the x- and z-axis. Therfore, in two dimensions, only considering the x-axis, the area of the stem cells should be calculated by using the cell diameter. This situation is displayed in figure \ref{tikz:AreaIn2D} at page \pageref{tikz:AreaIn2D}. For three dimensions it is possible to calculate the area of a circle with the formula $\pi * radius^{2}$, since a circle is in two dimensions, and use this calculation to further determine the amount of stem cells on the basal membrane. An example for the basal membrane and a stem cell in three dimensions is displayed in figure \ref{tikz:AreaIn3D} at page \pageref{tikz:AreaIn3D}. 
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{tikzpicture}[scale=3]
 %%draw the edges of the cube
 \draw[black,thick] (-2,0) -- (2,0)node[anchor=north east]{$basal membrane$};
 \draw[blue,thick] (-1,.01) -- (-0.5,.01)node[anchor=north]{$diameter_{cell}$};
 \end{tikzpicture}
-\caption{considerable area to spread the stem cells in two dimensions with an example of one stem cell placed on the basal membrane}
+\caption{considered area to spread the stem cells in two dimensions with an example of one stem cell placed on the basal membrane. Because only the x-axis is displayed we need to calculate the diameter of a cell}
 \label{tikz:AreaIn2D}
 \end{center}
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{tikzpicture}[MyPersp,font=\large]
 %%draw the edges of the cube
 %\draw[pattern=north west lines, pattern color=blue] (0,0) rectangle (2,4);
 \draw[pattern=north west lines, pattern color=gray] (0,0,0) -- (0,2.25,0) -- (3.25,2.25,0) -- (3.25,0,0) -- cycle;
-\fill[blue] (1,2)   circle[radius=0.125];
+\fill[blue] (1,1.75)   circle[radius=0.125];
  
 \end{tikzpicture}
-\caption{considerable area to spread the stem cells in two dimensions with an example of one stem cell placed on the basal membrane}
+\caption{considered area to spread the stem cells in three dimensions with an example of one stem cell placed on the basal membrane. This stem cell is a circle, because for the calculation we use two dimensions}
 \label{tikz:AreaIn3D}
 \end{center}
 \end{figure}
 
 
+The following formulas calculate the amount of stem cells in two dimensions:
 
-
-\begin{equation}
+\begin{equation}\label{eq:Area12-2D}
 A_{stem cells} = xLength * 0.12
 \end{equation}
-\begin{equation}
+\begin{equation}\label{eq:AmounStemCell2D}
 Amount_{StemCells} = \dfrac{A_{stem cells}}{diameter} 
 \end{equation}
-The first formula ensures that only 12\% of the given area is used. The second formula then calculates the amount of stem cells on this given area. Since the result of the calculation is often not a whole number, the result will be also checked for the first decimal digit and then rounded up or down. This has a significant difference in the result, as it is displayed in the following table \cite{TABLEREF}.
-\begin{table}[h]
+Formula \ref{eq:Area12-2D} ensures that only 12\% of the given area is used. Formula \ref{eq:AmounStemCell2D} then calculates the amount of stem cells on this given area. Since the result of the calculation is often not a whole number, the result is checked if the first decimal digit is larger or equal than 5 and then it is rounded up or down. This has a significant difference in the result, as it is displayed in table \ref{tbl:Approximation error} at page \pageref{tbl:Approximation error}.
+\begin{table}
 \centering
-\caption{Stakeholders' motivations to use \ac{SW CS}}
+\caption{Possible approximation error by not rounding the result of formula \ref{eq:AmounStemCell2D}}
 \renewcommand{\arraystretch}{1.5}
 	\begin{tabularx}{\textwidth}{XXXXX}
-		XLength in \SI{}{\micro\metre} & Result of $Amount_{StemCells}$ & rounded result & Area used of Stem cells in \SI{}{\micro\metre} & relative used area  \\
+		XLength in \SI{}{\micro\metre} & Result of $Amount_{StemCells}$ & rounded or casted result & Area used of Stem cells in \SI{}{\micro\metre} & relative used area  \\
 		\hline
 		200 & $\sim 2.66$ & 3 & 27 & 13.5\% \\
 		
@@ -333,22 +333,22 @@ The first formula ensures that only 12\% of the given area is used. The second f
 	\end{tabularx}
 	\label{tbl:Approximation error}
 \end{table}
-As the table displays, it is important to round the result. Otherwise there would be an approximation error which is to avoid.
 
-For three dimensions the displayed formulas have to be extended, because the z-axis is now also considered in the calculation of the amount of stem cells on the basal membrane. Therfore, the extended formulas for three dimensions are:
-\begin{equation}
+As the table displays, it is important to round the result. Otherwise there would be an approximation error which is to avoid.
+\newline
+For three dimensions the formulas \ref{eq:Area12-2D} and \ref{eq:AmounStemCell2D} have to be extended, because the z-axis is now also considered in the calculation of the amount of stem cells on the basal membrane. Therfore, the extended formulas for three dimensions are:
+\begin{equation}\label{eq:Area12-3D}
 A_{stem cells} = xLength * zLength * 0.12
 \end{equation}
-\begin{equation}
-Amount_{StemCells} = \dfrac{A_{stem cells}}{\pi * (cell radius)^{2}} 
+\begin{equation}\label{eq:AmounStemCell3D}
+Amount_{StemCells} = \dfrac{A_{stem cells}}{\pi * r^{2}} 
 \end{equation}
-The result of the formula $Amount_{StemCells}$ has to be rounded as well, otherwise the program would again include rounding errors, as it was shown in table \ref{TABLEREF}. That the formulas are correct is shown with the following example. In order to keep a good overview of the results and the parameters in the formulas, the decimal digits are rounded after the third decimal digit. \newline
-For a simulation with a length of \SI{200}{\micro\metre} at the x-axis and a length of \SI{50}{\micro\metre} at the z-axis, the overall area is $\SI{10000}{\micro\metre}^{2}$ and the for the stem cells reserved 12\% of the membrane are $\SI{1200}{\micro\metre}^{2}$. With an average diameter of \SI{9}{\micro\metre}, the minimum and maximum diameter of the cells are displayed in table \ref{TABLEREF}, the result of the amount of stem cells is $\sim 18.863$ which is rounded up to 19 stem cells on an area of $\SI{10000}{\micro\metre}^{2}$.
-
+The result of formula \ref{eq:AmounStemCell3D} has to be rounded as well, otherwise the program would again include rounding errors, as it is shown in table \ref{tbl:Approximation error}. That the formulas are correct is shown with the following example. In order to keep a good overview of the results and the parameters in the formulas, the decimal digits are rounded after the third decimal digit. \newline
+For a simulation with a length of \SI{200}{\micro\metre} at the x-axis and a length of \SI{50}{\micro\metre} at the z-axis, the overall area is $\SI{10000}{\micro\metre}^{2}$ and the for the stem cells reserved 12\% of the membrane are $\SI{1200}{\micro\metre}^{2}$. With an average diameter of \SI{9}{\micro\metre}, the minimum and maximum diameter of the different cells are displayed in table \ref{tab:Cell-properties} at page \pageref{tab:Cell-properties}, the result of the amount of stem cells is $\sim 18.863$ which is rounded up to 19 stem cells on an area of $\SI{10000}{\micro\metre}^{2}$.
 
 \begin{equation}
 \begin{split}
-Amount_{StemCells} & = \dfrac{\SI{200}{\micro\metre} * \SI{50}{\micro\metre} * 0.12}{\pi * cell radius^{2}} \\
+Amount_{StemCells} & = \dfrac{\SI{200}{\micro\metre} * \SI{50}{\micro\metre} * 0.12}{\pi * r^{2}} \\
 					& = \dfrac{\SI{1200}{\micro\metre^{2}}}{\SI{63.617}{\micro\metre^{2}}} \\
 					& \sim 18.863 \\
 					& = 19
@@ -373,7 +373,7 @@ A_{StemCells} & = \dfrac{A_{StemCells}}{\SI{10000}{\micro\metre^{2}}} \\
 \end{split}
 \end{equation}
 
-In the following listing the new calculation to figure out the amount of stem cells on the basal membrane is shown. The calculation is for two as well as for three dimensions modified, since both did not have a mathematical evidence.
+In the following listing the new calculation to figure out the amount of stem cells on the basal membrane at the start of the simulation is shown. The calculation is for two as well as for three dimensions modified, since both did not have a mathematical evidence.
 
 \begin{lstlisting}[language=Python, caption= new calculation of the amount of stem cells on the basal membrane with a mathematical evidence]
     def _initCells(self, steppable):
@@ -394,8 +394,8 @@ In the following listing the new calculation to figure out the amount of stem ce
 \end{lstlisting}
 
 \section{TargetVolume, Surface after Mitosis}
-Mmitosis is done by \ac{CC3D}, i.e. \ac{CC3D} decides where the cell splits and calculates the volumes and the surface of the two new cells. In our program we calculate and set attributes of the new cells, e.g. the target volume or the target surface. The target volume is simply calculated by dividing the target volume of the cell before mitosis by 2. This value is applied for both new created cells. The problem with this technique is that it is possible that the cell does not split complety in the middLe, therefor it is not possible to set the target volume of the two created cells without the knowledge of the volume of both cells. Moreover, the function 'initCellAttributes' calles the function 'setCellAttributes', in which the targetVolume of the specific cell is set to be 1 larger than the current volume. If the commands of the function 'initCellAttributes' are complete and the program is again in the below listet function, then the target volume of both cells is set to a value which has no evidence to be correct.
-\begin{lstlisting}[language=Python, caption =two cells are created by mitosis where the target volume is set at a wrong place]
+Mmitosis is done by \ac{CC3D}, i.e. \ac{CC3D} decides where the cell splits and calculates the volumes and the surface of the two new cells. In our program we calculate and set attributes of the new cells, e.g. the target volume or the target surface. The target volume is simply calculated by dividing the target volume of the cell before mitosis by 2. This value is applied for both new created cells. The problem with this technique is that it is possible that the cell does not split complety in the middle. Therefore, it is not possible to set the target volume of the two created cells without the knowledge of the volume of both cells. Moreover, the function 'initCellAttributes' calles the function 'setCellAttributes', in which the targetVolume of the specific cell is set to be 1 larger than the current volume. If the commands of the function 'initCellAttributes' are complete and the program is again in the below listet function, then the target volume of both cells is set to a value which has no evidence to be correct.
+\begin{lstlisting}[language=Python, caption=two cells are created by mitosis where the target volume is set at a wrong place]
     def updateAttributes(self):
         parentCell = self.mitosisSteppable.parentCell
         childCell = self.mitosisSteppable.childCell
@@ -420,7 +420,7 @@ Mmitosis is done by \ac{CC3D}, i.e. \ac{CC3D} decides where the cell splits and 
         self._cellLifeCycleBirth(parentCell)
         self._cellLifeCycleBirth(childCell)
 		cellDictChild['colony'] = cellDictParent['colony']
-\end{lstlisting}
+\end{lstlisting}\label{lst:TargetVolumeWrongPlace}
 \begin{lstlisting}[language=Python, caption=set the target volume as well as the target surface in the intended function]
     def setCellAttributes(self, cellDict, cell, lifeTimeParent):
 		...
@@ -428,7 +428,7 @@ Mmitosis is done by \ac{CC3D}, i.e. \ac{CC3D} decides where the cell splits and 
         cell.targetSurface = self.execConfig.calcVoxelSurfaceFromVoxelVolume(cell.targetVolume)
         ...
 \end{lstlisting}
-Since \ac{CC3D} calculates the new volume of both created cells and the cell attributes are initialized and set in the functions 'initCellAttributes' and 'setCellAttributes', which is called by 'initCellAttributes', setting the target volume for both cells at this position in the program is not necessary. Thus, these commands are deleted and the target volume will now only be set at the function 'setCellAttributes'. There the target volume is 1 larger than the current volume, because the cells are just created. With the next \ac{MCS}, and then every \ac{MCS}, the target volume will be calculated regarding the growth per day of the specific cell type. Thus, no changes in the function 'setCellAttributes' were requirded, the actual code of the function 'updateAttributes' is the following:
+Since \ac{CC3D} calculates the new volume of both created cells and the cell attributes are initialized and set in the functions 'initCellAttributes' and 'setCellAttributes', which is called by 'initCellAttributes', setting the target volume for both cells like it is in \ref{lst:TargetVolumeWrongPlace} is not correct. Thus, these commands are deleted and the target volume will now only be set at the function 'setCellAttributes'. There the target volume is 1 larger than the current volume, because the cells are just created. With the next \ac{MCS}, and then every \ac{MCS}, the target volume will be calculated regarding the growth per day of the specific cell type. Thus, no changes in the function 'setCellAttributes' were requirded, the actual code of the function 'updateAttributes' is the following:
 
 \begin{lstlisting}[language=Python, caption = two cells are created\, due to mitosis]
     def updateAttributes(self):
