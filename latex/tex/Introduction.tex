@@ -2,22 +2,25 @@
 
 Without cell adhesion no complex life would exist \cite{REF}.
 This is a well known and long existing statement in the biology. It describes that if different cells would not stick to each other the only living things would be cells. 
-In humans many organs are made of severall cells. This is also the case for the urothelium. For the urothelium it is necessary that the cells stick to each other. Otherwise the functions of the urothelium could not be executed and also it would not be able to growth. In the project we simulate this growth of an urothelium with several different models.
+In humans, organs are made of severall cells. This is also the case for the urothelium. For the urothelium it is necessary that the cells stick to each other. Otherwise the functions of the urothelium could not be executed and also it would not be able to growth.% If bladder cancer occurs the urothelium also can not function in the way it should do. 
 
-There are several types of tumors. One is the .... and the other one is the .... Since bladder cancer is one of the most common cancer types among men it is important to understand how and why the cancer is able to growth. Bladder cancer starts to growth in the urothelium. With the simulation of the urothelium and the different models we hope to be able to predict when bladder cancer occurs.
+There are several types of tumors. One is the .... and the other one is the .... Since bladder cancer is one of the most common cancer types among men it is important to understand how and why the cancer is able to growth. Bladder cancer starts to growth in the urothelium. With the growth and spread the structure of cells sticking together is changed. In this case, the urothelium is not able to completely do its tasks. In order to understand the urothelium and how and when bladder cancer appears observations of this organ are necessary. 
 
 To understand the functionality of organs observation is necessary. For the urothelium this is already done, as there are a lot of different in vitro experiments about the methodology of the urothlium. After the observation of organs is complete, we are able to predict how the organ will react to different situations. To verify these predictions we need to simulate the behavior of the organ. A simulation is in generell an illustration of the reality, but it can also be used to change reality in a for the research specific way to get more knowledge of this organ.
 
+A simulation should always be a simple as possible but also not to simple. Otherwise the simulation does not displays the reality. In the moduro project there is a 2D simulation of 16 different models of the urothelium. After all them were simulated the result is that the models are more realistic and others are less. The target with these models is to predict when bladder cancer occurs.
+
+Because a cell is a three dimensional organism, a 2D simulation of the urothelium might not give as many aspects as a 3D simultion could do. The aim of this bachelor thesis is to create a 3D simulation of these 16 different models. With this 3D simulation new insights of the urothelium and how bladder cancer occurs will be received. 
 
 \section{Background}
 \subsection{Biology of the Urothelium}
-Bladder cancer is one of the most common cancer types among men. It is the 4th most common type regarding to everydayhealth.com\footnote{https://www.everydayhealth.com/bladder-cancer/guide/ \textit{visited: 31.12.2017}}, where every 36st out of 100.000 men gets it. Bladder cancer usually starts with some cells in the bladder, which growth uncontrolled. From these cells, the tumor can spread further into surrounding areas \footnote{https://www.cancer.org/cancer/bladder-cancer/about/what-is-bladder-cancer.html \textit{visited: 31.12.2017} \label{ftn:cancer.org}}. The most common bladder cancer type is the urothelial carcinoma\footref{ftn:cancer.org}. An illustration of how bladder cancer evolves is displayed in figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium}.
+Bladder cancer is one of the most common cancer types among men. It is the 4th most common type regarding to everydayhealth.com \cite{EveryDayHealth.com}, where every 36st out of 100.000 men gets it. Bladder cancer usually starts with some cells in the bladder, which growth uncontrolled. From these cells, the tumor can spread further into surrounding areas \cite{Cancer.org}. The most common bladder cancer type is the urothelial carcinoma \cite{Cancer.org}. An illustration of how bladder cancer evolves is displayed in figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium}.
 
 The bladder is located in the lower urinary tract and consist of several parts, where urothelium coats the bladder \cite{Lazzeri2006}. More specifically, it covers the bladder from the renal pelvis to the proximal urethra \cite{Yamany2014, Birder2005} 
 
 Two important tasks of the bladder are the storage and release of urine. To do so the bladder will extend, during the storage, and then shrink again \cite{Karl-ErikAndersson2004}. One task of the urothelium is to form a distensible barrier \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, WRCross2005}. That the urothelium ensures its barrier function, it has to growth and downsize its size. This is done by the largest cells of the urothelium – the umbrella cells. Because the umbrella cells are in direct contact with the bladder, it is their task to change size and form during the growth and shrink process of the bladder. Birder described the urothelium as “… a responsive structure capable of detecting physiological and chemical stimuli and releasing a number of signaling mole-cules.” \cite{Birder2005}. Another task of the urothelium is to control the movement and passage of macromolecules, ions, water, toxic metabolites and solutes \cite{Apodaca2004, PuneetKhandelwal2009}. If the urothelium is damaged, it rapidly generates new cells, to ensure full functionality \cite{Apodaca2004, Yamany2014, PuneetKhandelwal2009}. In the research there are assumptions, that the quick regeneration is done by a lot of mitosis, i.e. cell division.
 
-To receive a better overview the different cell types are explained in the following paragraph. They are also displayed in figure XY.
+To receive a better overview the different cell types are explained in the following paragraph. In figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium} a simplified illustration of the urothelium with its different cell types and cell layers is provided. \newline
 The umbrella cells, also called superficial cells, they are connected directly with the bladder and have an average diameter of 25 up to \SI{250}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}. 
 
 Below these cells the intermediate cells are located. With an average diameter of 10 up to \SI{20}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}, they are a far bit smaller then the umbrella cells. The middle layer of the urothelium can consist of several own layers, i.e. there can be several layers in the layer of the intermediate cells. 
@@ -26,11 +29,10 @@ The smallest and the most common cells in the urothelium are the basal and stem 
 
 The urothelium has several layers. In the first layer, there are the basal and stem cells. Above them, there are several layers of intermediate cells. On top of the epithelium, i.e. a membranous tissue which consists of one or several layers1, there is one layer of umbrella cells.
 
-\begin{figure}[t]
+\begin{figure}
 	\center
-	\includegraphics{figures/pyhsiology-of-the-urothelium.png}
-	\caption{Physiology of the urothelium - http://000ekkt.myregisteredwp.com/trauma/ \newline
-			 \textit{visited: 31.12.2017}}
+	\includegraphics[scale=0.6]{figures/Urothelium.png}
+	\caption{Simplified physiology of the urothelium}
 	\label{img:physiology_urothelium}
 \end{figure}
 
@@ -66,7 +68,7 @@ The \ac{GGH} model has the advantage that “Initial conditions emulating a part
 
 
 \subsection{CompuCell3D}
-\ac{CC3D} is an open-source program, which provides a simulation environment for multi- or single-cell-based modeling of tissues, organs and organisms\footnote{http://www.compucell3d.org/ \textit{visited: 13.01.2018} \label{ftn:cc3d.org}}. To do so, \ac{CC3D} uses the \ac{CPM} in its simulation\footref{ftn:cc3d.org}, which describes cell and \ac{ECM} behavior \cite{Izaguirre2004}. 
+\ac{CC3D} is an open-source program, which provides a simulation environment for multi- or single-cell-based modeling of tissues, organs and organisms \cite{CC3D.org}. To do so, \ac{CC3D} uses the \ac{CPM} in its simulation \cite{CC3D.org}, which describes cell and \ac{ECM} behavior \cite{Izaguirre2004}. 
 CC3D provides the possibility to create scripts for the simulation, e.g. cell growth, mitosis, apoptosis or necrosis scripts, in python, C++ or in their own CC3DM, which is their own Markup Language. With such scripts CC3D allows the user to modify the behavior of the simulation for a specific purpose.
 CC3D uses the \ac{GGH} approach, explained in section \ref{subsec:Intro_GGH} at page \pageref{subsec:Intro_GGH}. It allows the user to choose between several cell-lattice types, i.e. a presentation of the pixels of a cell at a specific position in the simulation field (see picture XY). By default, it uses a square-lattice of single pixels for each dimension. There is also the possibility to use a hexagonal-lattice, where the pixels would be hexagons in two dimensions, or rhombic dodecahedrons in three dimensions.
 Since the core of a \ac{GGH} simulation is the effective energy \cite{IntroCC3D}, \ac{CC3D} tries to minimize this effective energy every \ac{MCS}, i.e. a calculation step in the simulation. The basic form for the effective energy is:
@@ -75,9 +77,10 @@ Since the core of a \ac{GGH} simulation is the effective energy \cite{IntroCC3D}
 \end{equation}
 There are several ways to extend this form, it is possible to add a volume or a surface constraint. During each \ac{MCS} an index-copy attempt takes place \cite{MaciejH.Swat2017}. I.e. a pixel is selected, and it will be tried to overwrite a randomly chosen pixel, next to the current pixel, in order to minimize the effective energy. The index copy attempt succeed and takes place only if this index copy attempt decreases the effective energy \cite{IntroCC3D}. Each \ac{MCS} the program tries to minimize the simulation, e.g. with index copy attempts. The user has the chance to use her/his specific script every \ac{MCS}, before the simulation starts or at the end of the simulation.
 
-\section{Given Task}
-The task of this bachelor thesis is to create a 3D morphogenesis simulation of the urothelium by using \ac{CC3D}. Since the simulation models and python scripts for a 2D simulation are given and the simulation is done by \ac{CC3D} the task is to modify the current simulation scripts, of the 2D simulation, in a way that these scripts can be used for a 3D simulation of the different models. \newline
-Therefor, first I have to analyse and understand the simulation scripts, in order to modify these for the 3D simulation. In some scripts, I will have to modify the parameters or change complete methods. My results of the 3D simulation has to be presented with at least one model. The results are also presented by prototypes (if there is enough space to present the different configuration). Another important task is to estimate or to calculate, if possible, the time effort and compare this time effort to the time effort of the current 2D simulations.
+\section{Scope of the Bachelor Thesis}
+The aim of this bachelor thesis is to create a 3D morphogenesis simulation of the urothelium using \ac{CC3D}. Since the simulation models and python program for a 2D simulation are given and the simulation is done by \ac{CC3D} the task is to modify the current simulation application, of the 2D simulation, in a way that this program can be used for a 3D simulation of the different models. \newline
+Therefore, some parts of the program has to be modified. Some functionalities has to be written completely new wheras for other functionalities it is enough to modify these. \newline
+The result of this bachelor thesis will be presented with an of the 2D simulation realistic model. This model is choosen from the given models in the 2D simulation. The question how much more time the 3D simulation need than the 2D simulation will be covered in this thesis as well. If it is possible to provide a calculation of how much more effort a simulation in three dimensions need it will be included, otherwise an estimation of the more effort is presented.
 
 \section{Outline}
 In this chapter the basic knowledge to understand this bachelor thesis is provided. The next chapter provides the process of the project, at the point where I started with the bachelor thesis. Once the basic knowledge and the state of the art are explained, I describe how I worked, i.e. what did I do to understand the project and to find solutions. After these information I reveal the results of this bachelor thesis. Therefor, if it is possible to have a 3D simulation by using \ac{CC3D}. In the last chapter a conclusion of this bachelor thesis is provided.

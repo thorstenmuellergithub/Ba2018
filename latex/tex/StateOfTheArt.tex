@@ -4,48 +4,71 @@ The current moduro project has a stable 2D simulation of 16 different models usi
 
 \section{Display and Simulation of the Urothelium}
 %wie wird es dargestellt 
-In \ac{CC3D} we use simulate an urothel of the size of \SI{200}{\micro\metre} for the x-axis and \SI{100}{\micro\metre} for the y-axis. The simulation of the urothel covers 2 years. At the first calculation step, \ac{MCS} 0, the simulation is initialized, i.e. the cells are drawn and placed. In order to provide a realistic simulation, i.e. the simulation is not to easy and not to hard, we have to calculate events which occur every \ac{MCS} and some events which are occur not every \ac{MCS}. The events, which are performed every \ac{MCS} are a) cell growth and b) the check for mitosis. Events which are not performed every \ac{MCS} are c) urination d) cell death e) transformation and f) mutation. These events will occur at some point in the simulation
-\subsection{Events every \ac{MCS}}
+In \ac{CC3D} we simulate an urothel of the size of \SI{333}{\micro\metre} for the x-axis and \SI{100}{\micro\metre} for the y-axis. Because, \ac{CC3D} has its constraints about the size if we use only one core of the prozessor the size of the simulation will be rescaled to its maximum limitations of \SI{267}{\micro\metre} for the x-axis and \SI{80}{\micro\metre} for the y-axis in two dimensions. \newline 
+The simulation of the urothel covers 720 days. At the first calculation step, \ac{MCS} 0, the simulation is initialized, i.e. the cells are drawn and placed on the basal membrane. A illustration of an initial simulation is displayed in figure \ref{img:2DSimulationInitialState} at page \pageref{img:2DSimulationInitialState}. Since we simulate morphogenesis, the urothelium is proposed to growth and to proliferate in the given area. An illustration therefor is presented in figure \ref{img:2DSimulation33Days} at page \pageref{img:2DSimulation33Days}. \newline
+In order to provide a realistic simulation, the simulation has to be not to easy and not to hard, we have to simulate events which occur every \ac{MCS} and some events which are occur not every \ac{MCS}. The events, which are performed every \ac{MCS} are a) cell growth and b) the check for mitosis. Events which are not performed every \ac{MCS} are c) urination d) cell death e) cell transformation and f) cell mutation. These events are presented in detail in the following.
+
+\begin{figure}
+	\center
+	\includegraphics[scale=0.35]{figures/2DSimulation-InitialState.png}
+	\caption{Initial state of an 2D simulation}
+	\label{img:2DSimulationInitialState}
+\end{figure}
+
+\begin{figure}
+	\center
+	\includegraphics[scale=0.35]{figures/2DSimulation-33Days.png}
+	\caption{2D Simulation after 33 days}
+	\label{img:2DSimulation33Days}
+\end{figure}
+
+\subsection{Events in the simulation}
+In this subsection the events for the simulation are presented. All of these events are executed every \ac{MCS}, excluding the initializing step, \ac{MCS} 0, and every factor of 250, \ac{MCS} 250, 500, 750, etc.. \newline
+The urination takes place every 12 hours, it should be simulated every 6 hours but because these events are not called every 250 \ac{MCS}, it is only called every 12 hours.
+
 \subsubsection{Cell Growth}
-Every \ac{MCS} we calculate the growth of a cell. In the project currently the maximum possible growth of a cell is calculated.  We need this calculation for the relation volume and TargetVolume as well as for the relation volume, surface and TargetSurface. \ac{CC3D} calculates the volume itself, because the by \ac{CC3D} calculated volume or surface is a read-only value, i.e. it can not be overwritten. We set every \ac{MCS} a targetVolume and a $\lambda_{vol}$ at the initialization of the simulation. If we would not set up a targetVolume the effective energy would be 0 and the simulation would not start. Cell growth is also required to influence the shape of the cell, as we calculate the shape out of the volume and apply the calculated surface as TargetSurface and the lambda $\lambda_{sur}$ to the effective energy.
+Every \ac{MCS} we calculate the growth of a cell. In the project the maximum possible growth of a cell is calculated and applied.  We need this calculation for the relation volume and target volume as well as for the relation volume, surface and target surface. Since, the volume and the surface of a cell is calculated by \ac{CC3D}. The only way to influence it, is by setting the correct $\lambda$ values, for the volume and surface, and by additional calculating the target volume and target surface values. In the program the calculation of the target volume and the target surface, i.e. the volume and surface which the cell should have, is made. \ac{CC3D} uses the lambda mulitplier and the target values to calculate the effective energy. Of this calculated energy it is able to calculate the volume and the surface of each cell. This is why we calculate the target volume and surface instead of the actual volume and surface of a cell.
 
 \subsubsection{Mitosis}
-The verification if a cell divides or growth further is done every simulation step. Doing so allows us to define a very specific \ac{MCS} at which a cell divides, as there a 500 \ac{MCS} per day. The cells which are able to growth and as a result divide are a) stem cells b) basal cells and c)intermediate cells. The umbrella cells are more a product of mitosis than of cell division, if they would divide there would be two instead of one umbrella cell.
+The verification if a cell divides or growth further is done in every simulation step. Doing so allows us to define a very specific \ac{MCS} at which a cell divides, as there a 500 \ac{MCS} per day. In order that a cell divides it needs to growth over its maximal size before it divides.
+The cells which are able to growth and as a result divide are a) stem cells b) basal cells and c)intermediate cells. 
 
-\subsection{Events not every \ac{MCS}}
-\subsubsection{Urination}
-Every 12 hours an urination is takes place. This is simulated in a way that for \textit{some specific cells} a necrosis flag is set, i.e. the simulation scripts let the cell shrink and then dissappear.
+The umbrella cells are a product of mitosis than of cell division, if they would divide there would be two instead of one umbrella cell.
 
 \subsubsection{Necrosis}
-If a cell dies, i.e. necrosis takes place, a flag in the cell dictionary is set. Every 12 hours, 250 \ac{MCS}, we check if a cell dies or not. If so, the cell will shrink and finally dissappear.
-
-\subsubsection{Transformation}
-A transformation can take place if a basal cell divides into a basal and a intermediate cell. Because the intermediate cell has to be inside the strata, it immediately will be transformed to an umbrella cell, which are kind the barrier to the urin in the bladder.
+If a cell dies necrosis takes place. In the program a flag in the cell dictionary is set. Every \ac{MCS}, the program checks if a cell dies or not. If so, the cell will shrink and as a result dissappear.
 
 \subsubsection{Mutation}
-In the current project every day it is checked if a cell mutates or not. Every cell type has, dependant on the biological model, a propability if the cell mutates or not. If the mutates, currently the flag for necrosis is set and therfor the cell dissappears.
+After 2 days, 1000\ac{MCS}, it is possible that a cell mutates, i.e. it becomes evil. We simulate the possibility for cells to mutate after 2 days, because otherwise there would not be much cells around the mutated cell. Each cell type has its own propability to become evil, in the current simulation it is not considered that cells mutate since the propability for each cell type to mutate is 0\%. \newline
+If a cell mutates, there is also the flag for necrosis set. Thus, the cell shrinks and dissappears.
+
+
+\subsubsection{Transformation}
+A transformation can take place if a basal cell divides into a basal and a intermediate cell. Because the intermediate cell has to be inside the strata, it immediately will be transformed to an umbrella cell, which are kind the barrier to the urin in the bladder. 
+
+
+\subsubsection{Urination}
+Every 12 hours an urination takes place. This is simulated in a way that randomly 2\% of the cells in direct contact with the bladder are washed out \cite{Torelli2017}. In the program a flag for necrosis is set and the cells will dissappear because of the necrosis event.
 
 
 
-\section{Simulation Properties}
-%scripts which influence the simulation, e.g. growthsteppable mitosisSteppable
+
+
+
+
 
 \section{Models}
-The 2D simulation of the urothel provided 16 different models. These model differ mostly in which cell types after the mitosis are created. The project divides the models into two domains, one has the id 'SSD', which stands for "stem cell-like division" \cite{Torelli2017} and means that every time a stem cell divides there will be one stem and one basal cell. The second domain has the id 'SPA', which stands for "stem cell population asymmetry" \cite{Torelli2017}. In the second domain the stem cell has a propability of 90\% that it will be one stem and one basal cells after mitosis. There is also the chance with a probability of 5\% that after mitosis there are two stem cells or two basal cells. This two domains and how the different models derive is displayed in figure XY.
-
-%\begin{figure}
-%	\center
-%	\includegraphics[scale=0.35]{figures/16DifferentModels.png}
-%	\caption{Display of the 16 different models in the project and how they are derived \cite{Torelli2017}}
-%	\label{img:16DifferentModels}
-%\end{figure}
+The 2D simulation of the urothel provided 16 different models. These model differ mostly in which cell types after the mitosis are created. The project divides the models into two domains, one has the id 'SSD', which stands for "stem cell-like division" \cite{Torelli2017} and means that every time a stem cell divides there will be one stem and one basal cell. The second domain has the id 'SPA', which stands for "stem cell population asymmetry" \cite{Torelli2017}. In the second domain the stem cell has a propability of 90\% that it will be one stem and one basal cells after mitosis. There is also the chance with a probability of 5\% that after mitosis of a stem cell there are two stem cells or two basal cells. \newline
+For the mitosis of basal cells there are 4 different models. The first one, 'BSD', describes the each basal cell which undergoes mitosis will create one basal and one intermediate cell. The second model describes that there is a 5\% chance that the basal cell will become two basal or two intermediate cells. There is a 90\% propability that the cell become one basal and one intermediate cell. The third model 'BPCD', describes that always a basal cells becomes two basal cells during mitosis and if the basal cell is not on the basal membrane it transform into an intermediate cell. The last model of the basal cells is the 'BCD'. In this model the basal cells immediately transform into an intermediate cell if it is not at the basal membrane anymore.\newline
+There are two different models how intermediate cell divide. One is the 'IPCD', a intermediate cell becomes always into two intermediate cells during mitosis and if there is no cell around the specific cell it will be transformed into an umbrella cell. The second one is the 'ICD', in this one only transformation of the intermediate cells into the umbrella cells happens. \newline
+With these different proliferation concepts there are 16 models in the project overall. These models were created by an earlier version of the project \cite{Torellie2017} and are displayed in table \ref{tbl:16Models} at page \pageref{tbl:16Models}.
 
 
 \begin{table}
 \begin{centering}
 \par\end{centering}
 \begin{centering}
-\begin{tabular}{|c|c|lc|}
+\begin{tabularx}{\textwidth}{|c|c|Xc|}
 \hline 
 Type & ID & Description & Model\tabularnewline
 \hline 
@@ -159,55 +182,13 @@ Intermediate cells
 \end{tikzpicture}
 \tabularnewline
 \hline 
-\end{tabular}
+\end{tabularx}
 \par\end{centering}
-\caption{\label{Cell-Lineage-Components}Possible proliferation and differentiation concepts for the three cell types stem (S), basal (B) and intermediate (I) cell (column Type). Column ID assigns a label for a specific proliferation or differentiation rule which refers to a specific model (column Model). Per cell type group one model can be chosen. In total we have $2\cdot 4 \cdot2 =16$ lineage models. Dividing cells are expressed by a plain line and transformation (differentiation) by a dashed line. Tranformation might happen either through contact (see ICD) or the loss of contact (see BCD).}
+\caption{\label{tbl:16Models}16 different models derived in the project as there are different ways of proliferation and mitosis are simulated for the different cell types.}
 \end{table}
 
 \section{Adhesion and cell sorting}
-During morphogensis of a strata the cells not only growth, they also sort themself. In order for the cell sorting there have to be different adhesion values \cite{REF}, i.e. how strong the surface of two different cell types are holding together. In the project this is done with a matrix, which every of the 16 model has.  
-The cell type 'Medium' is a \ac{CC3D} specific cell type and describe the space where no cells are in the simulation.
-
-%\begin{figure}
-%	\center
-%	\includegraphics[scale=0.6]{figures/adhesionMatrix.png}
-%	\caption{Adhesion values for the different connections between cell types. Small values represent large adhesion and large values represent small adhesion [check the CC3D manual if it is correct] \cite{Torelli2017}}
-%	\label{img:adhesionMatrix}
-%\end{figure}
-
-
-\begin{table}
-\begin{centering}
-\begin{tabular}{|cc|c|c|c|c|c|c|}
-\hline 
-Cell type & & $V_{min}$ & $d_{min}$ & $V_{max}$ & $d_{max}$ & Volume & Surface\tabularnewline
-\hline 
-\hline 
-Stem & \celltypeS & 268 & 8 & 523 & 10 & perfect & average\tabularnewline
-\hline 
-Basal & \celltypeB & 381 & 9 & 523 & 10 & important & average\tabularnewline
-\hline 
-Intermediate & \celltypeI & 905 & 12 & 1767 & 15 & important & poor\tabularnewline
-\hline 
-Umbrella & \celltypeU & 1767 & 15 & 3591 & 19 & important & poor\tabularnewline
-\hline 
-\end{tabular}
-\par\end{centering}
-\caption{\label{tab:Cell-properties}Cell properties. Volumes $V$ in $\mu$m$^{3}$, diameters $d$ in $\mu$m. Columns \sl Volume \normalfont and \sl Surface \normalfont are adjusted with the weights $\lambda_{V}$ and $\lambda_{A}$, respectively.}
-\end{table}
-
-
-\section{Cell Properties}
-%parts of scripts about the cell
-Each cell of cell type has several attributes, moreover each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. min- max Diameter, min- max Volume, growth in \SI{}{\micro\metre} per day or time until apoptosis, i.e. cell death, etc.. Some of the properties are displayed in figure XY. The attributes in the cell dictionary are more likely for the simulation. Therefore, these are some attributes which we are using to make decisions, e.g. the current and expected live time, a flag for necrosis can be set here, etc..
-
-%\begin{figure}
-%	\center
-%	\includegraphics[scale=0.6]{figures/volumeDiameterOfACell.png}
-%	\caption{Min and max volumes and diameters for the different cell types as well as the importance of the volume and the surface of the specific cell type \cite{Torelli2017}}
-%	\label{img:volumeDiameterOfACell}
-%\end{figure}
-
+During morphogensis of a strata the cells not only growth, they also sort themself. In order for the cell sorting there have to be different adhesion values \cite{REF}, i.e. how strong the surface of two different cell types are holding together. In the project this is done with a matrix, which every of the 16 model has. Such a matrix was created in an earlier version of the project \cite{Torelli2017} and is displayed in table \ref{tbl:AdhesionMatrix} at page \pageref{tbl:AdhesionMatrix}. In this table small values refer to more adhesion wheras larger values refer to less adhesion. The adhesion is calculated by \ac{CC3D}. The cell type 'Medium' is a \ac{CC3D} specific cell type and describe the space where no cells are in the simulation.
 
 \begin{table}
 \begin{centering}
@@ -230,8 +211,35 @@ Umbrella cell & \celltypeU &  &  &  &  &  & 2\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
-\caption{\label{tab:Surface-tension-values}Surface tension values for the four cell types, the basal membrane (BM) and the medium (M). The values are according to CompuCell3D conventions: small values represent high adhesion, higher values less adhesion/greater repulsion.}
+\caption{\label{tbl:AdhesionMatrix}Adhesion matrix for a model in the simulation. Smaller values refer to more adhesion and higher values mean less adhesion. The cell type M is the medium cell type, it is by \ac{CC3D} a specific cell type which is every in the available space in the simulation, and BM is the basal membrane.}
 \end{table}
+
+
+\section{Cell Properties}
+Each cell of cell type has several attributes, moreover each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. min- max Diameter, min- max Volume, growth in \SI{}{\micro\metre} per day or time until apoptosis, i.e. cell death, etc.. Some of the properties are displayed in figure XY. The attributes in the cell dictionary are more likely for the simulation. Therefore, these are some attributes which we are using to make decisions, e.g. the current and expected live time, a flag for necrosis can be set here, etc.. \newline
+In the simulation we also need to know the physiology constraints of a cell. In an earlier version of the project these were evidenced and are displayed in table \ref{tbl:CellConstraints} at page \pageref{tbl:CellConstraints} \cite{Torelli2017}. This table provides also the data how important the volume or the surface of a cell is.
+
+
+\begin{table}
+\begin{centering}
+\begin{tabular}{|cc|c|c|c|c|c|c|}
+\hline 
+Cell type & & $V_{min}$ & $d_{min}$ & $V_{max}$ & $d_{max}$ & Volume & Surface\tabularnewline
+\hline 
+\hline 
+Stem & \celltypeS & 268 & 8 & 523 & 10 & perfect & average\tabularnewline
+\hline 
+Basal & \celltypeB & 381 & 9 & 523 & 10 & important & average\tabularnewline
+\hline 
+Intermediate & \celltypeI & 905 & 12 & 1767 & 15 & important & poor\tabularnewline
+\hline 
+Umbrella & \celltypeU & 1767 & 15 & 3591 & 19 & important & poor\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{\label{tbl:CellConstraints}Constraints of a cell. Volumes $V$ in $\mu$m$^{3}$, diameters $d$ in $\mu$m. The 'Volume' and 'Surface' column describe how the $\lambda_{vol}$ and the $\lambda_{sur}$ should be set for each cell type.}
+\end{table}
+
 
 Each cell have a cell dictionary, where different values about the cell are saved. These values are a) exp-life-time, i.e. the expected live time of a cell until necrosis, i.e. cell death---in the simulation the cell shrinks and then dissappears---takes place b)necrosis c)DNA d)TurnOver e)colony f)id g)removed h)inhibited  i)min-max-volume j)normal-volume k)growth-factor l)life-time.
 
