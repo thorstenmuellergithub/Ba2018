@@ -288,21 +288,7 @@ It is possible to create a short video out of the simulation screenshots. This v
 
 
 \section{Simulation Scripts}
-In order to not overload this chapter by presenting all scripts, I will present parts of the scripts which are important for the given task. A complete overview of the scripts is displayed at figure XY.
-
-\subsection{Area of stem cells}
-To provide optimal proliferation, i.e. to growth and multiply, of the cells, around 12\% of the basal membrane are used for the stem cells \cite{Torelli2017}. Of these 12\% the amount of stem cells is calculated and then they will be drawn. In the current project there is no specific calculation of the percentage area of stem cells on the basal membrane. Moreover, the calculation is done with a magic number, i.e. a number in the code without any explanation. So there is no mathematical evidence that the calculation is correct and it would additional work to change the calculation if the area of the stem cells on the basal membrane changes. This calculation works fine for two dimensions, since the result is around 12\%. For the third dimension there have to be adjustments made.
-\begin{lstlisting}[language=Python, caption = cell Area]
-        # Adds the stem cells throughout the basal membrane:
-        cellDiameter = self.cellTypes[2].getAvgDiameter()
-        stemCellFactor = 8 * cellDiameter
-        if self.execConfig.dimensions == 2:
-            noStemCells = int(self.execConfig.xLength / stemCellFactor)
-        else:
-            noStemCells = int(self.execConfig.xLength * self.execConfig.yLength /
-                              (stemCellFactor * stemCellFactor))
-
-\end{lstlisting}
+In order to not overload this chapter by presenting all scripts, I will present parts of the scripts which are important for the project and were not modified in this bachelor thesis. A complete overview of the scripts is displayed at figure XY.
 
 \subsection{Position of the stem cells}
 After the amount of stem cells on the basal membrane is calculated, the cells will be positioned randomly on it. To do so a random value for the x and z Position is calculated in a way, that the cell will not be at the edge of the lattice. If the stem cell would be close to the lattice, than the proliferation could not take place in an optimal way.
@@ -316,14 +302,6 @@ After the amount of stem cells on the basal membrane is calculated, the cells wi
                 self._addCubicCell(2, xPos, 2, zPos, cellDiameter, cellDiameter, cellDiameter, steppable)
 \end{lstlisting}                
 
-\subsection{Cell Drawing}
-The cells are drawn in a cubic way. For every of the three dimensions a start and endpoint is defined, see the following listing:
-\begin{lstlisting}[language=Python, caption = cell Draw]
-steppable.cellField[xPosDim:xPosDim + xLengthDim - 1,
-					yPosDim:yPosDim + yLengthDim - 1,
-					zPosDim:zPosDim + zLengthDim - 1] = cell
-\end{lstlisting}
-In this listing 'x,y,zPosDim' defines the start points and 'x,y,zPosDim + x,y,zLengthDim - 1' defines the end points of the cell. 
 
 \subsection{MinMaxVolume}
 In order that we are able to simulate mitosis a minimum and a maximum value regarding cell size is necesseray. This is done by the 'MinMaxVolume' in the cell Dictionary. These is done with a one dimensional array with two values, as it is displayed in the listing below:
@@ -332,6 +310,7 @@ cellDict['min_max_volume'] = [self.execConfig.calcVoxelVolumeFromVolume(cellType
 								self.execConfig.calcVoxelVolumeFromVolume(cellType.maxVol)]
 \end{lstlisting} 
 Every cell type has its own minimum and maximum volume \cite{Torelli2017}. Since these values are saved in \SI{}{\micro\metre}, they have to be converted to the voxel unit. With these values, in voxel, it is possible to set boundaries for the specific cell, e.g. to calculate the volume when mitosis takes place or the maximal volume of a cell of a specific cell type.
+
 \subsection{Volume and TargetVolume}
 As explained earlier, in order that the simulation starts the effective energy is not allowed to be 0. As we are initializing every cell, we set the target volume of every cell to be 1 larger than the current volume. This has the effect, that the simulation starts. During the simulation we calculate the target volume out of the possible growth volume and the current volume.
 \begin{lstlisting}[language=Python, caption = set target Volume and Surface of a cell]
@@ -341,23 +320,6 @@ cell.targetSurface = self.execConfig.calcVoxelSurfaceFromVoxelVolume(cell.target
 \end{lstlisting}
 In the same context we calculated the target surface as well. This has the same reason as for the target volume. 
 
-\subsection{Lambda TargetVolume and TargetSurface}
-The lambda values for the volume and for the surface describe how much the deviation between the current and the should value is considered in the effective energy, see section 1.GGH.
-In the project there are several places where these values are set. One place is just behind the target volume and target surface is set.
-\begin{lstlisting}[language=Python, caption = set lambda volume and lambda surface]
-cell.lambdaVolume = self.execConfig.calcVolLambdaFromVolFit(cellType.volFit)
-cell.lambdaSurface = self.execConfig.calcSurLambdaFromSurFit(cellType.surFit)
-\end{lstlisting}
-At this place for each lambda value a function is called, these are displayed below, which has itself a multiplier for the multiplier of the specific volume or surface energy.
-\begin{lstlisting}[language=Python, caption = functions to calculate the lambda multiplier for the effective energy of the volume and surface]
-def calcSurLambdaFromSurFit(self, surFit):
-    return 0.05 * surFit
-
-def calcVolLambdaFromVolFit(self, volFit):
-	return 1.0 * volFit
-\end{lstlisting}
-
-The values for the volume and surface fitness are also set in every cell. Since these values are never used as a cell property, I not go further into detail of these two values.
 
 
 
