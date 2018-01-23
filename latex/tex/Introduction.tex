@@ -1,5 +1,5 @@
 \chapter{Introduction}
-
+\section{Motivation}
 Without cell adhesion no complex life would exist \cite{REF}.
 This is a well known and long existing statement in the biology. It describes that if different cells would not stick to each other the only living things would be cells. 
 In humans, organs are made of severall cells. This is also the case for the urothelium. For the urothelium it is necessary that the cells stick to each other. Otherwise the functions of the urothelium could not be executed and also it would not be able to growth.% If bladder cancer occurs the urothelium also can not function in the way it should do. 
@@ -14,7 +14,7 @@ Because a cell is a three dimensional organism, a 2D simulation of the urotheliu
 
 \section{Background}
 \subsection{Biology of the Urothelium}
-Bladder cancer is one of the most common cancer types among men. It is the 4th most common type regarding to everydayhealth.com \cite{EveryDayHealth.com}, where every 36st out of 100.000 men gets it. Bladder cancer usually starts with some cells in the bladder, which growth uncontrolled. From these cells, the tumor can spread further into surrounding areas \cite{Cancer.org}. The most common bladder cancer type is the urothelial carcinoma \cite{Cancer.org}. An illustration of how bladder cancer evolves is displayed in figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium}.
+Bladder cancer is the 4th most common cancer type in men regarding to everydayhealth.com \cite{EveryDayHealth.com}, where every 36st out of 100.000 men gets it. Bladder cancer usually starts with some cells in the bladder, which growth uncontrolled. From these cells, the tumor can spread further into surrounding areas \cite{Cancer.org}. The most common bladder cancer type is the urothelial carcinoma \cite{Cancer.org}. An illustration of how bladder cancer evolves is displayed in figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium}.
 
 The bladder is located in the lower urinary tract and consist of several parts, where urothelium coats the bladder \cite{Lazzeri2006}. More specifically, it covers the bladder from the renal pelvis to the proximal urethra \cite{Yamany2014, Birder2005} 
 
@@ -78,11 +78,11 @@ Since the core of a \ac{GGH} simulation is the effective energy \cite{IntroCC3D}
 There are several ways to extend this form, it is possible to add a volume or a surface constraint. During each \ac{MCS} an index-copy attempt takes place \cite{MaciejH.Swat2017}. I.e. a pixel is selected, and it will be tried to overwrite a randomly chosen pixel, next to the current pixel, in order to minimize the effective energy. The index copy attempt succeed and takes place only if this index copy attempt decreases the effective energy \cite{IntroCC3D}. Each \ac{MCS} the program tries to minimize the simulation, e.g. with index copy attempts. The user has the chance to use her/his specific script every \ac{MCS}, before the simulation starts or at the end of the simulation.
 
 
-\section{Scope of the Bachelor Thesis}
+\section{Objective of the Bachelor Thesis}
 The aim of this bachelor thesis is to create a 3D morphogenesis simulation of the urothelium using \ac{CC3D}. Since the simulation models and python program for a 2D simulation are given and the simulation is done by \ac{CC3D} the task is to modify the current application, of the 2D simulation, in a way that this program can be used for a 3D simulation of the different models. \newline
 Therefore, some parts of the program have to be modified. Some functionalities has to be written completely new wheras for other functionalities it is enough to modify these. \newline
 The result of this bachelor thesis will be presented with an of the 2D simulation realistic model. This model is choosen from the given models in the 2D simulation. The question how much more time the 3D simulation need than the 2D simulation will be covered in this thesis as well. If it is possible to provide a calculation of how much more effort a simulation in three dimensions need it will be included, otherwise an estimation of the more effort is presented.
 
 
 \section{Outline}
-In this chapter the basic knowledge to understand this bachelor thesis is provided. The next chapter provides the process of the project, at the point where I started with the bachelor thesis. Once the basic knowledge and the state of the art are explained, I describe how I worked, i.e. what did I do to understand the project and to find solutions. After these information I reveal the results of this bachelor thesis. Therefor, if it is possible to have a 3D simulation by using \ac{CC3D}. In the last chapter a conclusion of this bachelor thesis is provided.
+In this chapter the knowledge to understand this bachelor thesis is provided. The next chapter provides the status at which the project was at the beginning of this bachelor thesis. Once the basic knowledge and the state of the art are explained, necessary modifications of the program are revealed. After these modifications are presented, the result of this bachelor thesis is shown. In the last section of this scientific work this thesis is discussed from different points of view and the conclusion out of this work is presented.

@@ -1,12 +1,12 @@
 \chapter{State of the Art}
 %What was given to me
-The current moduro project has a stable 2D simulation of 16 different models using \ac{CC3D}. With these models it is tried to make predictions about how bladder cancer arises. The simulations are performed by \ac{CC3D} and then several values, e.g. the fitness of the model or how realistic the model is, etc., are summarized and displayed by the 'Moduro-Toolbox'. The project consits of several models and several scripts, both are written in python, i.e. a programming language. The models include properties of the specific model, e.g. adhesion energy or the possibility of the new cell types after mitosis, i.e. cell division, and the scripts modify the cell behavior, e.g. they check when a mitosis takes place, how fast the cell will growth, etc.. The scripts are also calculating if the current model is a realistic one or not. These evaluating data are later used by the 'Moduro-Toolbox' to provide a overview over these data.
+The current moduro project has a stable 2D simulation of 16 different models using \ac{CC3D}. With these models it is tried to make predictions about how bladder cancer arises. The simulations are performed by \ac{CC3D} and then several values, e.g. the fitness of the model or how realistic the model is, etc., are summarized and displayed by the 'Moduro-Toolbox'. The project consits of several models and a program, both are written in python, i.e. a programming language. The models include properties of the specific model, e.g. adhesion energy or the possibility of the new cell types after mitosis, i.e. cell division, and the application modify the cell behavior, e.g. they check when a mitosis takes place, how fast the cell will growth, etc.. The program also calculates if the current model is a realistic one or not. These evaluating data are later used by the 'Moduro-Toolbox' to provide a overview over these data.
 
 \section{Display and Simulation of the Urothelium}
 %wie wird es dargestellt 
-In \ac{CC3D} we simulate an urothel of the size of \SI{333}{\micro\metre} for the x-axis and \SI{100}{\micro\metre} for the y-axis. Because, \ac{CC3D} has its constraints about the size if we use only one core of the prozessor the size of the simulation will be rescaled to its maximum limitations of \SI{267}{\micro\metre} for the x-axis and \SI{80}{\micro\metre} for the y-axis in two dimensions. \newline 
+In \ac{CC3D} we simulate an urothel of the size of \SI{333}{\micro\metre} for the x-axis and \SI{100}{\micro\metre} for the y-axis. Because, \ac{CC3D} has its constraints about the size if we use one core of the prozessor the size of the simulation will be rescaled to its maximum limitations of \SI{267}{\micro\metre} for the x-axis and \SI{80}{\micro\metre} for the y-axis in two dimensions. We use only one core for the simulation, because otherwise \ac{CC3D} splits the simulation field into different grids and race conditions can occur at the edges of these grids \cite{MaciejH.Swat2017}. I.e. a cell is in both grids, therefor one half is in one grid and the other half is in the other grid, during the simulation both grids calculate the volume of the cell and both will apply the new volume of their calculation but the user do not know which calculation is correct. Thus, in order to reduce wrong results it is necessary to avoid race conditions. \newline 
 The simulation of the urothel covers 720 days. At the first calculation step, \ac{MCS} 0, the simulation is initialized, i.e. the cells are drawn and placed on the basal membrane. A illustration of an initial simulation is displayed in figure \ref{img:2DSimulationInitialState} at page \pageref{img:2DSimulationInitialState}. Since we simulate morphogenesis, the urothelium is proposed to growth and to proliferate in the given area. An illustration therefor is presented in figure \ref{img:2DSimulation33Days} at page \pageref{img:2DSimulation33Days}. \newline
-In order to provide a realistic simulation, the simulation has to be not to easy and not to hard, we have to simulate events which occur every \ac{MCS} and some events which are occur not every \ac{MCS}. The events, which are performed every \ac{MCS} are a) cell growth and b) the check for mitosis. Events which are not performed every \ac{MCS} are c) urination d) cell death e) cell transformation and f) cell mutation. These events are presented in detail in the following.
+In order to provide a realistic simulation, the simulation has to be not to easy and not to hard, we have to simulate events which occur every \ac{MCS} and some events which are occur not every \ac{MCS}. The events, which are performed every \ac{MCS} are a) cell growth and b) the check for mitosi c) cell death d) cell transformation and e) cell mutation. The event which does not occur every calculation step is f) urination. These events are presented in detail in the following subsections.
 
 \begin{figure}
 	\center
@@ -216,7 +216,7 @@ Umbrella cell & \celltypeU &  &  &  &  &  & 2\tabularnewline
 
 
 \section{Cell Properties}
-Each cell of cell type has several attributes, moreover each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. min- max Diameter, min- max Volume, growth in \SI{}{\micro\metre} per day or time until apoptosis, i.e. cell death, etc.. Some of the properties are displayed in figure XY. The attributes in the cell dictionary are more likely for the simulation. Therefore, these are some attributes which we are using to make decisions, e.g. the current and expected live time, a flag for necrosis can be set here, etc.. \newline
+Each cell of cell type has several attributes, moreover each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. min- max Diameter, min- max Volume, growth in \SI{}{\micro\metre} per day or time until apoptosis, i.e. cell death, etc.. \textbf{Some of the properties are displayed in figure XY}. The attributes in the cell dictionary are more likely for the simulation. Therefore, these are some attributes which we are using to make decisions, e.g. the current and expected live time, a flag for necrosis can be set here, etc.. \newline
 In the simulation we also need to know the physiology constraints of a cell. In an earlier version of the project these were evidenced and are displayed in table \ref{tbl:CellConstraints} at page \pageref{tbl:CellConstraints} \cite{Torelli2017}. This table provides also the data how important the volume or the surface of a cell is.
 
 
@@ -241,11 +241,11 @@ Umbrella & \celltypeU & 1767 & 15 & 3591 & 19 & important & poor\tabularnewline
 \end{table}
 
 
-Each cell have a cell dictionary, where different values about the cell are saved. These values are a) exp-life-time, i.e. the expected live time of a cell until necrosis, i.e. cell death---in the simulation the cell shrinks and then dissappears---takes place b)necrosis c)DNA d)TurnOver e)colony f)id g)removed h)inhibited  i)min-max-volume j)normal-volume k)growth-factor l)life-time.
+%Each cell have a cell dictionary, where different values about the cell are saved. These values are a) exp-life-time, i.e. the expected live time of a cell until necrosis, i.e. cell death---in the simulation the cell shrinks and then dissappears---takes place b)necrosis c)DNA d)TurnOver e)colony f)id g)removed h)inhibited  i)min-max-volume j)normal-volume k)growth-factor l)life-time.
 
 
 \section{Fitness functions}
-In order to validate the simulated models, there are several scripts which check if the model is realistic or not. These scripts will check every day, every 500, \ac{MCS} if the model is realistic or not \cite{Torelli2017}. The result of these two fitness functions will be written into a file, and later read out by the moduro toolbox.
+In order to validate the simulated models, there are several functionalities which check if the model is realistic or not. These functions, i.e. part of a program, check every day, every 500, \ac{MCS} if the model is realistic or not \cite{Torelli2017}. The result of these two fitness functions is written into a file, and later read out by the moduro toolbox.
 
 \subsection{Arrangement fitness function}
 The arrangement fitness function ensure that the strata of the simulated urothelium has the correct order \cite{Torelli2017}, i.e. that the first layer on the basal membrane consits only of stem and basal cells \cite{REFS}, the next three to five layers consits only of intermediate cells \cite{REFS} and that there is one layer of umbrella cells \cite{REFS}.
@@ -287,8 +287,9 @@ It is possible to create a short video out of the simulation screenshots. This v
 
 
 
-\section{Simulation Scripts}
-In order to not overload this chapter by presenting all scripts, I will present parts of the scripts which are important for the project and were not modified in this bachelor thesis. A complete overview of the scripts is displayed at figure XY.
+\section{Simulation Functionalities}
+In order to not overload this chapter by presenting all functionalities, parts of the application which are important for the project and which were not modified in this bachelor thesis are presented. \textbf{A complete overview of the scripts is maybe displayed at figure XY.}
+
 
 \subsection{Position of the stem cells}
 After the amount of stem cells on the basal membrane is calculated, the cells will be positioned randomly on it. To do so a random value for the x and z Position is calculated in a way, that the cell will not be at the edge of the lattice. If the stem cell would be close to the lattice, than the proliferation could not take place in an optimal way.
