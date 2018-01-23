@@ -117,7 +117,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortlocale</bcf:key>
-      <bcf:value>de_DE</bcf:value>
+      <bcf:value>en_US</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortscheme</bcf:key>
@@ -2061,7 +2061,7 @@
     <bcf:citekey order="18">Glazier2007</bcf:citekey>
     <bcf:citekey order="19">Glazier1993</bcf:citekey>
     <bcf:citekey order="19">Graner1992</bcf:citekey>
-    <bcf:citekey order="19">Scott1999</bcf:citekey>
+    <bcf:citekey order="19">Stott1999</bcf:citekey>
     <bcf:citekey order="19">Glazier2007</bcf:citekey>
     <bcf:citekey order="19">Chen2007</bcf:citekey>
     <bcf:citekey order="20">Graner1992</bcf:citekey>
@@ -2082,7 +2082,7 @@
     <bcf:citekey order="33">Torelli2017</bcf:citekey>
     <bcf:citekey order="34">Torelli2017</bcf:citekey>
     <bcf:citekey order="35">Torelli2017</bcf:citekey>
-    <bcf:citekey order="36">Torellie2017</bcf:citekey>
+    <bcf:citekey order="36">Torelli2017</bcf:citekey>
     <bcf:citekey order="37">REF</bcf:citekey>
     <bcf:citekey order="38">Torelli2017</bcf:citekey>
     <bcf:citekey order="39">Torelli2017</bcf:citekey>
