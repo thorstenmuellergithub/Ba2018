@@ -9,14 +9,7 @@
 %für die reproduzierbarkeit der BA \newline
 %was habe ich wie gemacht -> warum habe ich es so gemacht
 
-%In order to get familiar with this topic I first needed some background knowledge. To receive this knowledge I did use keyword searches on 'GoogleScholar' and then read the papers I found about the topic. To solve the problem, I also needed knowledge about \ac{CC3D}. I received this by reading their manuals and by trying out different settings, since there is no detailed documentation about their simulation.
-%
-%To analyze the simulation scripts I used papers and a pen. Since, in this project it is not possible to use a compiler to debug the scripts, because the computation is done by \ac{CC3D}, to draw the the different function calls per hand was one of two ways to understand the scripts. The second way was to use print commands, i.e. an ouput at the console (another i.e.), to see at which point which function in which script is called. 
-
-
-%For this bachelor thesis I used a constructive research, i.e. develop a solution to a given problem.
-
-\section{Draw Cells}
+\section{Sphere Cells}
 Since the program so far draws cubic cells and overgives the same parameter three times, a modification for this function was necessary. In the following the function call and the method of the old cell drawing method are displayed.
 \begin{lstlisting}[language=Python, caption = function call of the cell drawing method addCubicCell for a 3D cell]
 self._addCubicCell(2, xPos, 2, zPos, cellDiameter, cellDiameter, cellDiameter, steppable)
@@ -42,8 +35,9 @@ In the function 'addCubicCell' the parameters are converted into pixels, using t
     					 zStart:zEnd] = cell
 \end{lstlisting}        		
 In the listing above x,y,zStart defines the start and x,y,zEnd the end point of the to drwan area for each axis.\newline
-In order to be able to draw a cell as a sphere, \ac{CC3D} has to be able to draw all the different pixels containing to one cell. Because \ac{CC3D} allows the user to draw several pixels containing to one cell, a solution for this problem is possible.
-It is possible to lay a cuboid around the sphere, as it is displayed in fiugre \ref{tikz:SphereInCube} at page \pageref{tikz:SphereInCube} and then decide if a point of the cuboid is in the sphere or not.
+To be able to draw a cell as a sphere, \ac{CC3D} has to allow the user to draw several the different voxels in the simulation field, all containing to one cell. Since \ac{CC3D} allows the user to draw several pixels containing to one cell, a solution for this problem is possible.
+
+
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[MyPersp,font=\large]%[scale=3]
@@ -79,12 +73,38 @@ It is possible to lay a cuboid around the sphere, as it is displayed in fiugre \
 \end{center}
 \end{figure}
 
+In order to draw a sphere out of voxels, a cuboid has to lay around the sphere, as it is displayed in \ref{tikz:SphereInCube} at page \pageref{tikz:SphereInCube}. The cuboid has to be at least as large as $2 \cdot radius$ of the sphere, as it is displayed figure \ref{tikz:CuboidSphere} at page \pageref{tikz:CuboidSphere}. The cuboid is filled with voxels. To be able to calculate every point within the sphere, the cuboid and the sphere are required to have the same center \cite{REF}. In this case the following equation provides a mechnanism in which every point within the sphere can be calculated.
+\begin{equation}
+\sqrt{(x_{r}-x_{0})^2 + (y_{r}-y_{0})^2 + (z_{r}-z_{0})^2} <= radius
+\end{equation}
+In the equation $x_{r}$, $y_{r}$ and $z_{r}$ describe the current point of each of the three axis and $x_{0}$, $y_{0}$ and $z_{0}$ describe the center of the sphere. If the distance of the current $x, y, z$ point is smaller or equal to the radius the current point is within the sphere otherwise it would be outside of the sphere.
+This equation has the weakness that only one point is considered. Thus, only one point of the voxel is considered in the decision if the complete voxel is within the sphere or not.
+Since every voxel is a cuboid itself, the length of all corners are the same. This fact can be used to increase the accuracity of the equation above. Because we are able to calculate the corner length of a voxel, we are able to decide if the center and not one point of a voxel is at the inside or outside of a sphere. Because, the radius of the sphere is known, therefore the diameter of the cuboid can be calculated, and the voxel density is also known, the corner length of each voxel can be calulated as it is displayed in the following equation.
+\begin{equation}
+c = \dfrac{2 \cdot radius}{voxel density}
+\end{equation}
+In this equation c describes the corner length of a voxel. With this corner length it is now possible to calculate the center of a voxel and use this center further to decide if the voxel is inside or outside of the sphere. To receive the center of a voxel the calculation has to be done for every of the three axis. The following three formulas in equation \textbf{xy} displays such a calculation. 
+\begin{equation}
+\begin{split}
+x_{c} = x_{r} + \dfrac{x_{r+c} - x_{r}}{2} \\
+y_{c} = y_{r} + \dfrac{y_{r+c} - x_{y}}{2} \\
+z_{c} = z_{r} + \dfrac{z_{r+c} - x_{z}}{2} \\
+\end{split}
+\end{equation}
+In this equation $x_{r}$, $y_{r}$ and $z_{r}$ describe the start point and $x_{r+c}$, $y_{r+c}$ and $z_{r+c}$ describe the end point of the voxel.
+With the calculations of equation \textbf{xy} it is now possible to considere the center of a voxel in the decision if the voxel is in- or outside the sphere, as it is displayed in equation \textbf{xy}.
+\begin{equation}
+\sqrt{((x_{c} - x_{0})^{2} + (y_{c} - y_{0})^{2} + (z_{c} -z_{0})^{2}} <= radius
+\end{equation}
+
+
 As long as both, the cuboid and the sphere, have the same center it is possible to calculate every point inside or outside the sphere\cite{REF}. To do so, for every point within the cuboid it is necessary to calculate if the distance to the center is smaller or equal to the radius of the sphere. If this is the case, the point is inside of the sphere, otherwise it is outside of the sphere. Thus, the formula to determine if a point is inside of the sphere is the following:
 \begin{equation}
 \sqrt{(x_{r}-x_{0})^2 + (y_{r}-y_{0})^2 + (z_{r}-z_{0})^2} <= radius
 \end{equation}
 In this formula $x_{r},y_{r},z_{r}$ contains the current point of the specific axis and $x_{0},y_{0},z_{0}$ is the center of the cuboid and the sphere. Whenever the distance of the current point in the cuboid to the center is smaller or equal the radius of the sphere, than this point is inside of the sphere. \newline
 In order that it is possible to draw the cells in this way, the iteration over all points of the cuboid is necessary. Because to do this is computational more expensive than to just draw a cube, the cuboid should be as small as possible. Still, the cuboid has to be at least as large as $2*radius$ of the sphere, as it is displayed figure \ref{tikz:CuboidSphere} at page \pageref{tikz:CuboidSphere}.
+
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[scale=3]
@@ -112,7 +132,7 @@ In order that it is possible to draw the cells in this way, the iteration over a
 \end{figure}
 
 
-Since we need the old method to draw the basal membrane throughout the whole area, a new function is required. The old function is refactored into 'addMembrane', i.e. renamed and every time the function name appears within the project, within a comment or the function is called, this appearance is also change. With the new method name it clear that this function is now, in the 3D simulation, only required for the basal membrane, since it is a cubic cell, and if some simulations in two dimensions are made.\newline
+Since the old method is required to draw the basal membrane throughout the whole area, a new function is needed. The old function is refactored into 'addMembrane', i.e. renamed and every time the function name appears within the project, within a comment or the function is called, this appearance is also change. With the new method name it clear that this function is now, in the 3D simulation, only required for the basal membrane, since it is a cubic cell, and if some simulations in two dimensions are made.\newline
 The created function 'add3DCell', it is displayed in the listing below, is similiar to the old one, as it also has to convert the used points, i.e. the start and end point of the cuboid and the center of the cuboid and the sphere, into pixels. Then the iteration of all three axis as well as the calculation to decide if the pixel is inside the sphere or not takes place.
 
 \begin{lstlisting}[language=Python, caption = created method to draw a spere cell]
@@ -120,6 +140,7 @@ The created function 'add3DCell', it is displayed in the listing below, is simil
         '''The parameters are all in micro meter
         wheras the calculated variables are in px'''
 
+        print 'x:{}, y:{}, z:{} r:{}'.format(xPos, yPos, zPos, radius)
         cell = steppable.newCell(typename)
         xStart = self.execConfig.calcPixelFromMuMeter(xPos - radius)
         x0 = self.execConfig.calcPixelFromMuMeter(xPos)
@@ -131,17 +152,23 @@ The created function 'add3DCell', it is displayed in the listing below, is simil
         z0 = self.execConfig.calcPixelFromMuMeter(zPos)
         zEnd = self.execConfig.calcPixelFromMuMeter(zPos + radius)
 
-        radiusPx = self.execConfig.calcPixelFromMuMeter(radius)
-
-        for xr in range(xStart, xEnd):
-            for yr in range(yStart, yEnd):
-                for zr in range(zStart, zEnd):
-                    rd = sqrt((xr - x0) ** 2 + (yr - y0) ** 2 + (zr - z0) ** 2)
+        radiusPx = self.execConfig.calcFloatPixel(radius)
+        stepLength = 1.0
+        print 'steplength {}, zStart + stepLength/2 {}'.format(stepLength, (zStart+(((zStart+stepLength) - zStart)/2.)))
+        print 'x:{}-{}, y:{}-{}, z:{}-{} radiusPx:{}'.format(xStart, xEnd, yStart, yEnd, zStart, zEnd, radiusPx)
+        # loop over the center of each pixel to determine boundaries of the circle
+        for xr in xrange(xStart, xEnd):
+            for yr in xrange(yStart, yEnd):
+                for zr in xrange(zStart, zEnd):
+                    rd = sqrt(
+                        ((xr+(((xr+stepLength) - xr)/2.)) - x0) ** 2 +
+                        ((yr+(((yr+stepLength) - yr)/2.)) - y0) ** 2 +
+                        ((zr+(((zr+stepLength) - zr)/2.)) - z0) ** 2)
                     if (rd <= radiusPx):
                         steppable.cellField[xr, yr, zr] = cell
 \end{lstlisting}
 
-With this created function it is now possible to draw a cell as a sphere, as it is displayed at figure XY \cite{XY}. This has several advantages, as we are now able not to increase the $\lambda_{sur}$ in a way that the volume constraint does not count as it will be really consider..........................
+With this created function it is now possible to draw a cell as a sphere, as it is displayed at figure XY \cite{XY}. \newline To draw the cell as a sphere is the first step to have sphere cells in the simulation. Two main parts of the simulation are the growth and the mitosis of the simulation. In order that the cells are able to stay as a sphere it is required to adjust the volume and surface calculation as well.
 
 \section{Lambda Multiplier}
 In the project there were several places, where a lambda multiplier for the effective energy, see section 1.X, is calculated, but it is only set once. There are two additional multipliers, for the surface and volume constraints, saved in within each cell object. Since we are not using these values in the programm and they do not influence or set the $\lambda_{vol}$ or $\lambda_{sur}$ which \ac{CC3D} uses, these two values were outcommented in the first step and later deleted. \newline 
