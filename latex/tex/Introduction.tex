@@ -6,9 +6,9 @@ In humans, organs are made of several cells as well as epithels are made of seve
 There are two types of tumors. One is the benign and the other one is the malignant tumor \cite{Poplawski2009}. The benign tumor is self limited. Thus, it does not invade surrounding tissues as well as it does not spread into other body parts \cite{Poplawski2009}. The malignant tumor on the other hand is not limited in its growth and is able to invade other body parts \cite{Poplawski2009}. 
 
 Since bladder cancer is one of the most common cancer types among men it is important to understand how and why the cancer is able to grow. \newline
-Bladder cancer starts to grow in the urothelium. With the grow and spread, the structure of cells sticking together is changed. In this case, the urothelium is not able to completely perform its tasks. In order to understand the urothelium, how and when bladder cancer appears observations of this epithel is necessary. 
+Bladder cancer starts to grow in the urothelium. With the grow and spread, the structure of cells sticking together is changed. In this case, the urothelium is no longer able to completely perform its tasks. In order to understand the urothelium, how and when bladder cancer appears observations of this epithel is necessary. 
 
-To understand the functionalities of organs and epithels, in general organisms, observations are necessary. For the urothelium this is already done, as there are a lot of different in vitro experiments about the methodology of the urothelium. After an observation of an epithel or organ is complete, researches are able to predict how the observed organism will react in different situations. To verify these predictions a simulation is necessary. A simulation is an illustration of the reality \cite{REF}, but it can also be used to change reality in a for the research specific way to get more knowledge of the epithel, or an organism in general.
+To understand the functionalities of organs and epithels, in general organisms, observations are essential. For the urothelium this is already done, as there are a lot of different in vitro experiments about the methodology of the urothelium. After an observation of an epithel or organ is complete, researches are able to predict how the observed organism will react in different situations. To verify these predictions a simulation is necessary. A simulation is an illustration of the reality \cite{REF}, but it can also be used to change reality in a for the research specific way to get more knowledge of the epithel, or an organism in general.
 
 A simulation should always be as simple as possible but also not too simple \cite{REF}. Otherwise the simulation does not represent the reality. 
 There are several programs with different algorithms for cell simulation. A popular algorithm is the \ac{GGH} model. This model is popular because it is easy to describe how cells interact with each other and it is possible to define constraints for the volume and surface of each cell. \newline
@@ -20,11 +20,19 @@ Because a cell is a three dimensional organism, a 2D simulation of the urotheliu
 
 \section{Background}
 \subsection{Biology of the Urothelium}
+
+\begin{figure}
+	\center
+	\includegraphics[scale=0.3]{figures/Urothelium.png}
+	\caption{A simplified illustration of the urothelium. At the very bottom there is the basal membrane. Above the membrane the stem and basal cells are displayed. The blue cells represent the stem cells, the red cells display the basal cells. Above the layer out of these two cell types, the urothelium contains several layers of intermediate cells. At the top of the urothelium there is an layer of umbrella cells.}
+	\label{img:physiology_urothelium}
+\end{figure}
+
 Bladder cancer is the 4th most common cancer type in men regarding to everydayhealth.com, where every 36st out of 100.000 men gets it \cite{EveryDayHealth.com}. Bladder cancer usually starts with some cells in the bladder, which grow uncontrolled. From these cells, the tumor can spread further into surrounding areas \cite{Cancer.org}. The most common bladder cancer type is the urothelial carcinoma \cite{Cancer.org}.
 
-The bladder is located in the lower urinary tract and consists of several parts, where urothelium coats the bladder \cite{Lazzeri2006}. More specifically, it covers the bladder from the renal pelvis to the proximal urethra \cite{Yamany2014, Birder2005} 
+The bladder is located in the lower urinary tract and consists of several parts, where the urothelium is one part and coats the bladder \cite{Lazzeri2006}. More specifically, it covers the bladder from the renal pelvis to the proximal urethra \cite{Yamany2014, Birder2005}.
 
-Two important tasks of the bladder are the storage and release of urine. To do so the bladder will extend, during the storage, and then shrink again \cite{Karl-ErikAndersson2004}. One task of the urothelium is to form a distensible barrier \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, Lewis2000, WRCross2005}, which prevents unregulated exchange of ions, solutes, and toxic metabolites between the bladder and the blood \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, Lewis2000}. That the urothelium ensures its barrier function, it has to enlarger and downsize its size. This is done by the largest cells of the urothelium, the umbrella cells. Since the umbrella cells are in direct contact with the bladder, it is their task to change size and form during the grow and shrink process of the bladder. Birder described the urothelium as “… a responsive structure capable of detecting physiological and chemical stimuli and releasing a number of signaling mole-cules.” \cite{Birder2005}. Another task of the urothelium is to control the movement and passage of macromolecules, ions, water, toxic metabolites and solutes \cite{Apodaca2004, PuneetKhandelwal2009}. If the urothelium is damaged, it rapidly generates new cells, to ensure full functionality \cite{Apodaca2004, Yamany2014, PuneetKhandelwal2009}.
+Two important tasks of the bladder are the storage and release of urine. To do so the bladder will extend, during the storage, and then shrink again \cite{Karl-ErikAndersson2004}. One task of the urothelium is to form a distensible barrier \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, Lewis2000, WRCross2005}, which prevents unregulated exchange of ions, solutes, and toxic metabolites between the bladder and the blood \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, Lewis2000}. That the urothelium ensures its barrier function, it has to enlarge and downsize its size. This is done by the largest cells of the urothelium, the umbrella cells. Since the umbrella cells are in direct contact with the bladder, it is their task to change size and form during the grow and shrink process of the bladder. Birder described the urothelium as “… a responsive structure capable of detecting physiological and chemical stimuli and releasing a number of signaling mole-cules.” \cite{Birder2005}. Another task of the urothelium is to control the movement and passage of macromolecules, ions, water, toxic metabolites and solutes \cite{Apodaca2004, PuneetKhandelwal2009}. If the urothelium is damaged, it rapidly generates new cells, to ensure full functionality \cite{Apodaca2004, Yamany2014, PuneetKhandelwal2009}.
 
 To receive a better overview the different cell types are explained in the following paragraph. In figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium} a simplified illustration of the urothelium with its different cell types and cell layers is provided. \newline
 The umbrella cells, also called superficial cells, are connected directly with the bladder and have an average diameter of 25 up to \SI{250}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}. 
@@ -35,12 +43,6 @@ The smallest and the most common cells in the urothelium are the basal and stem 
 
 The urothelium consits of several layers. In the first layer, there are the basal and stem cells. Above them, there are several layers of intermediate cells. On top of the epithelium there is one layer of umbrella cells.
 
-\begin{figure}
-	\center
-	\includegraphics[scale=0.3]{figures/Urothelium.png}
-	\caption{A simplified illustration of the urothelium. At the very bottom there is the basal membrane. Above the membrane the stem and basal cells are displayed. The blue cells represent the stem cells, the red cells display the basal cells. Above the layer out of these two cell types, the urothelium contains several layers of intermediate cells. At the top of the urothelium there is an layer of umbrella cells.}
-	\label{img:physiology_urothelium}
-\end{figure}
 
 \subsection{CompuCell3D}
 \begin{figure}
@@ -57,7 +59,7 @@ Since the core of a \ac{GGH} simulation is the effective energy \cite{MaciejH.Sw
 \mathcal{H}_{boundary} = \sum_{\vec{i},\vec{j}}^{ }{J(\tau(\sigma(\vec{i})),(\tau(\sigma(\vec{j})))(1-\delta(\sigma(\vec{i}),(\sigma(\vec{j})))}
 \end{equation}
 This equation is a part of the equation of the \ac{GGH} model. The formula of the \ac{GGH} model, and with it this equation, is explained at section \ref{subsec:Intro_GGH} at page \pageref{subsec:Intro_GGH}. \newline
-There are two ways to extend this form, it is possible to add a volume or a surface constraint for each cell. During each \ac{MCS} an index-copy attempt takes place \cite{MaciejH.Swat2017}. Therefore, a pixel is selected, and it will be tried to overwrite a randomly chosen pixel, next to the current pixel, in order to minimize the effective energy. The index copy attempt succeeds and takes place if this index copy attempt decreases the effective energy \cite{MaciejH.Swat2017}. Each \ac{MCS} the program tries to minimize the effective energy with index copy attempts.
+There are two ways to extend this form, it is possible to either add a volume or a surface constraint for each cell. During each \ac{MCS} an index-copy attempt takes place \cite{MaciejH.Swat2017}. Therefore, a pixel is selected, and it is be tried to overwrite a randomly chosen pixel, next to the current pixel, in order to minimize the effective energy. The index copy attempt succeeds and takes place if this index copy attempt decreases the effective energy \cite{MaciejH.Swat2017}. Each \ac{MCS} the program tries to minimize the effective energy with index copy attempts.
 
 
 \subsection{Glazier Graner Hogeweg Model} \label{subsec:Intro_GGH}
@@ -96,7 +98,7 @@ The \ac{GGH} model has the advantage that “Initial conditions emulating a part
 
 \section{Objective}
 The aim of this bachelor thesis is to create a 3D morphogenesis simulation of the urothelium using \ac{CC3D}. Since the simulation models and python program for a 2D simulation are given and the simulation is done by \ac{CC3D} the task is to modify the current application, of the 2D simulation, in a way that this program can be used for a 3D simulation of the different models. \newline
-Therefore, some parts of the program have to be modified. Some functionalities have to be invented and developed new whereas for other functionalities it is enough to modify these. \newline
+Therefore, some parts of the program have to be modified. Some functionalities have to be invented and developed whereas for other functionalities it is enough to modify these. \newline
 The result of this bachelor thesis will be presented with an realistic model of the 2D simulations. This model is chosen from the given models in the 2D simulation. The question how much more time the 3D simulation need than the 2D simulation will be covered in this thesis as well. If it is possible to provide a calculation of how much more effort a simulation in three dimensions need it will be included, otherwise an estimation of the more effort is presented.
 
 

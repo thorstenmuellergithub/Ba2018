@@ -7,7 +7,7 @@
     headsepline=true,       % Trennlinie am Kopf der Seite
     footsepline=false,      % Keine Trennlinie am Fuß der Seite
     bibliography=totoc,     % Literaturverzeichnis in das Inhaltsverzeichnis aufnehmen
-    twoside=on,             % Doppelseitiger Druck - auf off stellen für einseitig
+    twoside=off,            % Doppelseitiger Druck - auf off stellen für einseitig
     DIV=7,                  % Verhältnis der Ränder zum bedruckten Bereich
     chapterprefix=true,     % Kapitel x vor dem Kapitelnamen
     cleardoublepage=plain]{scrbook}% {IEEEtran}
@@ -18,6 +18,7 @@
 \usepackage{multirow}
 \usepackage{tikz}
 \usepackage{adjustbox}
+\usepackage{subfig}
 \usetikzlibrary{calc}
 \usetikzlibrary{patterns}
 
@@ -55,7 +56,7 @@
 \usepackage{makeidx}              % Sachregister
 \usepackage{listings}             % Source Code listings
 \usepackage{listingsutf8}         % Listings in UTF8
-\usepackage[hang,font={sf,footnotesize},labelfont={footnotesize,bf}]{caption} % Beschriftungen
+\usepackage[font={sf,footnotesize},labelfont={footnotesize,bf}]{caption} % Beschriftungen %param hang, deleted
 \usepackage[scaled]{helvet}       % Schrift Helvetia laden
 \usepackage[absolute]{textpos}	  % Absolute Textpositionen (für Deckblatt)
 \usepackage{calc}                 % Berechnung von Positionen

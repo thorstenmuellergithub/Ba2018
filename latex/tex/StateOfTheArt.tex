@@ -1,67 +1,44 @@
 \chapter{State of the Art}
 %What was given to me
-The current moduro project has a stable 2D simulation of 16 different models using \ac{CC3D}. With these models it is tried to make predictions about how bladder cancer arises. The simulations are performed by \ac{CC3D} and then several values, e.g. the fitness of the model or how realistic the model is, etc., are summarized and displayed by the 'Moduro-Toolbox'. The project consits of several models and a program, both are written in python. The models include properties of the specific model, e.g. adhesion energy between cells or the possibilities of the new cell types after mitosis. The application modify the cell behavior, e.g. it checks when a mitosis takes place, how fast the cell will growth, etc.. The program also calculates if the current model is a realistic one or not, after the calculation these data will be written in to an file which can be read out by the 'Moduro-Toolbox'.
+In this chapter all information about the current project are revealed. At the beginning the properties of the project are explained and later in this chapter the simulation program is presented. The sections \ref{sec:Adhesion} to \ref{sec:3D} are explained based on the program of the project, wheras the other sections are presented based on previous work of the project.
+
+\section{Moduro}
+In the project moduro stands for 'Modeling of the Urothelium with the \ac{GGH} approach'. \newline
+The department of medical informatics at the university of applied sciences Mannheim and the clinic of urology in cooperation with the medical faculty Mannheim at the university of Heidelberg participate in this project. The aim is to predict how and when bladder cancer arises.
+
+The current moduro project has a stable 2D simulation of 16 different models using \ac{CC3D}. The simulations are performed by \ac{CC3D}. During the simulation statistics about the current simulation are written in text files and can be read out by the moduro toolbox. \newline
+The project consists  of a program and several models, both are written in python. The models include properties of cell behavior. Therefore, the adhesion energy between cells and the possibilities of the new cell types after mitosis is defined in the different models. The application modifies the cell behavior, e.g. it checks when a mitosis takes place, how fast the cell will growth, etc.. 
 
 \section{Display and Simulation of the Urothelium}
 %wie wird es dargestellt 
-In \ac{CC3D} we simulate an urothel of the size of \SI{333}{\micro\metre} for the x-axis and \SI{100}{\micro\metre} for the y-axis. Because, \ac{CC3D} has its constraints about the size if we use one core of the prozessor the size of the simulation will be rescaled to its maximum limitations of \SI{267}{\micro\metre} for the x-axis and \SI{80}{\micro\metre} for the y-axis in two dimensions. We use only one core for the simulation, because otherwise \ac{CC3D} splits the simulation field into different grids and race conditions can occur at the edges of these grids \cite{MaciejH.Swat2017}. I.e. a cell is in both grids, therefor one half is in one grid and the other half is in the other grid, during the simulation both grids calculate the volume of the cell and both will apply the new volume of their calculation but the user do not know which calculation is correct. Thus, in order to reduce wrong results it is necessary to avoid race conditions. \newline 
-The simulation of the urothel covers 720 days. At the first calculation step, \ac{MCS} 0, the simulation is initialized, i.e. the cells are drawn and placed on the basal membrane. A illustration of an initial simulation is displayed in figure \ref{img:2DSimulationInitialState} at page \pageref{img:2DSimulationInitialState}. Since we simulate morphogenesis, the urothelium is proposed to growth and to proliferate in the given area. An illustration therefor is presented in figure \ref{img:2DSimulation33Days} at page \pageref{img:2DSimulation33Days}. \newline
-In order to provide a realistic simulation, the simulation has to be not to easy and not to hard, we have to simulate events which occur every \ac{MCS} and some events which are occur not every \ac{MCS}. The events, which are performed every \ac{MCS} are a) cell growth and b) the check for mitosi c) cell death d) cell transformation and e) cell mutation. The event which does not occur every calculation step is f) urination. These events are presented in detail in the following subsections.
+In the 2D simulation, the urothel is simulated with a size of \SI{500}{\micro\metre} for the x-axis and \SI{150}{\micro\metre} for the y-axis. Because, the voxel density, i.e. it describes how many pixels displaying \SI{1}{\micro\metre}, is $0.8$, the size of the urothelium is represented with 400 pixels at the x-axis and 120 pixels at the y-axis. \ac{CC3D} allows the user to use any simulation size she/he wants, as long as the required hardware can handle the simulation. \newline
+It is possible to use \ac{CC3D} on several cores of the CPU. In the project one core for the simulation is used, because otherwise \ac{CC3D} splits the simulation field into different grids. As a result race conditions can occur at the edges of these grids \cite{MaciejH.Swat2017}. This means it is possible that a cell is in both grids. Thus, one half is in one grid and the other half is in another grid. During the simulation both grids calculate the volume of the cell and both will apply the new volume of their calculation but it is not checked which result has to be used. Therefore, in order to reduce wrong results, it is necessary to avoid race conditions. \newline 
+The 2D simulations of the urothelium covered 720 days. In the simulations one day is breakdown into 500 \ac{MCS}. Therefore, the simulation covers 360000 \ac{MCS}. The simulation duration can be set in the program. Thus, the user define how many \ac{MCS} are one day and how long the simulation runs. At the first calculation step, \ac{MCS} 0, the simulation is initialized, i.e. the cells are drawn and placed on the basal membrane. An illustration of an initial simulation is displayed in figure \ref{img:2DSimulationInitialState}. Since morphogenesis is simulated, the urothelium is proposed to growth and to proliferate in the given area. An illustration therefor is presented in figure \ref{img:2DSimulation33Days}.
 
 \begin{figure}
 	\center
 	\includegraphics[scale=0.35]{figures/2DSimulation-InitialState.png}
-	\caption{Initial state of an 2D simulation of the model SpaPcdbCdiIn}
+	\caption{Initial state of an 2D simulation of the model SPA/BPCD/IPCD}
 	\label{img:2DSimulationInitialState}
 \end{figure}
 
 \begin{figure}
 	\center
 	\includegraphics[scale=0.35]{figures/2DSimulation-33Days.png}
-	\caption{2D Simulation of the model SpaPcdbCdiIn after 33 days}
+	\caption{2D Simulation of the model SPA/BPCD/IPCD after 33 days}
 	\label{img:2DSimulation33Days}
 \end{figure}
 
-\subsection{Events in the simulation}
-In this subsection the events for the simulation are presented. All of these events are executed every \ac{MCS}, excluding the initializing step, \ac{MCS} 0, and every factor of 250, \ac{MCS} 250, 500, 750, etc.. \newline
-The urination takes place every 12 hours, it should be simulated every 6 hours but because these events are not called every 250 \ac{MCS}, it is only called every 12 hours.
-
-\subsubsection{Cell Growth}
-Every \ac{MCS} we calculate the growth of a cell. In the project the maximum possible growth of a cell is calculated and applied.  We need this calculation for the relation volume and target volume as well as for the relation volume, surface and target surface. Since, the volume and the surface of a cell is calculated by \ac{CC3D}. The only way to influence it, is by setting the correct $\lambda$ values, for the volume and surface, and by additional calculating the target volume and target surface values. In the program the calculation of the target volume and the target surface, i.e. the volume and surface which the cell should have, is made. \ac{CC3D} uses the lambda mulitplier and the target values to calculate the effective energy. Of this calculated energy it is able to calculate the volume and the surface of each cell. This is why we calculate the target volume and surface instead of the actual volume and surface of a cell.
-
-\subsubsection{Mitosis}
-The verification if a cell divides or growth further is done in every simulation step. Doing so allows us to define a very specific \ac{MCS} at which a cell divides, as there a 500 \ac{MCS} per day. In order that a cell divides it needs to growth over its maximal size before it divides.
-The cells which are able to growth and as a result divide are a) stem cells b) basal cells and c)intermediate cells. 
-
-The umbrella cells are a product of mitosis than of cell division, if they would divide there would be two instead of one umbrella cell.
-
-\subsubsection{Necrosis}
-If a cell dies necrosis takes place. In the program a flag in the cell dictionary is set. Every \ac{MCS}, the program checks if a cell dies or not. If so, the cell will shrink and as a result dissappear.
-
-\subsubsection{Mutation}
-After 2 days, 1000\ac{MCS}, it is possible that a cell mutates, i.e. it becomes evil. We simulate the possibility for cells to mutate after 2 days, because otherwise there would not be much cells around the mutated cell. Each cell type has its own propability to become evil, in the current simulation it is not considered that cells mutate since the propability for each cell type to mutate is 0\%. \newline
-If a cell mutates, there is also the flag for necrosis set. Thus, the cell shrinks and dissappears.
-
-
-\subsubsection{Transformation}
-A transformation can take place if a basal cell divides into a basal and a intermediate cell. Because the intermediate cell has to be inside the strata, it immediately will be transformed to an umbrella cell, which are kind the barrier to the urin in the bladder. 
-
-
-\subsubsection{Urination}
-Every 12 hours an urination takes place. This is simulated in a way that randomly 2\% of the cells in direct contact with the bladder are washed out \cite{Torelli2017}. In the program a flag for necrosis is set and the cells will dissappear because of the necrosis event.
-
-
-
-
-
-
-
+\section{Moduro Toolbox}
+The moduro toolbox is a software tool, which is able to visualize data in order to evaluate a simulation. \newline
+Every 12 hours the simulation is checked for its reality. This is done with the fitness functions of section \ref{sec:fitnessFunctions}. The results of these calculations are written in several text files, in a by \ac{CC3D} created directory of the simulation. Moreover, the amount of cells of the different cell types and the overall amount of cells is saved as well. The moduro toolbox is able to read out the data of the text files and then visualize these. This visualization is done with charts and with a table. \newline
+\ac{CC3D} saves some screenshots, of the simulation field, during the simulation. With these screenshots the moduro toolbox is able to create a video out of these screenshots. To create the video an extra program has to be installed which the toolbox would use.
 
 \section{Models}
-The 2D simulation of the urothel provided 16 different models. These model differ mostly in which cell types after the mitosis are created. The project divides the models into two domains, one has the id 'SSD', which stands for "stem cell-like division" \cite{Torelli2017} and means that every time a stem cell divides there will be one stem and one basal cell. The second domain has the id 'SPA', which stands for "stem cell population asymmetry" \cite{Torelli2017}. In the second domain the stem cell has a propability of 90\% that it will be one stem and one basal cells after mitosis. There is also the chance with a probability of 5\% that after mitosis of a stem cell there are two stem cells or two basal cells. \newline
-For the mitosis of basal cells there are 4 different models. The first one, 'BSD', describes the each basal cell which undergoes mitosis will create one basal and one intermediate cell. The second model describes that there is a 5\% chance that the basal cell will become two basal or two intermediate cells. There is a 90\% propability that the cell become one basal and one intermediate cell. The third model 'BPCD', describes that always a basal cells becomes two basal cells during mitosis and if the basal cell is not on the basal membrane it transform into an intermediate cell. The last model of the basal cells is the 'BCD'. In this model the basal cells immediately transform into an intermediate cell if it is not at the basal membrane anymore.\newline
-There are two different models how intermediate cell divide. One is the 'IPCD', a intermediate cell becomes always into two intermediate cells during mitosis and if there is no cell around the specific cell it will be transformed into an umbrella cell. The second one is the 'ICD', in this one only transformation of the intermediate cells into the umbrella cells happens. \newline
-With these different proliferation concepts there are 16 models in the project overall. These models were created by an earlier version of the project \cite{Torelli2017} and are displayed in table \ref{tbl:16Models} at page \pageref{tbl:16Models}.
+The 2D simulation of the urothel provides 16 different models. These models differ mostly in which cell types after the mitosis are created. The project divides the models into two domains, one has the identifier 'SSD' and means that every time a stem cell divides there will be one stem and one basal cell. The second domain is called 'SPA'. In the second domain the stem cell has a probability of 90\% that it will be one stem and one basal cells after mitosis. There is also the chance with a probability of 5\% that after mitosis of a stem cell there are two stem cells or two basal cells. \newline
+For the mitosis of basal cells there are 4 different models. The mitosis model 'BSD' describes that each basal cell which undergoes mitosis will create one basal and one intermediate cell. The model 'BPA' describes that there is a 5\% chance that the basal cell will become two basal or two intermediate cells. There is a 90\% probability that the cell become one basal and one intermediate cell. The model 'BPCD', describes that always a basal cell becomes two basal cells during mitosis and if the basal cell is not on the basal membrane it transform into an intermediate cell. The model 'BCD' has the behavior that a basal cell immediately transforms into an intermediate cell if it is not at the basal membrane.\newline
+There are two different models how intermediate cells split. One is the 'IPCD', therefor in mitosis an intermediate cell becomes two intermediate cells during. Each \ac{MCS} it is checked if there is a cell around the intermediate cell. If this is not the case it is transformed into an umbrella cell. The second model is the 'ICD'. In this one, only transformation of the intermediate cells into the umbrella cells happens if the intermediate cell is not enclosed by other cells. \newline
+With these mitosis concepts there are 16 different models in the project. These models were created by an earlier version of the project \cite{Torelli2017} and are displayed in table \ref{tbl:16Models} at page \pageref{tbl:16Models}.
 
 
 \begin{table}
@@ -187,8 +164,11 @@ Intermediate cells
 \caption{\label{tbl:16Models}16 different models derived in the project as there are different ways of proliferation and mitosis are simulated for the different cell types.}
 \end{table}
 
-\section{Adhesion and cell sorting}
-During morphogensis of a strata the cells not only growth, they also sort themself. In order for the cell sorting there have to be different adhesion values \cite{REF}, i.e. how strong the surface of two different cell types are holding together. In the project this is done with a matrix, which every of the 16 model has. Such a matrix was created in an earlier version of the project \cite{Torelli2017} and is displayed in table \ref{tbl:AdhesionMatrix} at page \pageref{tbl:AdhesionMatrix}. In this table small values refer to more adhesion wheras larger values refer to less adhesion. The adhesion is calculated by \ac{CC3D}. The cell type 'Medium' is a \ac{CC3D} specific cell type and describe the space where no cells are in the simulation.
+
+
+
+\section{Adhesion}\label{sec:Adhesion}
+During morphogenesis the cells not only growth, they also sort themselves. In order for cell sorting there have to be different adhesion values \cite{REF}, i.e. how strong two different cells are holding on each other. In the project this is done with a matrix, which every of the 16 model has. Such a matrix was created in an earlier version of the project \cite{Torelli2017} and is displayed in table \ref{tbl:AdhesionMatrix} at page \pageref{tbl:AdhesionMatrix}.
 
 \begin{table}
 \begin{centering}
@@ -215,9 +195,11 @@ Umbrella cell & \celltypeU &  &  &  &  &  & 2\tabularnewline
 \end{table}
 
 
-\section{Cell Properties}
-Each cell of cell type has several attributes, moreover each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. min- max Diameter, min- max Volume, growth in \SI{}{\micro\metre} per day or time until apoptosis, i.e. cell death, etc.. \textbf{Some of the properties are displayed in figure XY}. The attributes in the cell dictionary are more likely for the simulation. Therefore, these are some attributes which we are using to make decisions, e.g. the current and expected live time, a flag for necrosis can be set here, etc.. \newline
-In the simulation we also need to know the physiology constraints of a cell. In an earlier version of the project these were evidenced and are displayed in table \ref{tbl:CellConstraints} at page \pageref{tbl:CellConstraints} \cite{Torelli2017}. This table provides also the data how important the volume or the surface of a cell is.
+\section{Cell properties}
+In the project the physiology constraints of a cell are included. In an earlier version of the project these were evidenced \cite{Torelli2017} and are displayed in table \ref{tbl:CellConstraints} at page \pageref{tbl:CellConstraints}. In the program these constraints are converted into pixels and then applied. \newline
+In the simulation every cell has several attributes. Moreover, each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. a min- max diameter, a min- max volume, growth in \SI{}{\micro\metre} per day or the time until apoptosis, i.e. cell death. \newline
+The attributes in the cell dictionary are mainly used for decision making. Some values are the current and expected live time, a flag for necrosis and if a cell is inhibited, i.e. enclosed by other cells. \newline
+
 
 
 \begin{table}
@@ -241,82 +223,78 @@ Umbrella & \celltypeU & 1767 & 15 & 3591 & 19 & important & poor\tabularnewline
 \end{table}
 
 
-%Each cell have a cell dictionary, where different values about the cell are saved. These values are a) exp-life-time, i.e. the expected live time of a cell until necrosis, i.e. cell death---in the simulation the cell shrinks and then dissappears---takes place b)necrosis c)DNA d)TurnOver e)colony f)id g)removed h)inhibited  i)min-max-volume j)normal-volume k)growth-factor l)life-time.
 
 
-\section{Fitness functions}
-In order to validate the simulated models, there are several functionalities which check if the model is realistic or not. These functions, i.e. part of a program, check every day, every 500, \ac{MCS} if the model is realistic or not \cite{Torelli2017}. The result of these two fitness functions is written into a file, and later read out by the moduro toolbox.
+
+\section{Events in the simulation}
+In the simulation program there are several events modeled. These events can occur every calculation step or at a specific \ac{MCS} in the simulation. \newline
+The events which are performed every \ac{MCS}, except for \ac{MCS} 0 and every \ac{MCS} of factor 250, are a) cell growth and b) the check for mitosis c) cell death d) cell transformation and e) cell mutation. The event which occurs every 12 hours, every 250 \ac{MCS}, is f) urination. These events are presented in detail in the following subsections.
+
+\subsection{Cell Growth}
+In the project the maximum possible growth of a cell is calculated and applied. This calculation is used for the relation volume and target volume as well as for the relation volume, surface and target surface. Because, the volume and the surface of a cell is calculated by \ac{CC3D} and can only be read out, the target volume and target surface are calculated in the program and set.
+
+\subsection{Mitosis}
+The verification if a cell divides or growth further is done in every simulation step, except for these with a factor of 250. Therefore, it is possible to define a very specific calculation step at which a cell divides, as there a 500 \ac{MCS} per day. In order that a cell divides it grows over its maximal size before it divides.
+The cells which are able to grow and as a result divide are a) stem cells b) basal cells and c) intermediate cells. The umbrella cells grow as well, but they do not split.
+
+\subsection{Necrosis}
+If a cell dies, necrosis takes place. In the program a flag in the cell dictionary is set. Every calculation step, except for the \ac{MCS} of factor 250, the program checks if a cell dies or not. If so, the cell will shrink and as a result disappear.
+
+\subsection{Mutation}
+After 2 days, 1000\ac{MCS}, it is possible that a cell mutates, i.e. it becomes malignant. We simulate the possibility for cells to mutate after 2 days, because otherwise there would not be much cells around the mutated cell. Each cell type has its own probability to become malignant. In the current simulation it is not considered that cells mutate since the probability for each cell type to mutate is 0\%. \newline
+If a cell mutates, there is also the flag for necrosis set. Thus, the cell shrinks and disappears.
+
+\subsection{Transformation}
+A transformation can take place if a basal cell divides and at least one intermediate cell is created. If the intermediate cell is not enclosed by other cells, it immediately will be transformed to an umbrella cell.
+
+\subsection{Urination}
+Every 12 hours, every 500 \ac{MCS}, a urination takes place. The first urination event takes place at \ac{MCS} 375. This is simulated in a way that randomly 2\% of the cells in direct contact with the bladder are washed out. In the program a flag for necrosis is set and the cells will disappear because of the necrosis event.
+
+
+
+\section{Fitness functions}\label{sec:fitnessFunctions}
+In order to validate the simulated models, there are several functionalities which check if the model is realistic or not. These functions, i.e. part of a program, check every 12 hours, every 250 \ac{MCS}, if the model is realistic or not. The result of these fitness functions is written into several files, and can be read out by the moduro toolbox.
 
 \subsection{Arrangement fitness function}
-The arrangement fitness function ensure that the strata of the simulated urothelium has the correct order \cite{Torelli2017}, i.e. that the first layer on the basal membrane consits only of stem and basal cells \cite{REFS}, the next three to five layers consits only of intermediate cells \cite{REFS} and that there is one layer of umbrella cells \cite{REFS}.
+The arrangement fitness function ensures that the strata of the simulated urothelium has the correct order \cite{Torelli2017}, i.e. that the first layer on the basal membrane consists only of stem and basal cells \cite{REFS}, the next three to five layers consists only of intermediate cells \cite{REFS} and that there is one layer of umbrella cells \cite{REFS}.
 
-\begin{equation} 
-f_{a}^{*} = \begin{cases}
-\dfrac{1}{(1-L_{B})+(lib-L_{I})+(1-L_{U})+1} & \text{if amount of layers > 0} \\
-0 & \text{else 0}
-\end{cases}
+\begin{equation}\label{eq:LIB}
+lib = \dfrac{L - lib}{L}
 \end{equation}
-In this equation $L_{B}$ and $L_{U}$ are boolean values, i.e. they have the value 0 or 1 \cite{Torelli2017}. They are 1 if the the first layer of cells consits only of basal or stem cells and if the most upper layer consits only of umbrella cells, otherwise they will be 0 \cite{Torelli2017}.
-$lib$ is the amount of layers in betwenn the first and the last layers \cite{Torelli2017}. $L_{I}$ contains the amount of layers, which consits only intermediate cells \cite{Torelli2017}. Therfore, $lib-L_{I}$ describes the amount cells which are not in there intended layer \cite{Torelli2017}. \newline
-The arrangement fitness function is calculated columnwise, every \SI{25}{\micro\metre}. After this calculation the average of all calculations of this function is calculated \cite{Torelli2017}.
+\begin{equation}\label{eq:FitnessArrangement} 
+f_{a} = 1 - \dfrac{((1-L_{B})+(1-L_{U})+lib+(1-L_{O})}{4}
+\end{equation}
+In equation \ref{eq:LIB} $L$ refers to the amount of layers in the urothelium. $lib$ describe the amount of layers between the stem and basal cell layer and the umbrella cell layer at the top of the urotehlium, which include not only intermediate cells. Thus, if the layers between the first and last layer consist only of intermediate cells, the equation \ref{eq:LIB} has the result 0.\newline
+In equation \ref{eq:FitnessArrangement} $L_{B}$ and $L_{U}$ are boolean values, i.e. they have the value 0 or 1 and represent a false or true value. They are 1 if the first layer of cells consists only of basal or stem cells and if the most upper layer consists only of umbrella cells, otherwise they will be 0.
+$lib$ is calculated in equation \ref{eq:LIB}. $L_{O}$ presents the optimum amount of layers. It is 1, if the amount of layers in the simulated urothelium is between 3 and 7, otherwise it is 0. The result of equation \ref{eq:FitnessArrangement} is between 0 and 1, where 0 refers to no reality in the simulation and 1 refers to a perfect simulated urothelium. \newline
 
 \subsection{Volume fitness function}
-This function calculates the relative volume regarding the current volume of the different cell types in the urothel. The relative amount of the different cell types should be: stem and basal cell = 10\%, intermediate cells = 67\% and umbrella cells = 23\% considering an average thickness of \SI{85}{\micro\metre} \cite{Torelli2017}. Therfor the formula is:
-\begin{equation} 
+This function calculates the relative volume regarding the current volume of the different cell types in the urothel. The relative amount of the different cell types should be: stem and basal cell = 10\%, intermediate cells = 67\% and umbrella cells = 23\% considering an average thickness of \SI{85}{\micro\metre} \cite{Torelli2017}. Therefor the formula is:
+\begin{equation}\label{eq:VolumeFitnessSpecific}
 f_{V_{i}} = \dfrac{1}{4 (\dfrac{V_{Si}-V_{Ii}}{V_{Si}})^2 + 1}
 \end{equation}
-$V_{Si}$ and $V_{Ii}$ describes the \textit{should} and the actual \textit{is} volume of a specific cell type $i$ \cite{Torelli2017}. 
+$V_{Si}$ and $V_{Ii}$ describes the \textit{should} and the actual \textit{is} volume of a specific cell type $i$ \cite{Torelli2017}.  This calculation is done three times. One time for the stem and basal cells, one time for the intermediate cells and one time for the umbrella cells. The results of the three calculations are then further used to determine the relative volume overall.
+\begin{equation}\label{eq:VolumeFitnessOverall}
+f_{V} = \dfrac{f_{V_{B}} + f_{V_{I}} + f_{V_{U}}}{3}
+\end{equation}
+In this equation $f_{V_{B}}$ refers to the realtive volume of the stem and basal cells, $f_{V_{I}}$ presents the relative volume of the intermediate cells and $f_{V_{U}}$ include the realtive volume of the umbrella cells. \newline
+The result of all four calculations are written into a text file and can be read out by the moduro toolbox later.
 
 \subsection{Overall fitness function}
-The overall fitness function calculates the total fitness out of the volume and the arrangement fitness function. Therefor the average of both functions is calculated \cite{Torelli2017}. The function is the following:
+The overall fitness function calculates the total fitness out of the volume and the arrangement fitness function. Therefor the average of both functions is calculated \cite{Torelli2017}. This calculation is done by the moduro toolbox only. For every calculation step, the arrangement and volume fitness function are calculated the overall fitness is calculated. Therefor the formula is:
+
 \begin{equation} 
-f(t_{i}) = \dfrac{f_{V}(t_{i})+f_{a}^{*}(t_{i})}{2}
+f(t_{i}) = \dfrac{f_{V}(t_{i})+f_{a}(t_{i})}{2}
 \end{equation}
-$t_{i}$ describes a specific time point, in \ac{MCS}, at which this calculation could be done. At the end of the simulation is calculated as the average of the overall fitness function \cite{Torelli2017}. Therefor, the formula is:
+
+$t_{i}$ describes a specific time point, in \ac{MCS}, at which this calculation is done. At the end of the simulation the average of the overall fitness function is calculated to determine the reality of this simulation. Therefor, the formula is:
+
 \begin{equation} 
 f = \dfrac{1}{e+1} + \sum_{i=0}^{e}{f(t_{i})}
 \end{equation}
-$e+1$ indicating the amount of calculations of the overall fitness function \cite{Torelli2017}.
+The result of the calculation is between 0 and 1. Where 0 describes no reality at all and 1 presents a perfect realistic simulated urothelium.
 
 
-
-\subsection{Moduro Toolbox}
-The purpose of the moduro toolbox is that we are able to evaluate a simulation. The toolbox itself was an bachelor thesis. All the data, which are written in to a file, e.g. cell birth and death by mitosis, data about the volume and arrangement fitness, etc., can be read out and analyzed with the moduro toolbox.
-It is possible to create a short video out of the simulation screenshots. This video is able to display the complete simulation within a few minutes. Therefor a extra program is required.
-
-
-
-
-\section{Simulation Functionalities}
-In order to not overload this chapter by presenting all functionalities, parts of the application which are important for the project and which were not modified in this bachelor thesis are presented. \textbf{A complete overview of the scripts is maybe displayed at figure XY.}
-
-
-\subsection{Position of the stem cells}
-After the amount of stem cells on the basal membrane is calculated, the cells will be positioned randomly on it. To do so a random value for the x and z Position is calculated in a way, that the cell will not be at the edge of the lattice. If the stem cell would be close to the lattice, than the proliferation could not take place in an optimal way.
-\begin{lstlisting}[language=Python, caption = stem cell position]
-        for s in range(1, noStemCells + 1, 1):
-            xPos = random.uniform(cellDiameter, self.execConfig.xLength - cellDiameter)
-            zPos = random.uniform(cellDiameter, self.execConfig.zLength - cellDiameter)
-            if self.execConfig.dimensions == 2:
-                self._addCubicCell(2, xPos, 2, 0, cellDiameter, cellDiameter, 0, steppable)
-            else:
-                self._addCubicCell(2, xPos, 2, zPos, cellDiameter, cellDiameter, cellDiameter, steppable)
-\end{lstlisting}                
-
-
-\subsection{MinMaxVolume}
-In order that we are able to simulate mitosis a minimum and a maximum value regarding cell size is necesseray. This is done by the 'MinMaxVolume' in the cell Dictionary. These is done with a one dimensional array with two values, as it is displayed in the listing below:
-\begin{lstlisting}[language=Python, caption = MinMaxVolume]
-cellDict['min_max_volume'] = [self.execConfig.calcVoxelVolumeFromVolume(cellType.minVol),
-								self.execConfig.calcVoxelVolumeFromVolume(cellType.maxVol)]
-\end{lstlisting} 
-Every cell type has its own minimum and maximum volume \cite{Torelli2017}. Since these values are saved in \SI{}{\micro\metre}, they have to be converted to the voxel unit. With these values, in voxel, it is possible to set boundaries for the specific cell, e.g. to calculate the volume when mitosis takes place or the maximal volume of a cell of a specific cell type.
-
-\subsection{Volume and TargetVolume}
-As explained earlier, in order that the simulation starts the effective energy is not allowed to be 0. As we are initializing every cell, we set the target volume of every cell to be 1 larger than the current volume. This has the effect, that the simulation starts. During the simulation we calculate the target volume out of the possible growth volume and the current volume.
-\begin{lstlisting}[language=Python, caption = set target Volume and Surface of a cell]
-cell.targetVolume = cell.volume + 1  # At the beginning, the target is the actual size.
-# cell.targetVolume = cellDict['normal_volume'] # At the beginning, the target is the actual size.
-cell.targetSurface = self.execConfig.calcVoxelSurfaceFromVoxelVolume(cell.targetVolume)
-\end{lstlisting}
-In the same context we calculated the target surface as well. This has the same reason as for the target volume. 
+\section{3D functionalaties}\label{sec:3D}
+The functionalaties of the program are able to be used in 3D. Whenever a part of the program is required to be used in 2D as well as in 3D, it is checked if the simulation field has a third dimension or not. Examples for such functionalities are the fitness functions of the section before or the decision how many stem cells are placed on the basal membrane, which is modified and explained in section \ref{sec:AmountStemCellsBasalMembrane}. \newline
+Because so far only the 2D simulations were progressed, it is important to keep the functionalaties of the 2D simulation in the program. Doing so it is possible to switch between a 3D and a 2D simulation, as well as the benefits of both simulation types can be observed.
