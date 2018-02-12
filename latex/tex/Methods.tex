@@ -185,7 +185,7 @@ As the table displays, there is a significant difference in all three results. B
 
 
 
-\section{Draw Sphere Cells}
+\section{Draw Sphere Cells}\label{sec:DrawSphereCells}
 Since a sphere as a cell is an approximation to a cell in the urothelium, it is a possible technique to draw and further simulate a cell as a sphere. \newline 
 To be able to draw a sphere out of voxels it is required that a cuboid lays around the sphere, as it is displayed in \ref{tikz:SphereInCube}. The cuboid has to be at least as large as $2 \cdot radius$ of the sphere. In addition, the cuboid should not be larger than necessary, otherwise there would be unnecessary computable cost. The illustration in figure \ref{tikz:CuboidSphere} at page \pageref{tikz:CuboidSphere} display the perfect size of a square and a circle. These 2D objects are chosen to display the boundaries of a circle in a square as well as the boundaries would be in three dimensions.
 
@@ -323,7 +323,7 @@ With this created function it is now possible to draw a cell as a sphere, as it 
 To draw the cell as a sphere is the first step to have sphere cells in the simulation. Two major parts of the simulation are the growth and the mitosis of the simulation. In order that the cells are able to stay as a sphere it is required to adjust the volume and surface calculation as well.
 
 
-\section{Growth of a sphere cell}
+\section{Growth of a sphere cell}\label{sec:GrowSphereCell}
 Since in the project morphogenesis of the urothelium is simulated, the drawn sphere cells are required to grow. \newline
 In the simulation the current volume and surface of a cell is calculated by \ac{CC3D}. Every user is able to influence these values by setting the target volume and target surface and the proper multiplier, $\lambda_{vol}$ and $\lambda_{sur}$, for the specific part of the effective energy. Because the goal of the simulation is to minimize the effective energy, the cell will change the current volume and surface in the direction of the set target volume and target surface. 
 
