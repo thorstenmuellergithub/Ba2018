@@ -8,13 +8,13 @@
     
 This section has the purpose to give an overview over all changes in the project which occurred during this bachelor thesis. These changes include some small improvements of the application as well as how to draw a sphere cell. First minor changes are briefly described, deeper in this section the more effortful changes are explained. 
 
-\section{Lambda multipliers}
+\section{Lambda multipliers} \label{sec:LambdaMultipliers}
 In the project there were several places, where the multipliers $\lambda_{vol}$ and $\lambda_{sur}$ are calculated, but they are only set when a cell is initialized. The multiplier for the volume is set a second time in the necrosis event, if the program models that a cell dies. \newline
 There are two additional multipliers, for the surface and volume constraints, saved in within each cell object. Since we are not using these values in the program and they do not influence or set the $\lambda_{vol}$ or $\lambda_{sur}$ which \ac{CC3D} uses, these two values are deleted. Moreover, in one place there were methods to calculate the lambda values. Since these methods are not used in the project and they had a multiplier itself to calculate the multiplier for the specific part of the effective energy, they are deleted as well. 
 
 In the project the multipliers $\lambda_{vol}$ and $\lambda_{sur}$ are now set each time when a cell is initialized. A second time the multiplier $\lambda_{vol}$ is set, is if necrosis takes place. Because now the unnecessary methods and values for the multipliers values are removed, no confusion about which constraint values in the program are used will come up.
 
-\section{Abstract methods}
+\section{Abstract methods}\label{sec:AbstractMethods}
 In the program, in several classes there were methods, which are not used. These methods are not used in the class, in which they are written, due to polymorphism. They are used in classes, which inherit from the class where they are written. Polymorphism is a method out of \ac{OOP}. Another technique out of \ac{OOP} is the use of abstract classes and abstract methods. To explain polymorphism, abstract classes or abstract methods in detail, would take too much space out of this bachelor thesis. Thus, the change in the program is explained in the following.
 
 In the project there a several classes which inherit from each other. In these classes there were the same methods implemented. Since it is not required that all classes have to have the same methods, these are redundant methods, as long as they do not differ in their functionality. For such methods it is possible to declare them as an abstract method. An abstract method contains only the method construct, but no functionality. Due to polymorphism the class in which such an abstract method is implemented is used to call this method. \newline
@@ -35,11 +35,11 @@ The listing above displays how the class variable has to be initialized in order
 
 The listing above is an example of an abstract method in python. Using abstract methods creates more structure and clarity within the project. Therefore, the abstract declarations in this project created a much better clarity of the structure of the project and of the methods, which were used in the classes.
 
-\section{Calculation steps until urination}
+\section{Calculation steps until urination}\label{sec:calculationStpesUntilUrination}
 To simulate the urination in the program it was checked if the current calculation step is larger than 250 and a factor of 125. Because every 250 \ac{MCS} the volume- and arrangement fitness functions are calculated and no other events in the simulation take place, the urination was simulated every 12 hours. The check if the current \ac{MCS} is a factor of 125 happens with the modulo operator. Thus, the current calculation step is divided by 125 and if the result, as a whole number, is 0 it is a factor. \newline
 The check when the urination event takes place is modified. The urination event now takes place if the current calculation step is larger than 250 and if the current \ac{MCS} modulo 125 equals 1. Therefore, the urination event is used every 6 hours, at \ac{MCS} 376, 501, 626, 751, etc..
 
-\section{Area of stem cells on the basal membrane}\label{sec:AmountStemCellsBasalMembrane}
+\section{Amount of stem cells on the basal membrane}\label{sec:AmountStemCellsBasalMembrane}
 In an earlier version of the project it was evidenced that around 12\% of the area of the basal membrane are required to be filled with stem cells in order to have an optimal proliferation during the morphogenesis of the cells \cite{Torelli2017}.
 In the project the calculation of the amount of stem cells for two dimensions were correct but without an mathematical evidence. \newline
 Since the y-axis is negligible in the calculation of an area, the calculation for two dimensions considers the x-axis and the calculation for three dimensions considers the x- and z-axis. Therefore, in two dimensions the area of the stem cells should be calculated by using the cell diameter. An illustration therefor is displayed in figure \ref{tikz:AreaIn2D}. For three dimensions it is possible to calculate the area of a circle with the formula $A = \pi \cdot r^{2}$, because a sphere in 2D is a circle, and use this calculation to further determine the amount of stem cells on the basal membrane. An example for the basal membrane and a stem cell in three dimensions is displayed in figure \ref{tikz:AreaIn3D}. 
@@ -108,28 +108,8 @@ Amount_{StemCells} = \dfrac{A_{stem cells}}{\pi \cdot r^{2}}
 The result of formula \ref{eq:AmounStemCell3D} has to be rounded as well, otherwise the program would include rounding errors. 
 These calculations are now included in the program.
 
-%In the following listing the calculation for the amount of stem cells on the basal membrane is shown. The calculation uses the equations of this subsection. If the program has to round up the result. The result will be increased by 1 and then it will be casted. This functionality has and mathematical evidence, which is useful as it allows the program to be more resistant against errors.
-%
-%\begin{lstlisting}[language=Python, caption= new calculation of the amount of stem cells on the basal membrane with a mathematical evidence]
-%    def _initCells(self, steppable):
-%...
-%        c = 0.12 # the area used of stem cells in percentage
-%        cellDiameter = self.cellTypes[2].getAvgDiameter()  # cell diameter is of type float
-%        
-%        if self.execConfig.dimensions == 2:
-%            noStemCells = int(self.execConfig.xLength * c / cellDiameter)
-%        else:
-%            noStemCells = ((self.execConfig.xLength * self.execConfig.zLength) * c) / (PI * (cellDiameter / 2.) ** 2)
-%
-%        if noStemCells % 1 > 0.5:
-%            noStemCells += 1
-%
-%        noStemCells = int(noStemCells)
-%...
-%\end{lstlisting}
 
-
-\section{Target volume and target surface after mitosis}
+\section{Target volume and target surface after mitosis} \label{sec:TargetVolumeSurfaceAfterMitosis}
 Mitosis of the cell is simulated by \ac{CC3D}. In the simulation mitosis is simulated as the following: one cell splits into two cells. The cell which splits dies and then two new cells out of the died cell are created. \newline
 In the program we specify and check if and when a cell splits. \ac{CC3D} decides where the cell splits and calculates the volume and surface of the two new cells. In our program we calculate and set attributes of the new cells, e.g. the target volume or the target surface. \newline 
 The target volume is calculated by dividing the target volume of the cell before mitosis by 2. This value is applied for both new created cells. The problem with this technique is that it is possible that the cell might not split in the middle. In the case of mitosis, setting the target volume of the two created cells without the knowledge of the volume is a source of error. Because the target volume of the two new cells are set without considering the current volume of the cell, it occurred that one of the new cells, after mitosis, had a target volume which was smaller than the current volume. \newline
@@ -139,7 +119,7 @@ With this change of the program the case that some cells have a smaller target v
 
 
 
-\section{Approximation Error}
+\section{Approximation Error} \label{sec:ApproximationError}
 Because the project includes conversions from \SI{}{\micro\metre} into voxels and the amount of pixels, e.g. for the surface of a cell, has to be set as data type integer, i.e. a whole number, it is possible that in some places in the program there are approximation errors. In the project, the values of unit \SI{}{\micro\metre} are saved with the data type float, i.e. a number with decimal digits. To set these values as a whole number the values are casted into the data type integer. 
 
 Whenever a conversion from \SI{}{\micro\metre} into voxels is done the complete calculation is calculated with decimal digits. After the calculation is done it is verified if the first decimal digit is larger or equal to 5. If this condition is true the result is increased by 1, otherwise not. As a last step the result is casted. This technique has the advantage that calculation errors due to casting are removed, because the cast is the very last step. It is possible that in the program still include some rounding errors, but these can not be removed because \ac{CC3D} requires the amount of voxels as a whole number and the calculation is with decimal digits. \newline
@@ -380,9 +360,8 @@ This formula applies to all pixels, which are at the surface of the pixel sphere
 
 The calculated factor $\sqrt{2}$ was tested for a sphere surface. Because, this is an approximation to the surface of a pixel sphere, the tenth part beside this factor are also tested mathematically. As figure \ref{img:DeviationSphere} displays the  approximation with factor $\sqrt{2}$ still has some deviation. Almost no deviation between the surface of a sphere and a surface of a sphere of voxels is with a factor of $1.5$. Thus, this factor is applied for the calculation of the target surface. 
 
-\section{Calculation of the volume and surface sites of a voxel sphere}
+\section{Calculation of the volume and surface sites of a voxel sphere}\label{sec:CreatedAlgorithm}
 In order to calculate the voxel volume and the surface sites of a voxels sphere on our own, I created an algorithm for this problem. Otherwise for every measurement of the volume and surface of the sphere of voxels a new simulation in \ac{CC3D} had to be started. \newline
-The algorithm requires the radius of the sphere, this radius has to be a whole number. For the tenths part between two whole numbers the result of the algorithm and \ac{CC3D} deviates.
 Since a sphere and a cuboid are both symmetrical, it is possible to split both into 8 pieces. Doing so only one eighth of the of the cuboid has to be calculated in order to determine the volume and the surface of the sphere. \newline
 To calculate which voxels are in the voxel sphere, the algorithm creates a x, z, y matrix. In the following calculations and decisions the center of each voxel is used. For every x,z voxel in the eighth of the cuboid the y constraint of the circle is calculated. Next, every voxel at the x,z coordinate is checked if the center of the voxel is within this constraint or not. Thus, every voxel at a x,z coordinate is checked if its center is within the sphere or not. This is repeated until every x,z coordinate of the eighth of the cuboid is calculated. Every time a voxel is within the sphere, it will be marked in the matrix.  \newline
 To receive the volume of the voxel sphere all marked entries in the created matrix are count. Then, this result is mirrored for all three axis. Thus, the amount of marked voxels in the matrix is multiplied by 8, which equals to one multiply by 2 for each axis. Therefore $V=((Voxels \cdot 2) \cdot 2) \cdot 2$.
