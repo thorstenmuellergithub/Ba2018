@@ -1,11 +1,19 @@
 \chapter{Future work}
 In this chapter ideas for the future of the project are presented.
 
-As the result in section 4.5 reveals to keep a sphere shape is not possible. Because it might be a result of the square lattice it should be tested if the hexagonal lattice type suits this task better. With the hexagonal lattice the cells are hexagons in 2D and rhombic dodecahedrons in 3D. Because rhombic dodecahedron is in its form already similiar to a sphere it might work to keep the sphere shape of a cell with these objects.
+As the result in section 4.5 reveals to keep a sphere shape is not possible. Because it might be a result of the square lattice it should be tested if the hexagonal lattice type suits this task better. With the hexagonal lattice the cells are hexagons in 2D and rhombic dodecahedrons in 3D. Because rhombic dodecahedron is in its form already similiar to a sphere it might work to keep the sphere shape of a cell with these objects. \newline
+In addition to the different lattice type it should be tested if another approximation to the surface and volume of a sphere is possible. An possible approximation is to use pyramids. With the use of the hexagonal lattice type the cells are made of rhombic dodecahedrons, in three dimensions. The rhombic dodecahedron consits of twelve polygons, where each of the twelve polygons is an pyramid itself. In case of a dodecahedron all parts have the same area as well as the same shape \cite{Horn1984}. An explanation of the rhombic dodecahedron and some basic calculations can be found at Wolfram MathWorld \cite{RhombicDodecahedron.html}.
+
+As an extension of the project malignant cells could be simulated. Because these cells behave different from the non-malignant cells it will be challenge to implement these cells. This could increase the reality of the simulation a lot. First the hexagonal lattice should be tried to get sphere cells and a solid 3D simulation. It might is an useful extension if the 3D simulation works properly.
+
+\ac{CC3D} showed some weaknesses during the bachelor thesis. It is used for several years in the project and therefore there is a good knowledge how to handle the weaknesses. Beside the weaknesses \ac{CC3D} has also its strengths. It allows to develop a simulation program in several programming languages.  This brings freedom to the developer as they can choose if a more object oriented or a script oriented program is required. It would be very useful, especially for complex programs, if a debug during the simulation would be possible. Another strength of \ac{CC3D} is that it has a very active community. In the community a lot of questions are asked and members of the project as well as other community members help as much as possible. Therefore, it is possible to ask the community and get a feedback regarding the problem soon. \newline
+\ac{CC3D} is not the only program which could be used. In a masters thesis of a former student it was evidenced that it is the best suited program for the simulation of the urothelium \cite{MSCAngelo} at this time. This evaluation is almost 4 years in the past. Therefore, it might be possible that there are other programs as well as other approaches which could be used. One program which could be used in Morpheus. It is deveoped at the technical university in Dresden. In the most recent paper, in which the program is used, a 3D multi-scale model of fluids in the liver were simulated \cite{Meyer2017}. Another program for the simulation is Biocellion. It uses a parallel developing approach. This means the hardware sources of the computer can be used more as it is possible to let the cores of a CPU do several tasks \cite{Kang2014}. It might is suited for this problem because a cell has a sphere shape by default \cite{Kang2014}. These two programs might be an alternative to \ac{CC3D}. \newline
+An approach which uses parallelization is the \ac{RW} algortihm \cite{Cercato2006}. This approach was created an uses the \ac{CPM} algorithm. With the created \ac{RW} algorithm a speedup of 3 to 10 times in comparison the the \ac{CPM} is possible \cite{Cercato2006}. It is also mentioned that it is not enough to have a fast algorithm which allows parallelization, the developer has also to know how to use the algorithm in order to develop a faster simulation. \newline
+These programs and approaches might be an alternative to \ac{CC3D}. To determine if \ac{CC3D} is the best suited for the morphogenesis simulation of the urothelium, it might be useful to do a new evaluation of the different algorithms and programs for cell simulation at the market.
 
 
-\begin{itemize}
-\item take a look a biocellion (no race conditions) and morphois
-\item Random Walker algorithm
-\subitem archimedes volumen eines kugelschnittes
-\end{itemize}
+%\begin{itemize}
+%\item algorithmus weiterentwickeln
+%\item (voxel Density)
+%\item (adhesion)
+%\end{itemize}

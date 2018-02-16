@@ -8,9 +8,9 @@ There are two types of tumors. One is the benign and the other one is the malign
 Since bladder cancer is one of the most common cancer types among men it is important to understand how and why the cancer is able to grow. \newline
 Bladder cancer starts to grow in the urothelium. With its grow and spread, the structure of cells sticking together changes. In this case, the urothelium is no longer able to completely perform its tasks. In order to understand the urothelium, how and when bladder cancer appears, it is necessary to observe the epithel.
 
-To understand the functionalities of organs and epithels, in general organisms, observations are essential. For the urothelium this is already done, as there are a lot of different in vitro experiments about the methodology of the urothelium. After an observation of an epithel or organ is complete, researches are able to predict how the observed organism will react in different situations. To verify these predictions a simulation is necessary. A simulation is an illustration of the reality \cite{REF}, but it can also be used to change reality in a for the research specific way, to get more knowledge of the epithel, or an organism in general.
+To understand the functionalities of organs and epithels, in general organisms, observations are essential. For the urothelium this is already done, as there are a lot of different in vitro experiments about the methodology of the urothelium. After an observation of an epithel or organ is complete, researches are able to predict how the observed organism will react in different situations. To verify these predictions a simulation is necessary. A simulation is an abstract illustration of the reality, but it can also be used to change reality in a for the research specific way, to get more knowledge of the epithel, or an organism in general.
 
-A simulation should always be as simple as possible but also not too simple \cite{REF}. Otherwise the simulation does not represent the reality. 
+A simulation should always be as simple as possible but also not too simple. Otherwise the simulation does not represent the reality. 
 There are several programs with different algorithms for cell simulation. A popular algorithm is the \ac{GGH} model. This model is popular because it is easy to describe how cells interact with each other and it is possible to define constraints for the volume and surface of each cell. \newline
 The program \ac{CC3D} is a simulation program, which uses the \ac{GGH} algorithm in its simulation. In the moduro project \ac{CC3D} is used, and with the program the \ac{GGH} algorithm is used.
 
@@ -37,7 +37,7 @@ Two important tasks of the bladder are the storage and release of urine. To do s
 To receive a better overview the different cell types are explained in the following paragraph. In figure \ref{img:physiology_urothelium} at page \pageref{img:physiology_urothelium} a simplified illustration of the urothelium with its different cell types and cell layers is provided. \newline
 The umbrella cells, also called superficial cells, are connected directly with the bladder and have an average diameter of 25 up to \SI{250}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}. 
 
-Below these cells the intermediate cells are located. With an average diameter of 10 up to \SI{20}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}, they are smaller than the umbrella cells. There are at least three and up to five layers of the intermediate cells \cite{REF}. 
+Below these cells the intermediate cells are located. With an average diameter of 10 up to \SI{20}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}, they are smaller than the umbrella cells. There are at least three and up to five layers of the intermediate cells \cite{PuneetKhandelwal2009}. 
 
 The smallest and the most common cells in the urothelium are the basal and stem cells. Those cells have a diameter of up to \SI{10}{\micro\metre} \cite{Lazzeri2006, PuneetKhandelwal2009}. 
 
@@ -96,10 +96,11 @@ Glazier et. al. describe their model as:
 
 
 \section{Objective}
-The aim of this bachelor thesis is to create a 3D morphogenesis simulation of the urothelium using \ac{CC3D}. Since the simulation models and python program for a 2D simulation are given and the simulation is done by \ac{CC3D} the task is to modify the current application, of the 2D simulation, in a way that this program can be used for a 3D simulation of the different models. \newline
-Therefore, some parts of the program have to be modified. Some functionalities have to be invented and developed whereas for other functionalities it is enough to modify these. \newline
-The result of this bachelor thesis will be presented with an realistic model of the 2D simulations. This model is chosen from the given models in the 2D simulation. The question how much more time the 3D simulation need than the 2D simulation will be covered in this thesis as well. If it is possible to provide a calculation of how much more effort a simulation in three dimensions need it will be included, otherwise an estimation of the more effort is presented.
+The aim of this bachelor thesis is to create a 3D morphogenesis simulation of the urothelium using \ac{CC3D}. Because the simulation models and the program for a 2D simulation are given and the simulation is done by \ac{CC3D}, the task is to modify the current application, of the 2D simulation, in a way that this program can be used for a 3D simulation. \newline
+The required changes are all in the program, because the models of the 2D simulation should be also used for the 3D simulation.
+Therefore, some parts of the program have to be modified whereas other parts have to be developed. Because a third dimension will be added to the simulation, it is possible to try to let the cell have a different shape than in the 2D simulation. 
+The result of this bachelor thesis will be presented with an analysis of an 3D simulation. A model therefor is selected out of the models which were created earlier in the project.
 
 
 \section{Outline}
-In this chapter the necessary knowledge to understand this bachelor thesis is provided. The next chapter provides the status at which the project was at the beginning of this bachelor thesis. Once the basic knowledge and the state of the art are explained, necessary modifications of the program are revealed. After these modifications are presented, the result of this bachelor thesis is shown. In the last section of this thesis, this work is discussed from different points of view and the conclusion out of this work is presented.
+In this chapter the necessary knowledge to understand this bachelor thesis is provided. Chapter 'State of the Art' provides the status at which the project was at the beginning of this bachelor thesis. Once the basic knowledge and the 'State of the Art' are explained, the modifications in the program during the journey are revealed in chapter 'Methods'. Then, in chapter 'Results' the outcome of this thesis is presented. After the results are presented, these are discussed of different perspectives in chapter 'Discussion'. In chapter 'Future Work' ideas for the project are presented. To round up this paper a conclusion is provided in chapter 'Conclusion'.
