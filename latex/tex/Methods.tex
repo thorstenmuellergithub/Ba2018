@@ -369,3 +369,69 @@ To receive the volume of the voxel sphere all marked entries in the created matr
 To receive the surface sites of the voxels at the surface, every marked entry is checked if the voxel at x+1, z+1 or the y+1 is either out of bounce, i.e. if it is outside the cuboid, or outside the sphere. Every of the three conditions is checked for every voxel within the surface. If one condition is true, the amount of surface sites is increased by 1. At the end the result, like the volume, is multiplied by 8, in order to mirror the result for all three axis.
 
 
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[MyPersp,font=\large]%[scale=3]
+
+\draw[black,thick] (0,0,0) -- (0,2.75,0) -- (2.75,2.75,0) -- (2.75,0,0) -- cycle;
+\draw[black,thick] (0,0,2.75) -- (0,2.75,2.75) -- (2.75,2.75,2.75) -- (2.75,0,2.75) -- cycle;
+
+%
+%%draw the edges of the cube
+\draw[black,thick] (0,0,0) -- (0,0,2.75);
+\draw[black,thick] (0,2.75,0) -- (0,2.75,2.75);
+\draw[black,thick] (2.75,0,0) -- (2.75,0,2.75);
+\draw[black,thick] (2.75,2.75,0) -- (2.75,2.75,2.75);
+
+%\foreach \t in {0,15,...,150}% meridians
+%    {\draw[gray] ({1.73*cos(\t)+1.0},{1.73*sin(\t)+1.0},1.0)
+%        \foreach \rho in {5,10,...,360}
+%            {--({1.73*cos(\t)*cos(\rho)+1.0},
+% 			{1.73*sin(\t)*cos(\rho)+1.0},{1.73*sin(\rho)+1.0})}--cycle;
+%    }
+%\foreach \t in {-75,-60,...,75}% parallels
+%   {\draw[gray] ({1.73*cos(\t)+1.0},1.0,{1.73*sin(\t)+1.0})
+%        \foreach \rho in {5,10,...,360}
+%           {--({1.73*cos(\t)*cos(\rho)+1.0},   
+%			{1.73*cos(\t)*sin(\rho)+1.0},{1.73*sin(\t)+1.0})}--cycle;
+%   }  
+%   
+%\draw[red, thick] (0,0,0) --(2.75,0,0);
+%\draw[blue, thick] (0,0,0) -- (0,0,2.75);
+%\draw[green, thick] (0,0,0) -- (0,2.75,0);
+\draw[pattern=north west lines, pattern color=gray] (1.375,0,0) -- (1.375,2.75,0) -- (1.375,2.75,2.75) -- (1.37,0,2.75) -- cycle;
+\draw[pattern=north west lines, pattern color=gray] (0,1.375,0) -- (0,1.375,2.75) -- (2.75,1.375,2.75) -- (2.75,1.375,0) -- cycle;
+\draw[pattern=north west lines, pattern color=gray] (0,0,1.375) -- (2.75,0,1.375) -- (2.75,2.75,1.375) -- (0,2.75,1.375) -- cycle;
+%
+%\draw[green,thick] (1,1.50,1) -- (0.5,1.5,1) -- (0.5,1.5,1.5) -- (1,1.5,1.5) -- cycle;
+%\draw[green,thick] (1,1,1) -- (0.5,1,1) -- (0.5,1,1.5) -- (1,1,1.5) -- cycle;
+%
+%\draw[green,thick] (1,1,1) -- (1,1.5,1);
+%\draw[green,thick] (0.5,1,1) -- (0.5,1.5,1);
+%\draw[green,thick] (0.5,1,1.5) -- (0.5,1.5,1.5);
+%\draw[green,thick] (1,1,1.5) -- (1,1.5,1.5);
+
+\foreach \y in {1.375,1.71875, ..., 2.75}
+		{\foreach \z in {1.375,1.71875, ..., 2.75}
+			{\draw[black] (0,\y,\z) -- (1.375,\y,\z); %x-axis
+			}
+		}
+		
+		\foreach \x in {0, 0.34375, ..., 1.375}
+		{\foreach \z in {1.375,1.71875, ..., 2.75}
+			{\draw[black] (\x,1.375,\z) -- (\x,2.75,\z); %y-axis
+			}
+		}
+		
+\foreach \x in {0, 0.34375, ..., 1.375}
+		{\foreach \y in {1.375,1.71875, ..., 2.75}
+			{\draw[black] (\x,\y,1.375) -- (\x,\y,2.75); %y-axis
+			}
+		}
+		
+\end{tikzpicture}
+\caption{A cuboid layed around a sphere}
+\label{tikz:SphereInCube}
+\end{center}
+\end{figure}
