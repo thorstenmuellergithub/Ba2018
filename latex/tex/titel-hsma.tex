@@ -1,0 +1,43 @@
+% Dateiname: titel-hsma.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titelseite
+% Abmessungen des Deckelfensters bei den Bindemappen.
+% 34mm vom rechten Blattrand
+% 60mm vom oberen Blattrand
+% Fensterhöhe 55mm
+% Fensterbreite 130mm
+%
+% Benutzung:
+% \usepackage[absolute]{textpos}	
+% \include{titel-hsma}
+%
+%Bei der Erstellung der Vorlage wurde als Standard, Schriftgröße 11pt verwendet.
+ 
+% Titel der Arbeit
+\begin{textblock*}{130mm}(48mm,68mm) % 4,8cm vom linken Rand und 6,8cmm vom oberen Rand
+	\centering\Large
+	\textbf{Mauris eu diam eget elit pellentesque pellentesque. Praesent id magna sit amet nisi rhoncus condimentum.}
+\end{textblock*}%
+
+%Name
+\begin{textblock*}{130mm}(48mm,105mm)
+	\centering\large 
+	Vorname Nachname
+\end{textblock*}
+
+%Rest
+\begin{textblock*}{297mm}(-46mm,150mm) % -46mm muss vielleicht angepasst werden - von Bindungkorrektur abhängig
+	\begin{center}
+		{Bachelor-Thesis\\Studiengang Informatik}\\
+		\vspace{2cm}
+		{Fakultät für Informatik\\Hochschule Mannheim}\\
+		\vspace{2cm}
+		{23.12.2010} \\ %Datum
+		\vspace{3,5cm}
+		{Betreuerin: Prof. Dr. ...\\
+		Zweitkorrektor: Prof. ...}
+	\end{center}
+\end{textblock*}
+
+\null
+\newpage
