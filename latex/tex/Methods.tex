@@ -8,7 +8,7 @@
 
     
     
-This section gives an overview over all changes in the project which were done during this bachelor thesis. These changes include some small improvements of the application as well as the approach to draw a sphere cell. First minor changes will be described briefly, further onwoards in this chapter the more complex changes will be explained. 
+This section gives an overview over all changes in the project which were done during this bachelor thesis. These changes include some small improvements of the application as well as the approach to draw a sphere cell. First minor changes are described briefly, further onwoards in this chapter the more complex changes are explained. 
 
 \section{Lambda multipliers} \label{sec:LambdaMultipliers}
 In the project the mulitplieres $\lambda_{vol}$ and $\lambda_{sur}$ are set if a cell is initialized. $\lambda_{vol}$ is set a second time in the necrosis event, if the program models that a cell dies. \newline
@@ -75,7 +75,7 @@ Because the basal membrane in a 2D simulation is only displayed at the x-axis an
 \end{figure}
 
 
-With equations \ref{eq:Area12-2D} and \ref{eq:AmounStemCell2D} it is possible to calculate the amount of stem cells in two dimensions. $A_{stem cells}$ refers to the area at the basal membrane which can be used for stem cells. C is a constant, which describes 12\% of an object. Thus, $c=0.12$. $xLength$ presents the length of the x-axis and $zLength$ includes the length of the z-axis of the basal membrane, $d_{cell}$ describes the diameter of the cell and $Amount_{StemCells}$ describe the amount of stem cells at the basal membrane.
+With equations \ref{eq:Area12-2D} and \ref{eq:AmounStemCell2D} it is possible to calculate the amount of stem cells in two dimensions. $A_{stem cells}$ refers to the area at the basal membrane which can be used for stem cells. $c$ is a constant, which describes 12\% of an object. Thus, $c=0.12$. $xLength$ presents the length of the x-axis and $zLength$ includes the length of the z-axis of the basal membrane, $d_{cell}$ describes the diameter of the cell and $Amount_{StemCells}$ describe the amount of stem cells at the basal membrane.
 
 \begin{equation}\label{eq:Area12-2D}
 A_{stem cells} = xLength \cdot c
@@ -83,7 +83,7 @@ A_{stem cells} = xLength \cdot c
 \begin{equation}\label{eq:AmounStemCell2D}
 Amount_{StemCells} = \dfrac{A_{stem cells}}{d_{cell}} 
 \end{equation}
-Equation \ref{eq:Area12-2D} ensures that only 12\% of the given area is used. Formula \ref{eq:AmounStemCell2D} then calculates the amount of stem cells on this given area. Because the result of the calculation is often not a whole number, as last step the result is checked if the first decimal digit is larger or equal than 5 and then it is rounded up or casted, i.e. the decimal digits are cut off.
+Equation \ref{eq:Area12-2D} ensures that only 12\% of the given area is used. Formula \ref{eq:AmounStemCell2D} then calculates the amount of stem cells on this given area. Because the result of the calculation is often not a whole number, as last step the result is checked if the first decimal digit is larger or equal than 5 and then it is rounded up.
 
 \begin{table}[ht]
 \centering
@@ -104,8 +104,8 @@ Equation \ref{eq:Area12-2D} ensures that only 12\% of the given area is used. Fo
 	\label{tbl:Approximation error2D}
 \end{table}
 
-As table \ref{tbl:Approximation error2D} and \ref{tbl:Approximation error3D} display, it is important to round the result. Otherwise there would be an approximation error and as a result a calculation error. \newline
-For three dimensions the equation \ref{eq:Area12-2D} has to be extended. An illustration therefor is figure \ref{tikz:AreaIn3D}. Equation \ref{eq:AmounStemCell2D} has to be modified, because the area of an circle, instead of the diameter, is used for the calculation. Therefore, equations \ref{eq:Area12-3D} and \ref{eq:AmounStemCell3D} are used to calculate the amount of stem in three dimensions are:
+As table \ref{tbl:Approximation error2D} and \ref{tbl:Approximation error3D} at page \pageref{eq:AmounStemCell2D} and \pageref{tbl:Approximation error3D} display, it is important to round the result. Otherwise there would be an approximation error and as a result a calculation error. \newline
+For three dimensions equation \ref{eq:Area12-2D} has to be extended. An illustration therefor is figure \ref{tikz:AreaIn3D}. Equation \ref{eq:AmounStemCell2D} has to be modified, because the area of an circle, instead of the diameter, is used for the calculation. Therefore, equations \ref{eq:Area12-3D} and \ref{eq:AmounStemCell3D} are used to calculate the amount of stem in three dimensions.
 \begin{equation}\label{eq:Area12-3D}
 A_{stem cells} = (xLength \cdot zLength) \cdot c
 \end{equation}
@@ -124,15 +124,15 @@ With the observations of both techniques a new adhesion matrix for the different
 \section{Target volume and target surface after mitosis} \label{sec:TargetVolumeSurfaceAfterMitosis}
 Mitosis of the cell is simulated by \ac{CC3D}. In the simulation mitosis is simulated as the following: one cell splits into two cells. The cell which splits dies and then two new cells out of the dead cell are created. \newline
 In the program it is specified and checked if and when a cell splits. \ac{CC3D} decides where the cell splits and calculates the volume and surface of the two new cells. In the program attributes of the new cells, e.g. the target volume or the target surface, are calculate and set. \newline 
-The target volume were calculated by dividing the target volume of the cell before mitosis by 2. This value is applied for both new created cells. The problem with this technique is that it is possible that the cell might not split in the middle. In the case of mitosis, setting the target volume of the two created cells without the knowledge of the current volume is a source of error. Because the target volume of the two new cells was set without considering the current volume of the cell, it occurred that one of the new cells, after mitosis, had a target volume which was smaller than the current volume. \newline
-After mitosis both cells are initialized. Thus, the target volume and target surface are calculated and set. After the initialization of the cells, the target volume of the new cells were set to the target volume of the cell before mitosis divided by 2. \newline
+The target volume were calculated by dividing the target volume of the cell before mitosis by two. This value is applied for both new created cells. The problem with this technique is that it is possible that the cell might not split in the middle. In the case of mitosis, setting the target volume of the two created cells without the knowledge of the current volume is a source of error. Because the target volume of the two new cells was set without considering the current volume of the cell, it occurred that one of the new cells, after mitosis, had a target volume which was smaller than the current volume. \newline
+After mitosis both cells are initialized. Thus, the target volume and target surface are calculated and set. After the initialization of the cells, the target volume of the new cells were set to the target volume of the cell before mitosis divided by two. \newline
 Because the target volume is calculated out of the volume of the cell during the initialization process, the calculation of the target volume is removed out of the mitosis event. Now the target volume and target surface after mitosis is set only during the initialization process of the new cells. \newline
 Now, the target volume and target surface after mitosis is calculated and set dependent on the of \ac{CC3D} given volume.
 
 
 
 \section{Approximation Error} \label{sec:ApproximationError}
-The project includes conversions from \SI{}{\micro\metre} into voxels. In \ac{CC3D} the amount of pixels and voxels, e.g. for the surface of a cell, has to be set as data type integer, i.e. a whole number. Therefore, it is possible that in some places in the program there are calculation errors during a conversion of the units. In the project, the values of unit \SI{}{\micro\metre} are saved with the data type float, i.e. a number with decimal digits. To set these values as a whole number the values are casted into the data type integer as it is described below. 
+The project includes conversions from \SI{}{\micro\metre} into voxels. In \ac{CC3D} the amount of pixels and voxels, e.g. for the surface of a cell, has to be set as data type integer, i.e. a whole number. Therefore, it is possible that in some places in the program there are calculation errors during a conversion of the units. In the project, the values of unit \SI{}{\micro\metre} are saved with the data type float, i.e. a number with decimal digits. To set these values as a whole number the values are casted, i.e. the decimal digits are cut off, into the data type integer as it is described below. 
 
 Whenever a conversion from \SI{}{\micro\metre} into voxels is done the complete calculation is calculated with decimal digits. After the calculation is done it is verified if the first decimal digit is larger or equal to 5. If this condition is true the result is increased by 1, otherwise not. As a last step the result is casted. This technique has the advantage that calculation errors due to casting are removed, because the cast is the very last step. It is possible that the program still includes some rounding errors, but these can not be removed because \ac{CC3D} requires the amount of voxels as a whole number and the calculations are done with decimal digits. \newline
 In listing \ref{lst:RoundCastLastStep} below, the cast and the rounding of the result are done in the last step of the calculation.
@@ -232,7 +232,7 @@ In equation \ref{eq:calcPointInSphere} $x_{r}$, $y_{r}$ and $z_{r}$ describe the
 Because a voxel itself contains several points, this equation, in this case with cuboids, has the weakness that only one point is considered. Thus, only one point of the voxel is considered in the decision whether the complete voxel is within the sphere or not. Since every voxel is a cuboid itself, the length of all corners are the same. This fact can be used to increase the accuracy  of the equation above.
 
 In the program it is possible to calculate the corner length of a voxel. Thus, it is possible to decide if the center of a voxel is at the inside or outside of a sphere. How the center of a voxel is calculated is explained in the following paragraph. \newline
-Since the radius of the sphere is known, whether it is known or it is calculated out of the volume or the area of a sphere, the diameter of the cuboid can be calculated. Since the voxel density is known in the simulation, the corner length of each voxel can be calculated as it is displayed in equation \ref{eq:calcCornerLengthOfVoxel}.
+Because the radius of the sphere is known, whether it is known or it is calculated out of the volume or the area of a sphere, the diameter of the cuboid can be calculated. Moreover, the voxel density is known in the simulation, the corner length of each voxel can be calculated as it is displayed in equation \ref{eq:calcCornerLengthOfVoxel}.
 \begin{equation}\label{eq:calcCornerLengthOfVoxel}
 c = \dfrac{2 \cdot radius}{voxel density}
 \end{equation}
@@ -314,7 +314,7 @@ With all necessary points in the voxel unit it is now possible to iterate over a
                         
 \end{lstlisting}
 
-To draw the cell as a sphere is the first step to have sphere cells in the simulation. Because it is possible to draw a cell as a sphere, the cells are considered inthe rest of the paper as sphere cell. 
+To draw the cell as a sphere is the first step to have sphere cells in the simulation. Because it is possible to draw a cell as a sphere, the cells are considered in the rest of the paper as sphere cell. 
 %Two major parts of the simulation are the growth and the mitosis of the simulation. In order that the cells are able to stay as a sphere it is required to adjust the volume and surface calculation as well.
 
 
@@ -326,15 +326,15 @@ To model the growth of a cell, the growth per day of the volume for the differen
 In the program the target surface is calculated out of a real sphere and then multiplied by a factor.
 Because the surface of a sphere of voxels is larger than the surface of a real sphere, it is necessary to find the correct factor, by which the surface of a sphere has to be multiplied. This is necessary, in order to calculate the surface of a sphere of voxels. 
 
-For simplicity reasons, a first approximation of the factor is calculated in 2D. Thus, a circle and a square filled with pixels are used. An example therefor is displayed in figure \ref{img:CircleSquarePixels}. \newline
-Figure \ref{img:ApproximationSQRT2} displays an approximation, with which it is possible to calculate the factor for the surface. 
+For simplicity reasons, a first approximation of the factor is calculated in 2D. Thus, a circle and a square filled with pixels are used. An example therefor is displayed in figure \ref{img:CircleSquarePixels} at page \pageref{img:CircleSquarePixels}. \newline
+Figure \ref{img:ApproximationSQRT2} at page \pageref{img:ApproximationSQRT2} displays an approximation, with which it is possible to calculate the factor for the surface. 
 
 In figure \ref{img:ApproximationSQRT2} the left square is considered as a pixel, it could be any pixel of the figure \ref{img:CircleSquarePixels} through which the circle is included. Thus, the sides of the square are the same. The blue line represents the circle, in a way it could go through the pixel. An possible approximation is to insert a diagonal line. With this diagonal line an isosceles, right angular triangle is created as it is displayed at the right side of figure \ref{img:ApproximationSQRT2}. \newline
 The following formula provides a way to calculate the sides of this triangle.
 \begin{equation}\label{eq:IsoscelesRightAncularTriangle}
 c^{2} = 2 \cdot a^{2}
 \end{equation}
-This formula can be used to calculate the side $a$, as it is displayed in the following equation.
+The formula of equation \ref{eq:IsoscelesRightAncularTriangle} can be used to calculate the side $a$, as it is displayed in the following equation.
 \begin{equation}\label{eq:CornerSideAOfTriangle}
 \begin{split}
 a &= \sqrt{\dfrac{c^{2}}{2}} \\
@@ -350,7 +350,7 @@ S &= c \cdot \sqrt{2}
 \end{equation}
 This formula applies to all pixels, which are at the surface of the pixel sphere, $c$ is considered as the surface of the circle. Thus $c = \pi \cdot r^{2}$.
 
-The calculated factor $\sqrt{2}$ was tested for a sphere surface. Because, this is an approximation to the surface of a pixel sphere, the tenth part beside this factor are also tested mathematically. As figure \ref{img:DeviationSphere} displays the  approximation with factor $\sqrt{2}$ still has some deviation. Almost no deviation between the surface of a sphere and a surface of a sphere of voxels appeared with a factor of $1.5$. Thus, this factor is applied in the calculation of the target surface. 
+The calculated factor $\sqrt{2}$ was tested for a sphere surface. Because, this is an approximation to the surface of a pixel sphere, the tenth part beside this factor are also tested mathematically. As figure \ref{img:DeviationSphere} at page \pageref{img:DeviationSphere} displays the  approximation with factor $\sqrt{2}$ still has some deviation. Almost no deviation between the surface of a sphere and a surface of a sphere of voxels appeared with a factor of $1.5$. Thus, this factor is applied in the calculation of the target surface. 
 
 \begin{figure}[ht]
 	\center
@@ -377,10 +377,10 @@ The calculated factor $\sqrt{2}$ was tested for a sphere surface. Because, this 
 
 \section{Calculation of the volume and surface sites of a voxel sphere}\label{sec:CreatedAlgorithm}
 In order to determine the voxel volume and the surface sites of a sphere cell without the start of a simulation, an algorithm for this problem was created. Otherwise a new simulation in \ac{CC3D} had to be started for every measurement of the volume and surface of the sphere cells. \newline
-Since a sphere and a cuboid are both symmetrical, it is possible to split both into 8 pieces. Doing so only one eighth of the cuboid has to be calculated in order to determine the volume and the surface of the sphere. An example therefore is displayed in figure \ref{tikz:CuboidsInCuboid}. \newline
-To calculate which voxels are in the voxel sphere, the algorithm creates a x, z, y matrix. In the following calculations and decisions the center of each voxel is used. For every x,z coordinate in the eighth of the cuboid the y constraint of the circle is calculated. Next, every voxel at the x,z coordinate is checked if the center of the voxel is within this constraint or not. Thus, every voxel at a x,z coordinate gets checked if its center is within the sphere or not. This process is repeated until every x,z coordinate of the eighth of the cuboid is calculated. Every time a voxel is within the sphere, it will be marked with a 0 in the matrix. An example matrix is displayed in table \ref{tbl:MatrixCuboidsInCuboidSphere}. \newline
-To receive the volume of the voxel sphere all marked entries in the created matrix are count. Then, this result is mirrored for all three axes. Thus, the amount of marked voxels in the matrix is multiplied by 8, which equals to a single multiply by 2 for each axis. Therefore $V=(((Voxels \cdot 2) \cdot 2) \cdot 2)$.
-To receive the surface sites of the voxels at the surface, every marked entry is checked if the voxel at x+1, z+1 or the y+1 is either out of bounds, i.e. if it is outside the cuboid, or outside the sphere. Every of the three conditions is checked for every voxel within the surface. If one condition is true, the amount of surface sites is increased by 1. At the end the result, like the volume, is multiplied by 8, in order to mirror the result for all three axis.
+Because a sphere and a cuboid are both symmetrical, it is possible to split both into eight pieces. Doing so only one eighth of the cuboid has to be calculated in order to determine the volume and the surface of the sphere. An example therefore is displayed in figure \ref{tikz:CuboidsInCuboid} at page \pageref{tikz:CuboidsInCuboid}. \newline
+To calculate which voxels are in the voxel sphere, the algorithm creates a x, z, y matrix. In the following calculations and decisions the center of each voxel is used. For every x,z coordinate in the eighth of the cuboid the y constraint of the circle is calculated. Next, every voxel at the x,z coordinate is checked if the center of the voxel is within this constraint or not. Thus, every voxel at a x,z coordinate gets checked if its center is within the sphere or not. This process is repeated until every x,z coordinate of the eighth of the cuboid is calculated. Every time a voxel is within the sphere, it will be marked with a 0 in the matrix. An example matrix is displayed in table \ref{tbl:MatrixCuboidsInCuboidSphere} at page \pageref{tbl:MatrixCuboidsInCuboidSphere}. \newline
+To receive the volume of the voxel sphere all marked entries in the created matrix are count. Then, this result is mirrored for all three axes. Thus, the amount of marked voxels in the matrix is multiplied by eight, which equals to a single multiply by two for each axis. Therefore $V=(((Voxels \cdot 2) \cdot 2) \cdot 2)$, where $Voxels$ represent the voxels in the matrix marked with a 0.
+To receive the surface sites of the voxels at the surface, every marked entry is checked if the voxel at x+1, z+1 or the y+1 is either out of bounds, i.e. if it is outside the cuboid, or outside the sphere. Every of the three conditions is checked for every voxel within the surface. If one condition is true, the amount of surface sites is increased by 1. At the end the result, like the volume, is multiplied by eight, in order to mirror the result for all three axis.
 
 
 

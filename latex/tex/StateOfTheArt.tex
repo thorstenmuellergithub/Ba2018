@@ -11,7 +11,7 @@ The project consists  of a program and several models, both are written in Pytho
 \section{Display and Simulation of the Urothelium}
 %wie wird es dargestellt 
 In the 2D simulation, the urothel is simulated with a size of \SI{500}{\micro\metre} for the x-axis and \SI{150}{\micro\metre} for the y-axis. Because, the voxel density is $0.8$, the size of the urothelium is represented with 400 pixels at the x-axis and 120 pixels at the y-axis. The voxel denstity describes how many pixels are used to display \SI{1}{\micro\metre}. \ac{CC3D} allows the user to use any simulation size, as long as the required hardware is able to handle the simulation. \newline
-It is possible to use \ac{CC3D} on several cores of the \ac{CPU}. In the project one core for a simulation is used, because otherwise \ac{CC3D} splits the simulation field into different grids. As a result race conditions can occur at the edges of these grids \cite{MaciejH.Swat2017}. This means it is possible that a cell is in two grids. Thus, one half is in one grid and the other half is in another grid. During the simulation both grids would calculate the volume of the cell and both would apply the new volume of their calculation but it is not checked which result has to be used. Therefore, in order to reduce wrong results, it is necessary to avoid race conditions. \newline 
+It is possible to use \ac{CC3D} on several cores of the CPU. In the project one core for a simulation is used, because otherwise \ac{CC3D} splits the simulation field into different grids. As a result race conditions can occur at the edges of these grids \cite{MaciejH.Swat2017}. This means it is possible that a cell is in two grids. Thus, one half is in one grid and the other half is in another grid. During the simulation both grids would calculate the volume of the cell and both would apply the new volume of their calculation but it is not checked which result has to be used. Therefore, in order to reduce wrong results, it is necessary to avoid race conditions. \newline 
 The 2D simulations of the urothelium covers a timespan of 720 days. In the simulations one day is split up into 500 \ac{MCS}. Therefore, the simulation covers 360000 \ac{MCS}. The simulation duration can be set in the program. Thus, the user defines how many \ac{MCS} simulate one day and how long the simulation runs. At the first calculation step, \ac{MCS} 0, the simulation is initialized. An illustration of an initial simulation is displayed in figure \ref{img:2DSimulationInitialState}. Because morphogenesis is simulated, the urothelium is proposed to growth and to proliferate in the given area. An illustration therefor is presented in figure \ref{img:2DSimulation33Days}.
 
 \begin{figure}[ht]
@@ -42,7 +42,7 @@ The stem cells are the first type of cell which undergo mitosis. One concept has
 \subsection{Basal cells}
 For the mitosis of basal cells there are 4 different models. The mitosis model 'BSD' describes that each basal cell which undergoes mitosis will create one basal and one intermediate cell. The model 'BPA' describes that there is either a 5\% chance that the basal cell will become two basal or it will become two intermediate cells. There is a 90\% probability that the cell become one basal and one intermediate cell. The model 'BPCD', describes that always a basal cell becomes two basal cells during mitosis and if the basal cell is not on the basal membrane it transforms into an intermediate cell. The model 'BCD' has the behavior that a basal cell immediately transforms into an intermediate cell if it is not at the basal membrane.\newline
 \subsection{Intermediate cells}
-There are two different models how intermediate cells split. One is the 'IPCD', therefor during mitosis an intermediate cell becomes two intermediate cells. Each \ac{MCS} it is checked if there is a cell around the intermediate cell. If this is not the case it is transformed into an umbrella cell. The second model is the 'ICD'. In this one, the transformation of intermediate cells into the umbrella cells only happens if the intermediate cell is not enclosed by other cells. \newline
+There are two different models how intermediate cells split. One is the 'IPCD', therefor during mitosis an intermediate cell becomes two intermediate cells. Each \ac{MCS} it is checked if there is a cell around the intermediate cell. If this is not the case it is transformed into an umbrella cell. The second model is the 'ICD'. In this concept, the transformation of intermediate cells into the umbrella cells only happens if the intermediate cell is not enclosed by other cells. \newline
 
 
 \begin{table}[ht]
@@ -200,7 +200,7 @@ Umbrella cell & \celltypeU &  &  &  &  &  & 2\tabularnewline
 
 
 \section{Cell properties}
-In the project the physiology constraints of a cell are included. In an earlier version of the project these were evidenced \cite{Torelli2017} and are displayed in table \ref{tbl:CellConstraints} at page \pageref{tbl:CellConstraints}. In the program these constraints are converted into pixels and then applied. \newline
+In the project the physiological constraints of a cell are included. In an earlier version of the project these were evidenced \cite{Torelli2017} and are displayed in table \ref{tbl:CellConstraints} at page \pageref{tbl:CellConstraints}. In the program these constraints are converted into pixels and then applied. \newline
 In the simulation every cell has several attributes. Moreover, each cell has an cell dictionary, in which additional attributes are stored. The properties regarding the cell type are likely what every cell in general has, e.g. a min- max diameter, a min- max volume, growth in \SI{}{\micro\metre} per day or the time until apoptosis, i.e. cell death. \newline
 The attributes in the cell dictionary are mainly used for decision making. Some values are the current and expected live time, a flag for necrosis and if a cell is inhibited, i.e. enclosed by other cells. \newline
 
@@ -264,7 +264,7 @@ f_{A} = 1 - \dfrac{((1-L_{B})+(1-L_{U})+lib+(1-L_{O})}{4}
 \end{equation}
 In equation \ref{eq:LIB} $L$ refers to the amount of layers in the urothelium. $lib$ describe the amount of layers between the stem and basal cell layer and the umbrella cell layer at the top of the urotehlium, which include not only intermediate cells. Thus, if the layers between the first and last layer consist only of intermediate cells, the equation \ref{eq:LIB} has the result 0.\newline
 In equation \ref{eq:FitnessArrangement} $L_{B}$ and $L_{U}$ are boolean values, i.e. they have the value 0 or 1 and represent a false or true value. They are 1 if the first layer of cells consists only of basal or stem cells and if the most upper layer consists only of umbrella cells, otherwise they will be 0.
-$lib$ is calculated in equation \ref{eq:LIB}. $L_{O}$ presents the optimum amount of layers. It is 1, if the amount of layers in the simulated urothelium is between 3 and 7, otherwise it is 0. The result of equation \ref{eq:FitnessArrangement} is between 0 and 1, where 0 refers to no reality in the simulation and 1 refers to a perfect simulated urothelium. \newline
+$lib$ is calculated in equation \ref{eq:LIB}. $L_{O}$ presents the optimum amount of layers. It is 1, if the amount of layers in the simulated urothelium is between 3 and 7, otherwise it is 0. The result of equation \ref{eq:FitnessArrangement} is between 0 and 1, where 0 refers to a chaotic grown urothel with no reality in its structure and 1 refers to a perfectly structured urothelium. \newline
 
 \subsection{Volume fitness function} \label{subsec:VolumeFitness}
 This function calculates the relative volume regarding the current volume of the different cell types in the urothel. The relative amount of the different cell types should be: stem and basal cell = 10\%, intermediate cells = 67\% and umbrella cells = 23\% considering an average thickness of \SI{85}{\micro\metre} \cite{Torelli2017}. Therefor the formula is:
@@ -275,12 +275,12 @@ $V_{Si}$ and $V_{Ii}$ describes the \textit{should} and the actual \textit{is} v
 \begin{equation}\label{eq:VolumeFitnessOverall}
 f_{V} = \dfrac{f_{V_{B}} + f_{V_{I}} + f_{V_{U}}}{3}
 \end{equation}
-In this equation $f_{V_{B}}$ refers to the realtive volume of the stem and basal cells, $f_{V_{I}}$ presents the relative volume of the intermediate cells and $f_{V_{U}}$ include the realtive volume of the umbrella cells. \newline
-The result of all four calculations are written into a text file and can be read out by the moduro toolbox later.
+In equation \ref{eq:VolumeFitnessOverall} $f_{V_{B}}$ refers to the realtive volume of the stem and basal cells, $f_{V_{I}}$ presents the relative volume of the intermediate cells and $f_{V_{U}}$ include the realtive volume of the umbrella cells. \newline
+The result of all four calculations, three times the equation \ref{eq:VolumeFitnessSpecific} for every layer and one time equation \ref{eq:VolumeFitnessOverall} is calculated, are written into a text file and can be read out by the moduro toolbox later.
 
 \subsection{Overall fitness function}
 The ideas and equations of this subsections are found in the paper created earlier in the project \cite{Torelli2017}. \newline
-The overall fitness function calculates the total fitness out of the volume and the arrangement fitness function. Therefore the average of both functions is calculated. For every calculation step, the arrangement and volume fitness function are calculated the overall fitness is calculated. Therefor the formula is:
+The overall fitness function calculates the total fitness out of the volume and the arrangement fitness function. Therefore the average of both functions is calculated. For every calculation step, the arrangement and volume fitness function are calculated and the overall fitness is calculated. Therefor the formula is:
 
 \begin{equation} 
 f(t_{i}) = \dfrac{f_{V}(t_{i})+f_{A}(t_{i})}{2}
