@@ -1,5 +1,5 @@
 \chapter{Introduction}
-To start this paper an motivation for this scientific work is given. Then, the required knowledge is presented. After the presentation of the basic knowledge the objective of this bachelor thesis is displayed. To close this chapter an outline of this paper is given in the last section.
+To start this paper a motivation for this scientific work is given. Then, the required knowledge is presented. After the presentation of the basic knowledge the objective of this bachelor thesis is displayed. To close this chapter an outline of this paper is given in the last section.
 
 \section{Motivation}
 One of several requirements regarding complex life is cell adhesion. If cells do not stick to each other the only living things would be cells. 
@@ -8,7 +8,7 @@ In humans and animals, organs and epithels are made of several cells and several
 There are two types of tumors. One is the benign and the other one is the malignant tumor \cite{Poplawski2009}. The benign tumor is self limited. Thus, it does not invade surrounding tissues nor does it spread into other body parts \cite{Poplawski2009}. The malignant tumor on the other hand is not limited in its growth and is able to invade other body parts \cite{Poplawski2009}. 
 
 Since bladder cancer is one of the most common cancer types among men it is important to understand how and why the cancer is able to grow. \newline
-Bladder cancer starts to grow in the urothelium. With its grow and spread, the structure of cells sticking together changes. In this case, the urothelium is no longer able to completely perform its tasks. In order to understand the urothelium, how and when bladder cancer appears, it is necessary to observe the epithel.
+Bladder cancer starts to grow in the urothelium. With its growth and spread, the structure of cells sticking together changes. In this case, the urothelium is no longer able to completely perform its tasks. In order to understand the urothelium, how and when bladder cancer appears, it is necessary to observe the epithel.
 
 To understand the functionalities of organs and epithels, in general organisms, observations are essential. \textit{For the urothelium this is already done, as there are several in vitro experiments about the methodology of the urothelium.} After an observation of an epithel or organ is complete, researches are able to predict how the observed organism will react in different situations. To verify these predictions a simulation is necessary. A simulation is an abstract illustration of the reality, but it can also be used to change reality in a for the research specific way, to get more knowledge of the epithel, or an organism in general.
 
@@ -28,10 +28,10 @@ The bladder is located in the lower urinary tract and consists of several parts.
 
 Two important tasks of the bladder are the storage and release of urine. To do so the bladder will extend, during the storage, and then shrink again \cite{Karl-ErikAndersson2004}. One task of the urothelium is to form a distensible barrier \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, Lewis2000, WRCross2005}, which prevents unregulated exchange of ions, solutes, and toxic metabolites between the bladder and the blood \cite{Apodaca2004, Lazzeri2006, PuneetKhandelwal2009, Lewis2000}. The urothelium ensures its barrier function, through enlargement and downsizing of its size . This is done by the largest cells of the urothelium, the umbrella cells. Since the umbrella cells are in direct contact with the bladder, it is their task to change size and form during the growth and shrink process of the bladder. Birder \cite{Birder2005} described the urothelium as “… a responsive structure capable of detecting physiological and chemical stimuli and releasing a number of signaling mole-cules.”. Another task of the urothelium is to control the movement and passage of macromolecules, ions, water, toxic metabolites and solutes \cite{Apodaca2004, PuneetKhandelwal2009}. If the urothelium is damaged, it rapidly generates new cells, to ensure full functionality \cite{Apodaca2004, Yamany2014, PuneetKhandelwal2009}.
 
-To receive a better overview of the different cell types are explained in the following paragraph. In figure \ref{img:physiology_urothelium} a simplified illustration of the urothelium with its different cell types and cell layers is provided. \newline
+To receive a better overview of the different cell types, they are explained in the following paragraph. In figure \ref{img:physiology_urothelium} a simplified illustration of the urothelium with its different cell types and cell layers is provided. \newline
 The umbrella cells, also called superficial cells, are connected directly with the bladder and have an average diameter of 25 up to \SI{250}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}. 
 
-Below these cells the intermediate cells are located. With an average diameter of 10 up to \SI{20}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}. There are at least three and up to five layers of the intermediate cells \cite{PuneetKhandelwal2009}. 
+Below these cells the intermediate cells are located, with an average diameter of 10 up to \SI{20}{\micro\metre} \cite{Yamany2014, PuneetKhandelwal2009}. There are at least three and up to five layers of the intermediate cells \cite{PuneetKhandelwal2009}. 
 
 The smallest and the most common cells in the urothelium are the basal and stem cells. Those cells have a diameter of up to \SI{10}{\micro\metre} \cite{Lazzeri2006, PuneetKhandelwal2009}. 
 
@@ -52,7 +52,7 @@ The core of a \ac{GGH} simulation is the effective energy \cite{MaciejH.Swat2017
 \begin{equation}
 \mathcal{H}_{boundary} = \sum_{\vec{i},\vec{j}}^{ }{J(\tau(\sigma(\vec{i})),(\tau(\sigma(\vec{j})))(1-\delta(\sigma(\vec{i}),(\sigma(\vec{j})))}
 \end{equation}
-This equation is a part of the equation of the \ac{GGH} model. This model is explained in the next section. It is possible to extend this form in two ways. Either add a volume or a surface constraint for each cell can be added. 
+This equation is a part of the equation of the \ac{GGH} model. This model is explained in the next section. It is possible to extend this form in two ways. Either a volume or a surface constraint for each cell can be added. 
 During each \ac{MCS} an index-copy attempt takes place \cite{MaciejH.Swat2017}. In this index-copy attempt a pixel is selected, and it is tried to overwrite a randomly chosen pixel, next to the current pixel. It succeeds and takes place if this index copy attempt decreases the effective energy \cite{MaciejH.Swat2017}. Each \ac{MCS} \ac{CC3D} tries to minimize the effective energy with index copy attempts. 
 
 \begin{figure}[th]
@@ -63,7 +63,7 @@ During each \ac{MCS} an index-copy attempt takes place \cite{MaciejH.Swat2017}. 
 \end{figure}
 
 \subsection{Glazier Graner Hogeweg Model} \label{subsec:Intro_GGH}
-Glazier and Grander developed several formulas and models which are presented in this subsection with focus on the \ac{CPM} and \ac{GGH} model.\newline
+Glazier and Graner developed several formulas and models which are presented in this subsection with focus on the \ac{CPM} and \ac{GGH} model.\newline
 The \ac{GGH} model is widely used in biological simulations, since it provides a good flexibility, extensibility and usability \cite{Glazier2007}. 
 Glazier and Graner \cite{Glazier2007} developed the \ac{EPM} as an extension of the large-q Potts model, which itself is an extension of the Ising Model. Nowadays, this model is called \ac{CPM} \cite{Glazier2007, Graner1992, Glazier1993}. Glazier and Graner extended the \ac{CPM} in a way that also volume constraints are considered for the hamiltonian, i.e. the effective energy, as it is displayed in the following equation:
 \begin{equation}\label{eq:H_CPM}
@@ -72,7 +72,7 @@ Glazier and Graner \cite{Glazier2007} developed the \ac{EPM} as an extension of 
 		 & + \sum_{\sigma}^{}{\lambda_{vol}((\tau)v(\sigma)-V_{target}(\tau(\sigma)))^2}
 \end{split}
 \end{equation}
-The hamiltonian of equation \ref{eq:H_CPM} describes the effective energy for the extension of the \ac{CPM} model. The first sum describes $J$ of all cells, the adhesion energy between different cells. Therefor, every cell has a specific cell type $\tau(\sigma)$ \cite{Glazier1993, Graner1992}. Each cell is placed onto a lattice with a spin $(\sigma(\vec{i}))$ for every given dimension \cite{Graner1992, Glazier2007}. The adhesion energy between cells is only considered if the kroenecker delta is 0. Thus, the adhesion energy between cells is considered if $\delta(\sigma, \sigma') = 0$ \cite{Glazier1993, Graner1992, Stott1999, Glazier2007, Chen2007, Cickovski2005}. \newline
+The hamiltonian of equation \ref{eq:H_CPM} describes the effective energy for the extension of the \ac{CPM} model. The first sum describes $J$ of all cells, the adhesion energy between different cells. Therefore, every cell has a specific cell type $\tau(\sigma)$ \cite{Glazier1993, Graner1992}. Each cell is placed onto a lattice with a spin $(\sigma(\vec{i}))$ for every given dimension \cite{Graner1992, Glazier2007}. The adhesion energy between cells is only considered if the kroenecker delta is 0. Thus, the adhesion energy between cells is considered if $\delta(\sigma, \sigma') = 0$ \cite{Glazier1993, Graner1992, Stott1999, Glazier2007, Chen2007, Cickovski2005}. \newline
 With the second sum over all cells the volume of each cell is now considered within the effective energy. The user is now able to set a target volume $V_{target}(\tau(\sigma))$ for each cell and a multiplier $\lambda_{vol}$ for the deviation between the current volume $(\tau)v(\sigma)$ and the target volume. During the simulation this deviation is tried to be kept as small as possible for every cell in order to keep the effective energy as small as possible.
 
 Together with Hogeweg Glazier and Graner further developed the created extension of the \ac{CPM}. The further developed model is called \ac{GGH} model. The main extension is that the user is now able to add surface area constraints \cite{Graner1992, Glazier1993, Glazier2007} as well as to use a negative boundary energy \cite{Glazier2007}. With the surface constraint the equation for the effective energy of the \ac{GGH} model is: 
@@ -92,7 +92,7 @@ Glazier et. al. describe their model as:
 "GGH models define biological structure consisting of the configuration of a set of \textit{generalized cells}, each represented on a \textit{cell lattice} as a domain of lattice sites sharing the same cell index [...], a set of \textit{internal cell states} for each cell [...], and a set of \textit{auxiliary fields} ...” \cite{Glazier2007}.
 \end{quote}
 
-“Initial conditions emulating a particular biological configuration rather than random initial conditions.” \cite{Glazier2007} brings the advantage that the \ac{GGH} model now has now biologically motivated properties instead of physically motivated properties \cite{Glazier2007}. 
+“Initial conditions emulating a particular biological configuration rather than random initial conditions.” \cite{Glazier2007} brings the advantage that the \ac{GGH} model now has biologically motivated properties instead of physically motivated properties \cite{Glazier2007}. 
 
 
 \section{Objective}

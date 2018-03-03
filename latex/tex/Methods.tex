@@ -8,13 +8,13 @@
 
     
     
-This section gives an overview over all changes in the project which were done during this bachelor thesis. These changes include some small improvements of the application as well as the approach to draw a sphere cell. First minor changes are described briefly, further onwoards in this chapter the more complex changes are explained. 
+This section gives an overview over all changes in the project which were done during this bachelor thesis. These changes include some small improvements of the application as well as the approach to draw a sphere cell. First minor changes are described briefly, further onwards in this chapter the more complex changes are explained. 
 
 \section{Lambda multipliers} \label{sec:LambdaMultipliers}
 In the project the mulitplieres $\lambda_{vol}$ and $\lambda_{sur}$ are set if a cell is initialized. $\lambda_{vol}$ is set a second time in the necrosis event, if the program models that a cell dies. \newline
 In each cell object, there were two additional multipliers, one for the surface and one for the volume constraints. Because these values are not used in the program and they do not influence or set the $\lambda_{vol}$ or $\lambda_{sur}$ which \ac{CC3D} uses, these two values were deleted. Moreover, in one place there were methods to calculate the lambda values. Because these methods are not used in the project and they had a multiplier itself to calculate the multiplier for the specific part of the effective energy, they were deleted as well. 
 
-In the project the multipliers $\lambda_{vol}$ and $\lambda_{sur}$ are now set each time when a cell is initialized. A second time the multiplier $\lambda_{vol}$ is set, is if necrosis takes place. Now the unnecessary methods and values for the multipliers values are removed. Thus, no confusion about which constraint values in the program are used arises.
+In the project the multipliers $\lambda_{vol}$ and $\lambda_{sur}$ are now set each time when a cell is initialized. A second time the multiplier $\lambda_{vol}$ is set, if necrosis takes place. Now the unnecessary methods and values for the multipliers values are removed. Thus, no confusion about which constraint values in the program are used arises.
 
 \section{Abstract methods}\label{sec:AbstractMethods}
 The program has several classes with methods which were not used because of polymorphism. Polymorphism is a method out of \ac{OOP}. Another technique of \ac{OOP} is the use of abstract classes and abstract methods. To explain polymorphism, abstract classes or abstract methods in detail, would take too much space out of this bachelor thesis. Thus, the change in the program is explained in the following paragraph.
@@ -43,7 +43,7 @@ The check when the urination event takes place is modified. This modification to
 \section{Amount of stem cells on the basal membrane}\label{sec:AmountStemCellsBasalMembrane}
 In an earlier version of the project it was evidenced that around 12\% of the area of the basal membrane are required to be filled with stem cells in order to have an optimal proliferation during the morphogenesis of the cells \cite{Torelli2017}.
 In the project the calculation of the amount of stem cells for two dimensions were correct but it was incorrect for three dimensions. Moreover, one factor was calculated out of the diameter of the stem cells. This factor stayed the same for all sizes of the simulation fields. \newline
-Because the basal membrane in a 2D simulation is only displayed at the x-axis and at a 3D simulation it is displayed with the x- and z-axis, the calculation for two dimensions considers the x-axis and the calculation for three dimensions considers the x- and z-axis. Therefore, in two dimensions the area of the stem cells should be calculated by using the cell diameter. An illustration therefor is displayed in figure \ref{tikz:AreaIn2D}. For a 3D simulation it is possible to calculate the area of stem cells with a circle with the formula $A = \pi \cdot r^{2}$, because the y-axis is not considered in this calculation, and use this calculation to further determine the amount of stem cells on the basal membrane. An example for the basal membrane and a stem cell in three dimensions is displayed in figure \ref{tikz:AreaIn3D}. 
+Because the basal membrane in a 2D simulation is only displayed at the x-axis and at a 3D simulation it is displayed with the x- and z-axis, the calculation for two dimensions considers the x-axis and the calculation for three dimensions considers the x- and z-axis. Therefore, in two dimensions the area of the stem cells should be calculated by using the cell diameter. An illustration therefor is displayed in figure \ref{tikz:AreaIn2D}. For a 3D simulation it is possible to calculate the area of stem cells with a circle with the formula $A = \pi \cdot r^{2}$, because the y-axis is not considered in this calculation. The area of a circle is also used to determine the amount of stem cells on the basal membrane. An example for the basal membrane and a stem cell in three dimensions is displayed in figure \ref{tikz:AreaIn3D}. 
 
 \begin{figure}[ht]
 \begin{center}
@@ -52,7 +52,7 @@ Because the basal membrane in a 2D simulation is only displayed at the x-axis an
 \draw[black,thick] (-2,0) -- (2,0)node[anchor=north east]{$basal membrane$};
 \draw[blue,thick] (-1,.01) -- (-0.5,.01)node[anchor=north]{$d_{cell}$};
 \end{tikzpicture}
-\caption[Considered area to spread the stem cells in two dimensions]{Considered area to spread the stem cells in 2D with an example of one stem cell placed on the basal membrane. Because only the x-axis is consired the diameter of a cell is used for the calculation}
+\caption[Considered area to spread the stem cells in two dimensions]{Considered area to spread the stem cells in 2D with an example of one stem cell placed on the basal membrane. Because only the x-axis is considered the diameter of a cell is used for the calculation}
 \label{tikz:AreaIn2D}
 \end{center}
 \end{figure}
@@ -75,7 +75,7 @@ Because the basal membrane in a 2D simulation is only displayed at the x-axis an
 \end{figure}
 
 
-With equations \ref{eq:Area12-2D} and \ref{eq:AmounStemCell2D} it is possible to calculate the amount of stem cells in two dimensions. $A_{stem cells}$ refers to the area at the basal membrane which can be used for stem cells. $c$ is a constant, which describes 12\% of an object. Thus, $c=0.12$. $xLength$ presents the length of the x-axis and $zLength$ includes the length of the z-axis of the basal membrane, $d_{cell}$ describes the diameter of the cell and $Amount_{StemCells}$ describe the amount of stem cells at the basal membrane.
+With equations \ref{eq:Area12-2D} and \ref{eq:AmounStemCell2D} it is possible to calculate the amount of stem cells in two dimensions. $A_{stem cells}$ refers to the area at the basal membrane which can be used for stem cells. $c$ is a constant, which describes 12\% of an object. Thus, $c=0.12$. $xLength$ presents the length of the x-axis and $zLength$ includes the length of the z-axis of the basal membrane, $d_{cell}$ describes the diameter of the cell and $Amount_{StemCells}$ describes the amount of stem cells at the basal membrane.
 
 \begin{equation}\label{eq:Area12-2D}
 A_{stem cells} = xLength \cdot c
@@ -105,7 +105,7 @@ Equation \ref{eq:Area12-2D} ensures that only 12\% of the given area is used. Fo
 \end{table}
 
 As table \ref{tbl:Approximation error2D} and \ref{tbl:Approximation error3D} at page \pageref{eq:AmounStemCell2D} and \pageref{tbl:Approximation error3D} display, it is important to round the result. Otherwise there would be an approximation error and as a result a calculation error. \newline
-For three dimensions equation \ref{eq:Area12-2D} has to be extended. An illustration therefor is figure \ref{tikz:AreaIn3D}. Equation \ref{eq:AmounStemCell2D} has to be modified, because the area of an circle, instead of the diameter, is used for the calculation. Therefore, equations \ref{eq:Area12-3D} and \ref{eq:AmounStemCell3D} are used to calculate the amount of stem in three dimensions.
+For three dimensions equation \ref{eq:Area12-2D} has to be extended. An illustration therefor is figure \ref{tikz:AreaIn3D}. Equation \ref{eq:AmounStemCell2D} has to be modified, because the area of a circle, instead of the diameter, is used for the calculation. Therefore, equations \ref{eq:Area12-3D} and \ref{eq:AmounStemCell3D} are used to calculate the amount of stem cells in three dimensions.
 \begin{equation}\label{eq:Area12-3D}
 A_{stem cells} = (xLength \cdot zLength) \cdot c
 \end{equation}
@@ -117,7 +117,7 @@ These calculations are now included in the program.
 
 \section{Adhesion Matrix}\label{sec:AdhesionMatrix}
 To have a realistic simulation it is necessary to have a correct adhesion matrix. The matrix which was used for the 2D simulation is displayed in \ref{tbl:AdhesionMatrix} at page \pageref{tbl:AdhesionMatrix}. It might be that the adhesion values are useful for the 2D simulation but not for the 3D simulations. Therefore, obsevations of different adhesion values between different cell types are done and explained in the following. \newline
-To find the correct adhesion values, the simulation program was modified in a way that two cells in a small simulation field are place next to each other. As a first step, the cells were touching each other at \ac{MCS} 0. Then, they were observed during their growth process. The different observations were saved. In the second step, the two cells were placed with some distance to each other and it was watched how they behave as they touch during their growth process for different adhesion values. \newline
+To find the correct adhesion values, the simulation program was modified in a way that two cells in a small simulation field are placed next to each other. As a first step, the cells were touching each other at \ac{MCS} 0. Then, they were observed during their growth process. The different observations were saved. In the second step, the two cells were placed with some distance to each other and it was observed how they behave as they touch during their growth process for different adhesion values. \newline
 With the observations of both techniques a new adhesion matrix for the different cell types was created. This adhesion matrix is displayed in table \ref{tbl:NewAdhesion} at page \pageref{tbl:NewAdhesion}.
 
 
@@ -127,7 +127,7 @@ In the program it is specified and checked if and when a cell splits. \ac{CC3D} 
 The target volume were calculated by dividing the target volume of the cell before mitosis by two. This value is applied for both new created cells. The problem with this technique is that it is possible that the cell might not split in the middle. In the case of mitosis, setting the target volume of the two created cells without the knowledge of the current volume is a source of error. Because the target volume of the two new cells was set without considering the current volume of the cell, it occurred that one of the new cells, after mitosis, had a target volume which was smaller than the current volume. \newline
 After mitosis both cells are initialized. Thus, the target volume and target surface are calculated and set. After the initialization of the cells, the target volume of the new cells were set to the target volume of the cell before mitosis divided by two. \newline
 Because the target volume is calculated out of the volume of the cell during the initialization process, the calculation of the target volume is removed out of the mitosis event. Now the target volume and target surface after mitosis is set only during the initialization process of the new cells. \newline
-Now, the target volume and target surface after mitosis is calculated and set dependent on the of \ac{CC3D} given volume.
+Now, the target volume and target surface after mitosis is calculated and set dependent on the by \ac{CC3D} given volume.
 
 
 
@@ -329,7 +329,7 @@ Because the surface of a sphere of voxels is larger than the surface of a real s
 For simplicity reasons, a first approximation of the factor is calculated in 2D. Thus, a circle and a square filled with pixels are used. An example therefor is displayed in figure \ref{img:CircleSquarePixels} at page \pageref{img:CircleSquarePixels}. \newline
 Figure \ref{img:ApproximationSQRT2} at page \pageref{img:ApproximationSQRT2} displays an approximation, with which it is possible to calculate the factor for the surface. 
 
-In figure \ref{img:ApproximationSQRT2} the left square is considered as a pixel, it could be any pixel of the figure \ref{img:CircleSquarePixels} through which the circle is included. Thus, the sides of the square are the same. The blue line represents the circle, in a way it could go through the pixel. An possible approximation is to insert a diagonal line. With this diagonal line an isosceles, right angular triangle is created as it is displayed at the right side of figure \ref{img:ApproximationSQRT2}. \newline
+In figure \ref{img:ApproximationSQRT2} the left square is considered as a pixel, it could be any pixel of the figure \ref{img:CircleSquarePixels} through which the circle is included. Thus, the sides of the square are the same. The blue line represents the circle, in a way it could go through the pixel. A possible approximation is to insert a diagonal line. With this diagonal line an isosceles, right angular triangle is created as it is displayed at the right side of figure \ref{img:ApproximationSQRT2}. \newline
 The following formula provides a way to calculate the sides of this triangle.
 \begin{equation}\label{eq:IsoscelesRightAncularTriangle}
 c^{2} = 2 \cdot a^{2}
@@ -350,7 +350,7 @@ S &= c \cdot \sqrt{2}
 \end{equation}
 This formula applies to all pixels, which are at the surface of the pixel sphere, $c$ is considered as the surface of the circle. Thus $c = \pi \cdot r^{2}$.
 
-The calculated factor $\sqrt{2}$ was tested for a sphere surface. Because, this is an approximation to the surface of a pixel sphere, the tenth part beside this factor are also tested mathematically. As figure \ref{img:DeviationSphere} at page \pageref{img:DeviationSphere} displays the  approximation with factor $\sqrt{2}$ still has some deviation. Almost no deviation between the surface of a sphere and a surface of a sphere of voxels appeared with a factor of $1.5$. Thus, this factor is applied in the calculation of the target surface. 
+The calculated factor $\sqrt{2}$ was tested for a sphere surface. Because this is an approximation to the surface of a pixel sphere, the tenth parts beside this factor are also tested mathematically. As figure \ref{img:DeviationSphere} at page \pageref{img:DeviationSphere} displays the  approximation with factor $\sqrt{2}$ still has some deviation. Almost no deviation between the surface of a sphere and a surface of a sphere of voxels appeared with a factor of $1.5$. Thus, this factor is applied in the calculation of the target surface. 
 
 \begin{figure}[ht]
 	\center
@@ -438,14 +438,14 @@ To receive the surface sites of the voxels at the surface, every marked entry is
 \draw[->, >=latex] (0,0,0) -- (0,0,3) node[left]{$y$};
 		
 \end{tikzpicture}
-\caption[A cuboid splitted up into eight parts. One eigthth is filled with voxels.]{A cuboid splitted up in eight parts. This eighth of the cuboid is a cuboid itself. In order to determine which voxels are in the sphere this one eighth is filled with voxels. With these voxels it is possible to calculate the volume in voxels and the surface sites of the sphere out of voxels.}
+\caption[A cuboid split up into eight parts. One eigthth is filled with voxels.]{A cuboid splitted up in eight parts. This eighth of the cuboid is a cuboid itself. In order to determine which voxels are in the sphere this one eighth is filled with voxels. With these voxels it is possible to calculate the volume in voxels and the surface sites of the sphere out of voxels.}
 \label{tikz:CuboidsInCuboid}
 \end{center}
 \end{figure}
 
 \begin{table}[ht]
 \centering
-\caption[A matrix to determine which voxel is within the sphere or not]{An example matrix of the cuboids in picture \ref{tikz:CuboidsInCuboid}. Each number represents one cuboid. Every column presents the voxels at a x,z coordinate where as the entries in the row display the different voxel at the y-axis for this given x,z coordinate. 4 columns regarding to the different z-positions at one x-postion.  \newline}
+\caption[A matrix to determine which voxel is within the sphere or not]{An example matrix of the cuboids in picture \ref{tikz:CuboidsInCuboid}. Each number represents one cuboid. Every column presents the voxels at a x,z coordinate whereas the entries in the row display the different voxels at the y-axis for this given x,z coordinate. 4 columns regarding to the different z-positions at one x-postion.  \newline}
 \renewcommand{\arraystretch}{1.5}
 	\begin{tabularx}{\textwidth}{cccccccccccccccccccc}
 		y3 & 0 & 0 & 1 & 1 & &  0 & 1 & 1 & 1 & & 1 & 1 & 1 & 1 & & 1 & 1 & 1 & 1 \\
