@@ -10,145 +10,150 @@ The changes described in section \ref{sec:LambdaMultipliers} and \ref{sec:Abstra
 During the bachelor thesis several adjustments in the program code were made. All these changes are important as they affect the simulation. These changes were tested by using the output command to see the required information at the command line. 
 \subsection{Calculation of the amount of stem cells on the basal membrane}
 With the changes presented in section \ref{sec:AmountStemCellsBasalMembrane} the program now has a calculation of the amount of stem cells on the basal membrane for two and three dimensions. The new calculation is correct for every simulation size in 2D and 3D. This is important as the program should be able to have a correct implementation for two as well as for three dimensions. An example for the initialization of a simulation is displayed in figure \ref{img:SimulationAtMCS0} at page \pageref{img:SimulationAtMCS0}.
-\subsection{\ac{MCS} until the urination event}
-The modifications of the calculation until the urination event was presented in section \ref{sec:calculationStpesUntilUrination}. Therefore the urination now takes place every six hours instead of every twelve hours. This change is important for the simulation because with a urination every twelve hours the simulation is not as real as with the event every six hours. Moreover, in the paper \cite{Torelli2017} of the project it is stated that this event occurs every six hours. This change helps the simulation to not only be more realistic, it is also important that there are not too many cells in the simulation field. As a result of too many cells in the simulation field the simulation stops. Thus, the change increases the quality of a simulation and helps to prevent an overflow of cells.
-\subsection{Target volume and target surface after mitosis}
-The described modifications in section \ref{sec:TargetVolumeSurfaceAfterMitosis} affects the simulation in a way that after mitosis both cells are able to grow immediately. Without the modification the cell with a too small target volume and target surface would not grow several calculation steps. Therefore, the cell does not grow until the target volume becomes larger than the current volume. It is not possible that one of the two cells has a smaller target volume and surface than the current volume and surface, because the target volume of both created cells is now set dependent on the by \ac{CC3D} given volume of each cell. With this modification both cells, created during mitosis, are now able to grow immediately.
-\subsection{Conversion between the physical unit and the voxel unit}
-The modifications presented in section \ref{sec:ApproximationError} are crucial since now the calculation of volume constraints of each cell type is more precise. With this modification every conversion of \SI{}{\micro\metre} into pixels and voxels is now free of calculation errors. Since the result of the calculations of the volume constraints of the different cell types is used to determine when mitosis takes place it is important to have it without a calculation error. Simulations beside a voxel density of 1 have the correct volume constraints of the cells, because the result is converted only at the end. Moreover, this calculation is also used to calculate the growth per calculation step in the simulation, since the growth of a cell is calculated in the physical unit and then converted into pixels. This modification is important and affects the correctness of simulations, because the calculation of the volume constraints of the different cell types and the calculation of the growth of each cell each \ac{MCS} are two major parts of the simulation.\newline
-\newline
 
-\begin{figure}[ht]
+
+
+
+\subsection{\ac{MCS} until the urination event}
+The modifications of the calculation until the urination event was presented in section \ref{sec:calculationStpesUntilUrination}. Therefore, the urination now takes place every six hours instead of every twelve hours. This change is important for the simulation because with a urination every twelve hours the simulation is not as real as with the event every six hours. Moreover, in the paper \cite{Torelli2017} of the project it is stated that this event occurs every six hours. This change helps the simulation to not only be more realistic, it is also important that there are not too many cells in the simulation field. As a result of too many cells in the simulation field the simulation stops. Thus, the change increases the quality of a simulation and helps to prevent an overflow of cells.
+\subsection{Target volume and target surface after mitosis}
+The described modifications in section \ref{sec:TargetVolumeSurfaceAfterMitosis} affects the simulation in a way that after mitosis both cells are able to grow immediately. Without the modification the cell with a too small target volume and target surface would not grow several calculation steps. Therefore, the cell does not grow until the target volume becomes larger than the current volume. It is not possible that one of the two cells have a smaller target volume and surface than the current volume and surface, because the target volume of both created cells is now set dependent on the by \ac{CC3D} given volume of each cell. With this modification both cells, created during mitosis, are now able to grow immediately.
+\subsection{Conversion between the physical unit and the voxel unit}
+The modifications presented in section \ref{sec:ApproximationError} are crucial since now the calculation of volume constraints of each cell type is more precise. With this modification every conversion of \SI{}{\micro\metre} into pixels and voxels is now free of calculation errors. Since the result of the calculations of the volume constraints of the different cell types is used to determine when mitosis takes place it is important to have it without a calculation error. Simulations beside a voxel density of one have the correct volume constraints of the cells, because the result is converted only at the end. Moreover, this calculation is also used to calculate the growth per calculation step in the simulation, since the growth of a cell is calculated in the physical unit and then converted into pixels. This modification is important and affects the correctness of simulations, because the calculation of the volume constraints of the different cell types and the calculation of the growth of each cell each \ac{MCS} are two major parts of the simulation.\newline
+\newpage
+\begin{figure}[h]
 	\center
 	\includegraphics[scale=0.4]{figures/SimulationAtMCS0.png}
-	\caption[Spread stem cells at the basal membrane at \ac{MCS} 0]{Spread stem cells at the basal membrane at \ac{MCS} 0. The box displays the simulation field, with a size of \SI{100}{\micro\metre} at the x-asis, \SI{80}{\micro\metre} at the y-axis and \SI{100}{\micro\metre} at the z-axis. In the simulation the green bottom displays the basal membrane and at the basal membrane the stem cells are spread. The amount of these stem cells is calculated as explainedin section \ref{sec:AmountStemCellsBasalMembrane}.}
+	\caption[Spread stem cells at the basal membrane at \ac{MCS} 0]{Spread stem cells at the basal membrane at \ac{MCS} 0. The box displays the simulation field, with a size of \SI{100}{\micro\metre} at the x-asis, \SI{80}{\micro\metre} at the y-axis and \SI{100}{\micro\metre} at the z-axis. In the simulation the green bottom displays the basal membrane and at the basal membrane the stem cells are spread. The amount of these stem cells is calculated as explained in section \ref{sec:AmountStemCellsBasalMembrane}.}
 	\label{img:SimulationAtMCS0}
 \end{figure}
 
 
+
+
 \section{Draw sphere cells}
-With the new method presented in section \ref{sec:DrawSphereCells} the program is now able to draw a sphere cell, as it is displayed in figure \ref{img:DrawnSphereCellRadius5And9} and \ref{img:DrawnSphereCellRadius14And23} at page \pageref{img:DrawnSphereCellRadius5And9} and page \pageref{img:DrawnSphereCellRadius14And23}. \newline
+With the new method presented in section \ref{sec:DrawSphereCells} the program is now able to draw a sphere cell, as it is displayed in figure \ref{img:DrawnSphereCells}. \newline
 Since voxels are used in the 3D simulation to draw a sphere cell it is not possible to draw a perfectly round sphere. This problem is displayed with an circle and a square in picture \ref{img:CircleSquarePixels} at page \pageref{img:CircleSquarePixels}, since the circle and square are the 2D presentation of a sphere and a cuboid. The drawn cells are as spherish as possible in the simulation with the use of voxels. \newline
-Figure \ref{img:DrawnSphereCellRadius5And9} displays two independently drawn cells with a radius of \SI{5}{\micro\metre} and \SI{9}{\micro\metre}. These cells show that there are a lot of edges in the sphere. As the radius increases, the sphere shape of the cell gets more detailed as it is displayed in figure \ref{img:DrawnSphereCellRadius14And23}, in which two cells are drawn independently with a radius of \SI{14}{\micro\metre} and \SI{23}{\micro\metre}. With the increase of the radius the deviation of the surface increases as well, as it is shown in figure \ref{img:DeviationSphere} at page \pageref{img:DeviationSphere}. This might be a result as the surface of a sphere and a cuboid, with the diameter $2 \cdot r$, deviates more as $r$ increases.
+Figure \ref{img:DrawnSphereCells} displays independently drawn cells with different radius of \SI{5}{\micro\metre} and up to \SI{23}{\micro\metre}. The cells in the first two rows show that there are a lot of edges in the sphere. As the radius increases, the sphere shape of the cell gets more detailed as it is displayed in the last two rows. With the increase of the radius the deviation of the surface increases as well, as it is shown in figure \ref{img:DeviationSphere} at page \pageref{img:DeviationSphere}. This might be a result as the surface of a sphere and a cuboid, with the diameter $2 \cdot r$, deviates more as $r$ increases.
 
 
-\begin{figure}[ht]
+\begin{figure}[!]
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=1.05]{figures/VoxelSphere/Radius5-0.png}
+		\includegraphics[scale=0.75]{figures/VoxelSphere/Radius5-0.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=1.05]{figures/VoxelSphere/Radius5-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.755]{figures/VoxelSphere/Radius5-1.png}
 	}
 	\end{center}
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=0.74]{figures/VoxelSphere/Radius9-0.png}
+		\includegraphics[scale=0.53]{figures/VoxelSphere/Radius9-0.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=0.735]{figures/VoxelSphere/Radius9-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.54]{figures/VoxelSphere/Radius9-1.png}
 	}
 	\end{center}
-	\caption[Drawn sphere cells with a radius of 5 and 9]{\label{img:DrawnSphereCellRadius5And9}A single cell drawn into the simulation field. The radius of the cell of (a) and (b) is 5 and the radius of the cell of (c) and (d) is 9. Pictures (a) and (c) are with the front view, whereas the
-pictures (b) and (d) have a view angle of around 45 degrees. The color of the cell is chosen in
-a way that more details are visible.}
+	
+		\begin{center}
+	\subfloat[]{
+		\includegraphics[scale=0.455]{figures/VoxelSphere/Radius14-0.png}
+	}
+	\subfloat[]{
+		\hspace{1.5cm}\includegraphics[scale=0.545]{figures/VoxelSphere/Radius14-1.png}
+	}
+	\end{center}
+	\begin{center}
+	\subfloat[]{
+%		\hspace{0.1cm}
+		\includegraphics[scale=0.505]{figures/VoxelSphere/Radius23-0.png}
+	}
+	\subfloat[]{
+		\hspace{1.5cm}\includegraphics[scale=0.49]{figures/VoxelSphere/Radius23-1.png}
+	}
+	\end{center}
+	
+	
+	\caption[Drawn sphere cells]{\label{img:DrawnSphereCells}A single cell drawn into the simulation field. The radius of the cell in the first row is \SI{5}{\micro\metre}, in the second row a cell with a diameter of \SI{9}{\micro\metre} is displayed, in the third row a diameter of \SI{14}{\micro\metre} was used and in the last row the cell has a diameter of \SI{23}{\micro\metre}. The pictures in the left column are with the front view, whereas the
+pictures at the right column have a view angle of around 45 degrees.}
 \end{figure}
 
-\begin{figure}[ht]
-	\begin{center}
-	\subfloat[]{
-		\includegraphics[scale=0.65]{figures/VoxelSphere/Radius14-0.png}
-	}
-	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=0.76]{figures/VoxelSphere/Radius14-1.png}
-	}
-	\end{center}
-	\begin{center}
-	\subfloat[]{
-		\hspace{0.1cm}\includegraphics[scale=0.705]{figures/VoxelSphere/Radius23-0.png}
-	}
-	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=0.695]{figures/VoxelSphere/Radius23-1.png}
-	}
-	\end{center}
-	\caption[Drawn sphere cells with a radius of 14 and 23]{\label{img:DrawnSphereCellRadius14And23}A single cell drawn into the simulation field. The radius of the cell of (a) and (b) is 14 and the radius of the cell of (c) and (d) is 23. Pictures (a) and (c) are with the front view, whereas the
-pictures (b) and (d) have a view angle of around 45 degrees. The color of the cell is chosen in
-a way that more details are visible.}
-\end{figure}
 
 
 \section{Calculate the voxel volume and surface sites of a sphere cell}
 The created algorithm, which is described in section \ref{sec:CreatedAlgorithm} it is able to calculate, out of a given radius, the volume of a sphere cell created with cuboids in voxel, as well as it is able to count the surface sites of the cell. Moreover, it is also possible to calculate the physical volume and surface of a sphere with a given radius. With this algorithm it is possible to calculate the volume and surface of a sphere cell and get the same result as \ac{CC3D} calculates. \newline
-The algorithm is useful but also has its weaknesses. For a voxel density beside 1 the results between the created algorithm and \ac{CC3D} deviate. The results differ also if the radius is not a whole number. There are no insights how \ac{CC3D} calculates the volume and surface of a drawn sphere cell. Moreover, for the tenths part of five to nine of the radius, for every radius between $.5$ until $.9$, it is possible to create the cube with a radius which is either rounded up or down. This means for a radius of $3.7$ it is possible to use either six or eight voxels to create the cuboid. Seven voxels are not possible because then the sphere would lose its symmetry. \newline
+The algorithm is useful but also has its weaknesses. For a voxel density beside one the results between the created algorithm and \ac{CC3D} deviate. The results differ also if the radius is not a whole number. There are no insights how \ac{CC3D} calculates the volume and surface of a drawn sphere cell. Moreover, for the tenths part of five to nine of the radius, for every radius between $.5$ until $.9$, it is possible to create the cube with a radius which is either rounded up or down. This means for a radius of $3.7$ it is possible to use either six or eight voxels to create the cuboid. Seven voxels are not possible because then the sphere would lose its symmetry. \newline
 The algorithm helps to calculate the volume of a sphere cell, out of voxels, as well as to count the surface sites. It is able to be executed without a start of a simulation. Thus, there is no need to adjust the coding of the project and to wait until the simulation started to receive the volume and surface values of a sphere cell.
 
 
 \section{Growth of sphere cells}\label{sec:GrowSphereCells}
-In section \ref{sec:GrowSphereCell} the factor for the calculation of the surface of the cell was evidenced best to be $1.5$ for a voxel density of 1. With this factor it should be possible to let the sphere cell grow as a sphere. To test the growth of the cell, one single cell was placed in the simulation field. As the cell grew during the simulation the volume and surface values were read out of the command line and compared to the documented values of a drawn cell. \newline
+In section \ref{sec:GrowSphereCell} the factor for the calculation of the surface of the cell was evidenced best to be $1.5$ for a voxel density of one. With this factor it should be possible to let the sphere cell grow as a sphere. To test the growth of the cell, one single cell was placed in the simulation field. As the cell grew during the simulation the volume and surface values were read out of the command line and compared to the documented values of a drawn cell. \newline
 To let a cell grow as a sphere does not work. Even the volume and surface values, calculated by \ac{CC3D}, and the target volume and target surface values, calculated by the program, meet the values of sphere cells with a small deviation of a maximum deviation up to 50 voxels. \newline
-In figure \ref{img:GrowthSphereCellRadius5} and \ref{img:GrowthSphereCellRadius9} at page \pageref{img:GrowthSphereCellRadius5} and \pageref{img:GrowthSphereCellRadius9} examples of the growth of two stem cells with a different radius are displayed. It is observable that these cells are not able to keep the shape with which they were depicted.
+In figure \ref{img:GrowthSphereCellRadius5} and \ref{img:GrowthSphereCellRadius9} examples of the growth of two stem cells with a different radius are displayed. It is observable that these cells are not able to keep the shape with which they were depicted.
 
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=1.15]{figures/GrowthSphereCell/Radius5/Radius5-MCS0.png}
+		\includegraphics[scale=0.85]{figures/GrowthSphereCell/Radius5/Radius5-MCS0.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=1.142]{figures/GrowthSphereCell/Radius5/Radius5-MCS0-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.842]{figures/GrowthSphereCell/Radius5/Radius5-MCS0-1.png}
 	}
 	\end{center}
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=1.16]{figures/GrowthSphereCell/Radius5/Radius5-MCS50.png}
+		\includegraphics[scale=0.86]{figures/GrowthSphereCell/Radius5/Radius5-MCS50.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=1.155]{figures/GrowthSphereCell/Radius5/Radius5-MCS50-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.855]{figures/GrowthSphereCell/Radius5/Radius5-MCS50-1.png}
 	}
 	\end{center}
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=1.145]{figures/GrowthSphereCell/Radius5/Radius5-MCS250.png}
+		\includegraphics[scale=0.845]{figures/GrowthSphereCell/Radius5/Radius5-MCS250.png}
 	}
 	\subfloat[]{
-		\hspace{0.53cm}\includegraphics[scale=1.145]{figures/GrowthSphereCell/Radius5/Radius5-MCS250-1.png}
+		\hspace{1.53cm}\includegraphics[scale=0.845]{figures/GrowthSphereCell/Radius5/Radius5-MCS250-1.png}
 	}
 	\end{center}
-	\caption[Growth of a sphere cell with a radius of 5]{\label{img:GrowthSphereCellRadius5}A sphere cell, with a radius of \SI{5}{\micro\metre} and a voxel density of 1, as it grows. Images (a), (c) and (e) show the front view of the cell and figures (b), (d) and(f) have around a 45 degrees angle of the front. Figure (a) and (b) are at \ac{MCS} 0, images (c) and (d) at calculation step 50 and figures (e) and (f) present \ac{MCS} 250.}
+	\caption[Growth of a sphere cell with a radius of 5]{\label{img:GrowthSphereCellRadius5}A sphere cell, with a radius of \SI{5}{\micro\metre} and a voxel density of one, as it grows. Images (a), (c) and (e) show the front view of the cell and figures (b), (d) and(f) have around a 45 degrees angle of the front. Figure (a) and (b) are at \ac{MCS} 0, images (c) and (d) at calculation step 50 and figures (e) and (f) present \ac{MCS} 250.}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=0.7]{figures/GrowthSphereCell/Radius9/Radius9-MCS0.png}
+		\includegraphics[scale=0.5]{figures/GrowthSphereCell/Radius9/Radius9-MCS0.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=0.7]{figures/GrowthSphereCell/Radius9/Radius9-MCS0-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.5]{figures/GrowthSphereCell/Radius9/Radius9-MCS0-1.png}
 	}
 	\end{center}
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=0.7]{figures/GrowthSphereCell/Radius9/Radius9-MCS250.png}
+		\includegraphics[scale=0.5]{figures/GrowthSphereCell/Radius9/Radius9-MCS250.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=0.698]{figures/GrowthSphereCell/Radius9/Radius9-MCS250-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.498]{figures/GrowthSphereCell/Radius9/Radius9-MCS250-1.png}
 	}
 	\end{center}
 	\begin{center}
 	\subfloat[]{
-		\includegraphics[scale=0.7]{figures/GrowthSphereCell/Radius9/Radius9-MCS750.png}
+		\includegraphics[scale=0.5]{figures/GrowthSphereCell/Radius9/Radius9-MCS750.png}
 	}
 	\subfloat[]{
-		\hspace{0.5cm}\includegraphics[scale=0.7]{figures/GrowthSphereCell/Radius9/Radius9-MCS750-1.png}
+		\hspace{1.5cm}\includegraphics[scale=0.5]{figures/GrowthSphereCell/Radius9/Radius9-MCS750-1.png}
 	}
 	\end{center}
-	\caption[Growth of a sphere cell with a radius of 9]{\label{img:GrowthSphereCellRadius9}A sphere cell, with a radius of \SI{9}{\micro\metre} and a voxel density of 1, as it grows. Images (a), (c) and (e) show the front view of the cell and figures (b), (d) and (f) have an approximately 45 degrees angle of the front. Figures (a) and (b) are at \ac{MCS} 0, figures (c) and (d) at calculation step 250 and figures (e) and (f) present \ac{MCS} 750.}
+	\caption[Growth of a sphere cell with a radius of 9]{\label{img:GrowthSphereCellRadius9}A sphere cell, with a radius of \SI{9}{\micro\metre} and a voxel density of one, as it grows. Images (a), (c) and (e) show the front view of the cell and figures (b), (d) and (f) have an approximately 45 degrees angle of the front. Figures (a) and (b) are at \ac{MCS} 0, figures (c) and (d) at calculation step 250 and figures (e) and (f) present \ac{MCS} 750.}
 \end{figure}
 
+\newpage
 
 \section{Adhesion matrix}
-The new adhesion matrix is different from the one which was used until this thesis. Based on the observations of section \ref{sec:AdhesionMatrix} the new adhesion matrix was created. The matrix is displayed in table \ref{tbl:NewAdhesion}. The values were chosen in a way that cells of one layer stick to each other and try to increase the area where the cells touch. The adhesion for cells at one layer was observed not to be too high in order that the cells do not infiltrate each other. An example therefor is displayed in figure \ref{img:InfiltratingCells} at page \pageref{img:InfiltratingCells}. If cells infiltrate each other it is a sign of too high adhesion energy. For the adhesion between cells of different layers in the urothelium the values were chosen in a way that the cells connect with each other but that they grow independently. It is important that the cells of different layers do not connect too strong to each other, otherwise the different layers in the urothelium might be mixed. 
-\begin{figure}[ht]
+The new adhesion matrix is different from the one which was used until this thesis. Based on the observations of section \ref{sec:AdhesionMatrix} the new adhesion matrix was created. The matrix is displayed in table \ref{tbl:NewAdhesion}. The values were chosen in a way that cells of one layer stick to each other and try to increase the area where the cells touch. The adhesion for cells at one layer was observed not to be too high in order that the cells do not infiltrate each other. An example therefor is displayed in figure \ref{img:InfiltratingCells}. If cells infiltrate each other it is a sign of too high adhesion energy. For the adhesion between cells of different layers in the urothelium the values were chosen in a way that the cells connect with each other but that they grow independently. It is important that the cells of different layers do not connect too strong to each other, otherwise the different layers in the urothelium might be mixed. 
+
+\begin{figure}[H]
 	\center
 	\includegraphics[scale=1.2]{figures/TooHighAdhesion1.png}
 	\caption[Different cells try to infiltrate each other]{Different cells try to infiltrate each other as a reason of too high adhesion values between the cells. The different points at the surface of a cell are an indicator that a surrounding cell tries to infiltrate the cell at which the points occur.}
@@ -183,12 +188,12 @@ The new adhesion matrix is different from the one which was used until this thes
 	\label{tbl:NewAdhesion}
 \end{table}
 
+\newpage
 
 \section{Simulation result}
-To test this bachelor thesis some 3D simulations were made. It is not possible to have an in depth analysis of several simulations, because a 3D simulation over a timespan of 700 days with a simulation field of \SI{200}{\micro\metre} at the x-axis, \SI{80}{\micro\metre} at the y-axis and \SI{100}{\micro\metre} at the z-axis and with a voxel density of 1 took 14 days to complete. Because of this immense time effort a brief analysis of one simulation run of the model SPA/PCDB/PCDI is provided. In the next chapter analyses of short simulations are compared briefly to the completed simulation presented in this chapter. \newline
+To test this bachelor thesis some 3D simulations were made. It is not possible to have an in depth analysis of several simulations, because a 3D simulation over a timespan of 700 days with a simulation field of \SI{200}{\micro\metre} at the x-axis, \SI{80}{\micro\metre} at the y-axis and \SI{100}{\micro\metre} at the z-axis and with a voxel density of one took 14 days to complete. Because of this immense time effort, a brief analysis of one simulation run of the model SPA/PCDB/PCDI is provided. In the next chapter analyses of short simulations are compared briefly to the completed simulation presented in this chapter. \newline
 Figure \ref{img:720daysScreenshotSPA/BCPD/IPCD} at page \pageref{img:720daysScreenshotSPA/BCPD/IPCD} displays screenshots at the front and at the back of the simulation field. These screenshots are taken after the simulation was finished. It is visible that the arrangement of the cell layers is not perfect, because some umbrella cells are on top of the basal cells. Moreover, at one point an intermediate cell is surrounded by umbrella cells, therefore it is at a wrong layer in the urothelium. \newline
-In figure \ref{img:Fa_Fv_SPA/BCPD/IPCD} at page \pageref{img:Fa_Fv_SPA/BCPD/IPCD} a result of the fitness functions of sections \ref{subsec:ArrangementFitness} and \ref{subsec:VolumeFitness} is provided. The arrangement fitness function displays an almost perfect result of an urothelium, whereas the volume fitness function displays not much reality in the simulation. The 2D simulation of this model had an overall fitness value of almost 90\% by 49 simulation runs. In the 3D the overall fitness values would be lower, as it is the average of the arrangement and the volume fitness function.
-A further analysis of this simulation and of other simulations is discussed in the next chapter in section \ref{sec:SimulationResults}.
+In figure \ref{img:Fa_Fv_SPA/BCPD/IPCD} the result of the fitness functions of section \ref{sec:fitnessFunctions} is provided. The arrangement fitness function displays an almost perfect result of an urothelium, whereas the volume and the total fitness functions display not much reality in the simulation. The 2D simulation of this model had an overall fitness value of almost 90\% by 49 simulation runs. In the 3D simulation the overall fitness values is lower. Why this decrease happen and a further analysis of this simulation and of other simulations is discussed in the next chapter in section \ref{sec:SimulationResults}.
 
 %With the results of the simulations a first insight of the 3D simulation is given. To receive a complete and in detail analysis of the models in three dimensions several simulations of the different models has to be done.
 \begin{figure}[ht]
@@ -200,13 +205,13 @@ ylabel=Fitness,
 grid=major,
 xmin=0,xmax=700,ymin=0,ymax=1,
 width=10cm,height=10cm,
-legend entries={$f_A$, $f_V$},
+legend entries={$f_A$, $f_V$, $f_{T}$},
 legend style={at={(0.02,0.02)},anchor=south west}
 ]
-%\addplot[
-%color=blue,
-%mark repeat=0.5, mark phase=0
-%] table[x=time,y=FitnessTotal] {figures/SpaPcdbPcdiIn/FitnessPlot.dat}; 
+\addplot[
+color=blue,
+mark repeat=0.5, mark phase=0
+] table[x=time,y=FitnessTotal] {figures/SpaPcdbPcdiIn/FitnessPlot.dat}; 
 \addplot[
 color=gray,
 mark repeat=0.5, mark phase=0
@@ -217,7 +222,7 @@ mark repeat=0.5, mark phase=0
 ] table[x=time,y=FitnessVolume] {figures/SpaPcdbPcdiIn/FitnessVolume.dat}; 
 \end{axis}
 \end{tikzpicture}
-\caption[Analysis of a simulation of the model SPA/BCPD/IPCD]{\label{img:Fa_Fv_SPA/BCPD/IPCD}Analysis of a simulation of the model SPA/BCPD/IPCD. The simulation covered 700 days, 350000 \ac{MCS}. The analysis covers the arrangement, $f_{A}$ and the volume fitness function, $f_{V}$ of sections \ref{subsec:ArrangementFitness} and \ref{subsec:VolumeFitness}. At the figure the 'Fitness' values represent the reality of this model, where 0 refers to no reality and 1 presents a perfect realistic simulated urothelium.}
+\caption[Analysis of a simulation of the model SPA/BCPD/IPCD]{\label{img:Fa_Fv_SPA/BCPD/IPCD}Analysis of a simulation of the model SPA/BCPD/IPCD. The simulation covered 700 days, 350000 \ac{MCS}. The analysis covers the arrangement, $f_{A}$, the volume fitness function, $f_{V}$ and the overall fitness function $f_{T}$ of section \ref{sec:fitnessFunctions}. At the figure the 'Fitness' values represent the reality of this model, where 0 refers to no reality and 1 presents a perfect realistic simulated urothelium.}
 
 \end{center}
 \end{figure}
@@ -233,7 +238,7 @@ mark repeat=0.5, mark phase=0
 \includegraphics[width=12cm]{figures/SpaPcdbPcdiIn/MCS350000-1.png}
 }
 \end{center}
-\caption[Simulated urothel with the model SPA/PCDB/PCDI at day 700]{\label{img:720daysScreenshotSPA/BCPD/IPCD}Screenshots at the end of a simulation of the model SPA/PCDB/PCDI, which lasted 700 days. Screenshot (a) is taken of a the front view, whereas screenshot (b) is taken of the back of the urothelium.}
+\caption[Simulated urothel with the model SPA/PCDB/PCDI at day 700]{\label{img:720daysScreenshotSPA/BCPD/IPCD}Screenshots at the end of a simulation of the model SPA/PCDB/PCDI, which lasted 700 days. Screenshot (a) is taken of the front view, whereas screenshot (b) is taken of the back of the urothelium.}
 
 \end{figure}
 
